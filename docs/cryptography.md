@@ -11,20 +11,19 @@ The parameters are as follows:
 
 | Parameter | Value          |
 |:----------|:---------------|
-| N         | 2<sup>16</sup> |
+| N         | 2<sup>17</sup> |
 | r         | 8              |
 | p         | 1              |
 
-Note: Although [OWASP](https://cheatsheetseries.owasp.org/cheatsheets/Password_Storage_Cheat_Sheet.html) recommends
-an `N` value of <code>2<sup>17</sup></code>, it cannot be confirmed at this time that such a value would not cause older
-iOS devices to crash. This value might be increased in the future, and the hashing algorithm could be completely
-switched to `Argon2` once it gains broader support.
+Note: These parameters follow the recommendations
+by [OWASP](https://cheatsheetseries.owasp.org/cheatsheets/Password_Storage_Cheat_Sheet.html). They may be increased in
+the future, and the hashing algorithm could be fully transitioned to `Argon2` once it gains broader support in Swift.
 
 ### Authenticated Encryption with Associated Data (AEAD)
 
 [XChaCha20-Poly1305](https://datatracker.ietf.org/doc/html/draft-irtf-cfrg-xchacha#section-2) cipher is used to ensure
-the confidentiality, integrity, and authenticity of data. The XChaCha20-Poly1305 variant was chosen specifically for its larger
-192-bit nonce, which significantly reduces the risk of nonce collisions.
+the confidentiality, integrity, and authenticity of data. The XChaCha20-Poly1305 variant was chosen specifically for its
+larger 192-bit nonce, which significantly reduces the risk of nonce collisions.
 
 ## Master Key
 

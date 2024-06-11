@@ -1,0 +1,773 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 56;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		6B19CA722B7A70B800690390 /* WelcomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B19CA712B7A70B800690390 /* WelcomeView.swift */; };
+		6B19CA742B7A769900690390 /* PasswordSetupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B19CA732B7A769900690390 /* PasswordSetupView.swift */; };
+		6B2583AF2B96048700938F3A /* SettingsTab.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B2583AE2B96048700938F3A /* SettingsTab.swift */; };
+		6B27317A2B53E23800F30621 /* UpdateTokenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B2731792B53E23800F30621 /* UpdateTokenView.swift */; };
+		6B27317C2B53F0B200F30621 /* TokenRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B27317B2B53F0B200F30621 /* TokenRowView.swift */; };
+		6B35A4C92B557EE50004D4C5 /* AlertKit in Frameworks */ = {isa = PBXBuildFile; productRef = 6B35A4C82B557EE50004D4C5 /* AlertKit */; };
+		6B39629A2BF5E935000410B0 /* MainAppView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B3962992BF5E935000410B0 /* MainAppView.swift */; };
+		6B39629C2BF5EB3E000410B0 /* AuthenticationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B39629B2BF5EB3E000410B0 /* AuthenticationView.swift */; };
+		6B39629E2BF63F27000410B0 /* SwiftDataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B39629D2BF63F27000410B0 /* SwiftDataService.swift */; };
+		6B3962A02BF6423B000410B0 /* CryptoService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B39629F2BF6423B000410B0 /* CryptoService.swift */; };
+		6B3962A42C002E60000410B0 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6B3962A32C002E60000410B0 /* Launch Screen.storyboard */; };
+		6B3BB0B12B4EA87C00DCEF0B /* ChronosApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B3BB0B02B4EA87C00DCEF0B /* ChronosApp.swift */; };
+		6B3BB0B32B4EA87C00DCEF0B /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B3BB0B22B4EA87C00DCEF0B /* ContentView.swift */; };
+		6B3BB0B52B4EA87D00DCEF0B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6B3BB0B42B4EA87D00DCEF0B /* Assets.xcassets */; };
+		6B3BB0B82B4EA87D00DCEF0B /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6B3BB0B72B4EA87D00DCEF0B /* Preview Assets.xcassets */; };
+		6B3BB0E02B4ECE6F00DCEF0B /* TOTPRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B3BB0DF2B4ECE6F00DCEF0B /* TOTPRowView.swift */; };
+		6B3BB0E22B4ED19300DCEF0B /* TokensTab.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B3BB0E12B4ED19300DCEF0B /* TokensTab.swift */; };
+		6B3BB0EE2B4EEEBD00DCEF0B /* Valet in Frameworks */ = {isa = PBXBuildFile; productRef = 6B3BB0ED2B4EEEBD00DCEF0B /* Valet */; };
+		6B3BB1202B511A9E00DCEF0B /* SwiftOTP in Frameworks */ = {isa = PBXBuildFile; productRef = 6B3BB11F2B511A9E00DCEF0B /* SwiftOTP */; };
+		6B3C7A382BE764E70043FEBD /* StorageSetupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B3C7A372BE764E70043FEBD /* StorageSetupView.swift */; };
+		6B3C7A3D2BE9E0600043FEBD /* Logging in Frameworks */ = {isa = PBXBuildFile; productRef = 6B3C7A3C2BE9E0600043FEBD /* Logging */; };
+		6B4B48F32BD7BB3C007D357D /* Token.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B4B48F22BD7BB3C007D357D /* Token.swift */; };
+		6B5E41CE2BD790F80045DBC6 /* EncryptedToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B5E41CD2BD790F80045DBC6 /* EncryptedToken.swift */; };
+		6B66D5E72B526315006DB79D /* AddTokenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B66D5E62B526315006DB79D /* AddTokenView.swift */; };
+		6B66D5ED2B526648006DB79D /* CodeScanner in Frameworks */ = {isa = PBXBuildFile; productRef = 6B66D5EC2B526648006DB79D /* CodeScanner */; };
+		6B66D5EF2B52BAC2006DB79D /* HOTPRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B66D5EE2B52BAC2006DB79D /* HOTPRowView.swift */; };
+		6B7383E02B9C3962008E8867 /* Factory in Frameworks */ = {isa = PBXBuildFile; productRef = 6B7383DF2B9C3962008E8867 /* Factory */; };
+		6B7383E52B9C4230008E8867 /* Container.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B7383E42B9C4230008E8867 /* Container.swift */; };
+		6B7A54742B94B7A30057DCF9 /* PrivacyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B7A54732B94B7A30057DCF9 /* PrivacyView.swift */; };
+		6B842DD52BE33E2E00056F0F /* RestoreBackupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B842DD42BE33E2E00056F0F /* RestoreBackupView.swift */; };
+		6B8ABEEC2B8F6A4F00F5B514 /* CryptoSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 6B8ABEEB2B8F6A4F00F5B514 /* CryptoSwift */; };
+		6B9581E22B62AFF80029EF3C /* ViewModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B9581E12B62AFF80029EF3C /* ViewModifier.swift */; };
+		6B9581E42B633A880029EF3C /* AddManualTokenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B9581E32B633A880029EF3C /* AddManualTokenView.swift */; };
+		6B9D74652C14ADDC008E6582 /* StateService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B9D74642C14ADDC008E6582 /* StateService.swift */; };
+		6B9D74682C1553A1008E6582 /* SecureBytes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B9D74672C1553A1008E6582 /* SecureBytes.swift */; };
+		6BA5DA5C2B9E94F8009908E5 /* SecureEnclaveService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BA5DA5B2B9E94F8009908E5 /* SecureEnclaveService.swift */; };
+		6BC3C3B52BA6B91E00B181B9 /* BiometricsSetupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BC3C3B42BA6B91E00B181B9 /* BiometricsSetupView.swift */; };
+		6BD6D2012C11FEB4004512BF /* OTPService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BD6D2002C11FEB4004512BF /* OTPService.swift */; };
+		6BD90AA52B8E34BB00FABD91 /* PasswordLoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BD90AA42B8E34BB00FABD91 /* PasswordLoginView.swift */; };
+		6BE122922BD6413D008636D2 /* ChronosCrypto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BE122912BD6413D008636D2 /* ChronosCrypto.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		6B19CA712B7A70B800690390 /* WelcomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeView.swift; sourceTree = "<group>"; };
+		6B19CA732B7A769900690390 /* PasswordSetupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordSetupView.swift; sourceTree = "<group>"; };
+		6B2583AE2B96048700938F3A /* SettingsTab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsTab.swift; sourceTree = "<group>"; };
+		6B2583B02B975D3200938F3A /* Chronos.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Chronos.entitlements; sourceTree = "<group>"; };
+		6B2731792B53E23800F30621 /* UpdateTokenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateTokenView.swift; sourceTree = "<group>"; };
+		6B27317B2B53F0B200F30621 /* TokenRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenRowView.swift; sourceTree = "<group>"; };
+		6B3962992BF5E935000410B0 /* MainAppView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainAppView.swift; sourceTree = "<group>"; };
+		6B39629B2BF5EB3E000410B0 /* AuthenticationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationView.swift; sourceTree = "<group>"; };
+		6B39629D2BF63F27000410B0 /* SwiftDataService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftDataService.swift; sourceTree = "<group>"; };
+		6B39629F2BF6423B000410B0 /* CryptoService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CryptoService.swift; sourceTree = "<group>"; };
+		6B3962A32C002E60000410B0 /* Launch Screen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
+		6B3BB0AD2B4EA87C00DCEF0B /* Chronos.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Chronos.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		6B3BB0B02B4EA87C00DCEF0B /* ChronosApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChronosApp.swift; sourceTree = "<group>"; };
+		6B3BB0B22B4EA87C00DCEF0B /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		6B3BB0B42B4EA87D00DCEF0B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		6B3BB0B72B4EA87D00DCEF0B /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		6B3BB0DF2B4ECE6F00DCEF0B /* TOTPRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TOTPRowView.swift; sourceTree = "<group>"; };
+		6B3BB0E12B4ED19300DCEF0B /* TokensTab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokensTab.swift; sourceTree = "<group>"; };
+		6B3C7A372BE764E70043FEBD /* StorageSetupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageSetupView.swift; sourceTree = "<group>"; };
+		6B4B48F22BD7BB3C007D357D /* Token.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Token.swift; sourceTree = "<group>"; };
+		6B5E41CD2BD790F80045DBC6 /* EncryptedToken.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EncryptedToken.swift; sourceTree = "<group>"; };
+		6B66D5E62B526315006DB79D /* AddTokenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTokenView.swift; sourceTree = "<group>"; };
+		6B66D5EE2B52BAC2006DB79D /* HOTPRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HOTPRowView.swift; sourceTree = "<group>"; };
+		6B7383E42B9C4230008E8867 /* Container.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Container.swift; sourceTree = "<group>"; };
+		6B7A546F2B94584E0057DCF9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		6B7A54732B94B7A30057DCF9 /* PrivacyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyView.swift; sourceTree = "<group>"; };
+		6B842DD42BE33E2E00056F0F /* RestoreBackupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestoreBackupView.swift; sourceTree = "<group>"; };
+		6B9581E12B62AFF80029EF3C /* ViewModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModifier.swift; sourceTree = "<group>"; };
+		6B9581E32B633A880029EF3C /* AddManualTokenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddManualTokenView.swift; sourceTree = "<group>"; };
+		6B9D74642C14ADDC008E6582 /* StateService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateService.swift; sourceTree = "<group>"; };
+		6B9D74672C1553A1008E6582 /* SecureBytes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecureBytes.swift; sourceTree = "<group>"; };
+		6BA5DA5B2B9E94F8009908E5 /* SecureEnclaveService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecureEnclaveService.swift; sourceTree = "<group>"; };
+		6BC3C3B42BA6B91E00B181B9 /* BiometricsSetupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BiometricsSetupView.swift; sourceTree = "<group>"; };
+		6BD6D2002C11FEB4004512BF /* OTPService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OTPService.swift; sourceTree = "<group>"; };
+		6BD90AA42B8E34BB00FABD91 /* PasswordLoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordLoginView.swift; sourceTree = "<group>"; };
+		6BE122912BD6413D008636D2 /* ChronosCrypto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChronosCrypto.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		6B3BB0AA2B4EA87C00DCEF0B /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6B3BB1202B511A9E00DCEF0B /* SwiftOTP in Frameworks */,
+				6B8ABEEC2B8F6A4F00F5B514 /* CryptoSwift in Frameworks */,
+				6B3BB0EE2B4EEEBD00DCEF0B /* Valet in Frameworks */,
+				6B35A4C92B557EE50004D4C5 /* AlertKit in Frameworks */,
+				6B66D5ED2B526648006DB79D /* CodeScanner in Frameworks */,
+				6B7383E02B9C3962008E8867 /* Factory in Frameworks */,
+				6B3C7A3D2BE9E0600043FEBD /* Logging in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		6B19CA6E2B7A695200690390 /* Onboarding */ = {
+			isa = PBXGroup;
+			children = (
+				6B19CA712B7A70B800690390 /* WelcomeView.swift */,
+				6B19CA732B7A769900690390 /* PasswordSetupView.swift */,
+				6B842DD42BE33E2E00056F0F /* RestoreBackupView.swift */,
+				6B3C7A372BE764E70043FEBD /* StorageSetupView.swift */,
+				6BC3C3B42BA6B91E00B181B9 /* BiometricsSetupView.swift */,
+			);
+			path = Onboarding;
+			sourceTree = "<group>";
+		};
+		6B2583AD2B96047700938F3A /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				6B2583AE2B96048700938F3A /* SettingsTab.swift */,
+			);
+			path = Settings;
+			sourceTree = "<group>";
+		};
+		6B3BB0A42B4EA87C00DCEF0B = {
+			isa = PBXGroup;
+			children = (
+				6B3BB0AF2B4EA87C00DCEF0B /* Chronos */,
+				6B3BB0AE2B4EA87C00DCEF0B /* Products */,
+				6B3BB0EC2B4EEEBD00DCEF0B /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		6B3BB0AE2B4EA87C00DCEF0B /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				6B3BB0AD2B4EA87C00DCEF0B /* Chronos.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		6B3BB0AF2B4EA87C00DCEF0B /* Chronos */ = {
+			isa = PBXGroup;
+			children = (
+				6B9D74662C15534E008E6582 /* Crypto */,
+				6BD0562B2BDF7F190099616B /* Extensions */,
+				6B7383E12B9C3975008E8867 /* Services */,
+				6B8581BB2B99FB4400A19CE1 /* Data */,
+				6B2583B02B975D3200938F3A /* Chronos.entitlements */,
+				6B7A546F2B94584E0057DCF9 /* Info.plist */,
+				6B3BB1062B503CB900DCEF0B /* Database */,
+				6B3BB0DA2B4EB04600DCEF0B /* App */,
+				6B3BB0B42B4EA87D00DCEF0B /* Assets.xcassets */,
+				6B3BB0B62B4EA87D00DCEF0B /* Preview Content */,
+				6B3962A32C002E60000410B0 /* Launch Screen.storyboard */,
+			);
+			path = Chronos;
+			sourceTree = "<group>";
+		};
+		6B3BB0B62B4EA87D00DCEF0B /* Preview Content */ = {
+			isa = PBXGroup;
+			children = (
+				6B3BB0B72B4EA87D00DCEF0B /* Preview Assets.xcassets */,
+			);
+			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		6B3BB0DA2B4EB04600DCEF0B /* App */ = {
+			isa = PBXGroup;
+			children = (
+				6B7A54722B94B7960057DCF9 /* Privacy */,
+				6BD90AA22B8E349500FABD91 /* Login */,
+				6B19CA6E2B7A695200690390 /* Onboarding */,
+				6B3BB0E32B4EE1BB00DCEF0B /* Tabs */,
+				6B3BB0B02B4EA87C00DCEF0B /* ChronosApp.swift */,
+				6B3BB0B22B4EA87C00DCEF0B /* ContentView.swift */,
+				6B3962992BF5E935000410B0 /* MainAppView.swift */,
+				6B39629B2BF5EB3E000410B0 /* AuthenticationView.swift */,
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
+		6B3BB0E32B4EE1BB00DCEF0B /* Tabs */ = {
+			isa = PBXGroup;
+			children = (
+				6B2583AD2B96047700938F3A /* Settings */,
+				6B3BB0E42B4EE1D100DCEF0B /* Tokens */,
+			);
+			path = Tabs;
+			sourceTree = "<group>";
+		};
+		6B3BB0E42B4EE1D100DCEF0B /* Tokens */ = {
+			isa = PBXGroup;
+			children = (
+				6BD0562A2BDF64D80099616B /* Row */,
+				6B66D5E52B525D1B006DB79D /* AddToken */,
+				6B3BB0E12B4ED19300DCEF0B /* TokensTab.swift */,
+			);
+			path = Tokens;
+			sourceTree = "<group>";
+		};
+		6B3BB0EC2B4EEEBD00DCEF0B /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		6B3BB1062B503CB900DCEF0B /* Database */ = {
+			isa = PBXGroup;
+			children = (
+				6BE122912BD6413D008636D2 /* ChronosCrypto.swift */,
+				6B5E41CD2BD790F80045DBC6 /* EncryptedToken.swift */,
+			);
+			path = Database;
+			sourceTree = "<group>";
+		};
+		6B66D5E52B525D1B006DB79D /* AddToken */ = {
+			isa = PBXGroup;
+			children = (
+				6B66D5E62B526315006DB79D /* AddTokenView.swift */,
+				6B9581E32B633A880029EF3C /* AddManualTokenView.swift */,
+			);
+			path = AddToken;
+			sourceTree = "<group>";
+		};
+		6B7383E12B9C3975008E8867 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				6B7383E42B9C4230008E8867 /* Container.swift */,
+				6BA5DA5B2B9E94F8009908E5 /* SecureEnclaveService.swift */,
+				6B39629D2BF63F27000410B0 /* SwiftDataService.swift */,
+				6B39629F2BF6423B000410B0 /* CryptoService.swift */,
+				6BD6D2002C11FEB4004512BF /* OTPService.swift */,
+				6B9D74642C14ADDC008E6582 /* StateService.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		6B7A54722B94B7960057DCF9 /* Privacy */ = {
+			isa = PBXGroup;
+			children = (
+				6B7A54732B94B7A30057DCF9 /* PrivacyView.swift */,
+			);
+			path = Privacy;
+			sourceTree = "<group>";
+		};
+		6B8581BB2B99FB4400A19CE1 /* Data */ = {
+			isa = PBXGroup;
+			children = (
+				6B4B48F22BD7BB3C007D357D /* Token.swift */,
+			);
+			path = Data;
+			sourceTree = "<group>";
+		};
+		6B9D74662C15534E008E6582 /* Crypto */ = {
+			isa = PBXGroup;
+			children = (
+				6B9D74672C1553A1008E6582 /* SecureBytes.swift */,
+			);
+			path = Crypto;
+			sourceTree = "<group>";
+		};
+		6BD0562A2BDF64D80099616B /* Row */ = {
+			isa = PBXGroup;
+			children = (
+				6B3BB0DF2B4ECE6F00DCEF0B /* TOTPRowView.swift */,
+				6B66D5EE2B52BAC2006DB79D /* HOTPRowView.swift */,
+				6B2731792B53E23800F30621 /* UpdateTokenView.swift */,
+				6B27317B2B53F0B200F30621 /* TokenRowView.swift */,
+			);
+			path = Row;
+			sourceTree = "<group>";
+		};
+		6BD0562B2BDF7F190099616B /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				6B9581E12B62AFF80029EF3C /* ViewModifier.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		6BD90AA22B8E349500FABD91 /* Login */ = {
+			isa = PBXGroup;
+			children = (
+				6BD90AA42B8E34BB00FABD91 /* PasswordLoginView.swift */,
+			);
+			path = Login;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		6B3BB0AC2B4EA87C00DCEF0B /* Chronos */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 6B3BB0D12B4EA87D00DCEF0B /* Build configuration list for PBXNativeTarget "Chronos" */;
+			buildPhases = (
+				6B3BB11A2B5066DC00DCEF0B /* ShellScript */,
+				6B3BB0A92B4EA87C00DCEF0B /* Sources */,
+				6B3BB0AA2B4EA87C00DCEF0B /* Frameworks */,
+				6B3BB0AB2B4EA87C00DCEF0B /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Chronos;
+			packageProductDependencies = (
+				6B3BB0ED2B4EEEBD00DCEF0B /* Valet */,
+				6B3BB11F2B511A9E00DCEF0B /* SwiftOTP */,
+				6B66D5EC2B526648006DB79D /* CodeScanner */,
+				6B35A4C82B557EE50004D4C5 /* AlertKit */,
+				6B8ABEEB2B8F6A4F00F5B514 /* CryptoSwift */,
+				6B7383DF2B9C3962008E8867 /* Factory */,
+				6B3C7A3C2BE9E0600043FEBD /* Logging */,
+			);
+			productName = Chronos;
+			productReference = 6B3BB0AD2B4EA87C00DCEF0B /* Chronos.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		6B3BB0A52B4EA87C00DCEF0B /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1520;
+				LastUpgradeCheck = 1520;
+				TargetAttributes = {
+					6B3BB0AC2B4EA87C00DCEF0B = {
+						CreatedOnToolsVersion = 15.2;
+					};
+				};
+			};
+			buildConfigurationList = 6B3BB0A82B4EA87C00DCEF0B /* Build configuration list for PBXProject "Chronos" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 6B3BB0A42B4EA87C00DCEF0B;
+			packageReferences = (
+				6B3BB0E92B4EE83C00DCEF0B /* XCRemoteSwiftPackageReference "Valet" */,
+				6B3BB11E2B511A9E00DCEF0B /* XCRemoteSwiftPackageReference "SwiftOTP" */,
+				6B66D5EB2B526648006DB79D /* XCRemoteSwiftPackageReference "CodeScanner" */,
+				6B35A4C72B557EE50004D4C5 /* XCRemoteSwiftPackageReference "AlertKit" */,
+				6B8ABEEA2B8F6A4F00F5B514 /* XCRemoteSwiftPackageReference "CryptoSwift" */,
+				6B7383DE2B9C3962008E8867 /* XCRemoteSwiftPackageReference "Factory" */,
+				6B3C7A3B2BE9E0600043FEBD /* XCRemoteSwiftPackageReference "swift-log" */,
+			);
+			productRefGroup = 6B3BB0AE2B4EA87C00DCEF0B /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				6B3BB0AC2B4EA87C00DCEF0B /* Chronos */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		6B3BB0AB2B4EA87C00DCEF0B /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6B3BB0B82B4EA87D00DCEF0B /* Preview Assets.xcassets in Resources */,
+				6B3962A42C002E60000410B0 /* Launch Screen.storyboard in Resources */,
+				6B3BB0B52B4EA87D00DCEF0B /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		6B3BB11A2B5066DC00DCEF0B /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 8;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+			shellPath = /bin/sh;
+			shellScript = "if [[ \"$(uname -m)\" == arm64 ]]; then\n    export PATH=\"/opt/homebrew/bin:$PATH\"\nfi\n\nif which swiftlint > /dev/null; then\n    swiftlint --fix --config .swiftlint.yml && swiftlint --config .swiftlint.yml\nelse\n  echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		6B3BB0A92B4EA87C00DCEF0B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6B3BB0B32B4EA87C00DCEF0B /* ContentView.swift in Sources */,
+				6B3BB0B12B4EA87C00DCEF0B /* ChronosApp.swift in Sources */,
+				6B7383E52B9C4230008E8867 /* Container.swift in Sources */,
+				6B3C7A382BE764E70043FEBD /* StorageSetupView.swift in Sources */,
+				6BC3C3B52BA6B91E00B181B9 /* BiometricsSetupView.swift in Sources */,
+				6B9D74652C14ADDC008E6582 /* StateService.swift in Sources */,
+				6B9581E42B633A880029EF3C /* AddManualTokenView.swift in Sources */,
+				6B19CA722B7A70B800690390 /* WelcomeView.swift in Sources */,
+				6B66D5E72B526315006DB79D /* AddTokenView.swift in Sources */,
+				6B2583AF2B96048700938F3A /* SettingsTab.swift in Sources */,
+				6B39629C2BF5EB3E000410B0 /* AuthenticationView.swift in Sources */,
+				6B9581E22B62AFF80029EF3C /* ViewModifier.swift in Sources */,
+				6BE122922BD6413D008636D2 /* ChronosCrypto.swift in Sources */,
+				6B19CA742B7A769900690390 /* PasswordSetupView.swift in Sources */,
+				6B7A54742B94B7A30057DCF9 /* PrivacyView.swift in Sources */,
+				6BD90AA52B8E34BB00FABD91 /* PasswordLoginView.swift in Sources */,
+				6B9D74682C1553A1008E6582 /* SecureBytes.swift in Sources */,
+				6B3BB0E22B4ED19300DCEF0B /* TokensTab.swift in Sources */,
+				6B3BB0E02B4ECE6F00DCEF0B /* TOTPRowView.swift in Sources */,
+				6B5E41CE2BD790F80045DBC6 /* EncryptedToken.swift in Sources */,
+				6B4B48F32BD7BB3C007D357D /* Token.swift in Sources */,
+				6B842DD52BE33E2E00056F0F /* RestoreBackupView.swift in Sources */,
+				6BA5DA5C2B9E94F8009908E5 /* SecureEnclaveService.swift in Sources */,
+				6B66D5EF2B52BAC2006DB79D /* HOTPRowView.swift in Sources */,
+				6B39629E2BF63F27000410B0 /* SwiftDataService.swift in Sources */,
+				6BD6D2012C11FEB4004512BF /* OTPService.swift in Sources */,
+				6B39629A2BF5E935000410B0 /* MainAppView.swift in Sources */,
+				6B3962A02BF6423B000410B0 /* CryptoService.swift in Sources */,
+				6B27317A2B53E23800F30621 /* UpdateTokenView.swift in Sources */,
+				6B27317C2B53F0B200F30621 /* TokenRowView.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		6B3BB0CF2B4EA87D00DCEF0B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.2;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MACOSX_DEPLOYMENT_TARGET = 14.4;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		6B3BB0D02B4EA87D00DCEF0B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.2;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MACOSX_DEPLOYMENT_TARGET = 14.4;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		6B3BB0D22B4EA87D00DCEF0B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Chronos/Chronos.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"Chronos/Preview Content\"";
+				DEVELOPMENT_TEAM = MKJ7X96SHQ;
+				ENABLE_PREVIEWS = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Chronos/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = Chronos;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
+				INFOPLIST_KEY_NSCameraUsageDescription = "Access to camera is need to scan QR codes";
+				INFOPLIST_KEY_NSFaceIDUsageDescription = "To unlock the app";
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = "Launch Screen.storyboard";
+				INFOPLIST_KEY_UIStatusBarHidden = YES;
+				INFOPLIST_KEY_UIStatusBarStyle = UIStatusBarStyleDarkContent;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UIUserInterfaceStyle = Dark;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.joeldavidw.Chronos;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Debug;
+		};
+		6B3BB0D32B4EA87D00DCEF0B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Chronos/Chronos.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"Chronos/Preview Content\"";
+				DEVELOPMENT_TEAM = MKJ7X96SHQ;
+				ENABLE_PREVIEWS = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Chronos/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = Chronos;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
+				INFOPLIST_KEY_NSCameraUsageDescription = "Access to camera is need to scan QR codes";
+				INFOPLIST_KEY_NSFaceIDUsageDescription = "To unlock the app";
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = "Launch Screen.storyboard";
+				INFOPLIST_KEY_UIStatusBarHidden = YES;
+				INFOPLIST_KEY_UIStatusBarStyle = UIStatusBarStyleDarkContent;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UIUserInterfaceStyle = Dark;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.joeldavidw.Chronos;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		6B3BB0A82B4EA87C00DCEF0B /* Build configuration list for PBXProject "Chronos" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				6B3BB0CF2B4EA87D00DCEF0B /* Debug */,
+				6B3BB0D02B4EA87D00DCEF0B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		6B3BB0D12B4EA87D00DCEF0B /* Build configuration list for PBXNativeTarget "Chronos" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				6B3BB0D22B4EA87D00DCEF0B /* Debug */,
+				6B3BB0D32B4EA87D00DCEF0B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		6B35A4C72B557EE50004D4C5 /* XCRemoteSwiftPackageReference "AlertKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/sparrowcode/AlertKit";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.1.9;
+			};
+		};
+		6B3BB0E92B4EE83C00DCEF0B /* XCRemoteSwiftPackageReference "Valet" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/square/Valet";
+			requirement = {
+				kind = exactVersion;
+				version = 4.3.0;
+			};
+		};
+		6B3BB11E2B511A9E00DCEF0B /* XCRemoteSwiftPackageReference "SwiftOTP" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/lachlanbell/SwiftOTP.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 3.0.2;
+			};
+		};
+		6B3C7A3B2BE9E0600043FEBD /* XCRemoteSwiftPackageReference "swift-log" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/apple/swift-log.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.5.4;
+			};
+		};
+		6B66D5EB2B526648006DB79D /* XCRemoteSwiftPackageReference "CodeScanner" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/twostraws/CodeScanner.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.4.1;
+			};
+		};
+		6B7383DE2B9C3962008E8867 /* XCRemoteSwiftPackageReference "Factory" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/hmlongco/Factory";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.3.2;
+			};
+		};
+		6B8ABEEA2B8F6A4F00F5B514 /* XCRemoteSwiftPackageReference "CryptoSwift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/krzyzanowskim/CryptoSwift.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.8.2;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		6B35A4C82B557EE50004D4C5 /* AlertKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 6B35A4C72B557EE50004D4C5 /* XCRemoteSwiftPackageReference "AlertKit" */;
+			productName = AlertKit;
+		};
+		6B3BB0ED2B4EEEBD00DCEF0B /* Valet */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 6B3BB0E92B4EE83C00DCEF0B /* XCRemoteSwiftPackageReference "Valet" */;
+			productName = Valet;
+		};
+		6B3BB11F2B511A9E00DCEF0B /* SwiftOTP */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 6B3BB11E2B511A9E00DCEF0B /* XCRemoteSwiftPackageReference "SwiftOTP" */;
+			productName = SwiftOTP;
+		};
+		6B3C7A3C2BE9E0600043FEBD /* Logging */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 6B3C7A3B2BE9E0600043FEBD /* XCRemoteSwiftPackageReference "swift-log" */;
+			productName = Logging;
+		};
+		6B66D5EC2B526648006DB79D /* CodeScanner */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 6B66D5EB2B526648006DB79D /* XCRemoteSwiftPackageReference "CodeScanner" */;
+			productName = CodeScanner;
+		};
+		6B7383DF2B9C3962008E8867 /* Factory */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 6B7383DE2B9C3962008E8867 /* XCRemoteSwiftPackageReference "Factory" */;
+			productName = Factory;
+		};
+		6B8ABEEB2B8F6A4F00F5B514 /* CryptoSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 6B8ABEEA2B8F6A4F00F5B514 /* XCRemoteSwiftPackageReference "CryptoSwift" */;
+			productName = CryptoSwift;
+		};
+/* End XCSwiftPackageProductDependency section */
+	};
+	rootObject = 6B3BB0A52B4EA87C00DCEF0B /* Project object */;
+}

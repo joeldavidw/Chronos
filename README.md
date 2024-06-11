@@ -25,6 +25,12 @@ Chronos is an open-source two-factor authentication (2FA) app for iOS, developed
     - HTML with QR codes for easy scanning
 - Built natively with Swift
 
+## Screenshots (Preview)
+
+[<img width=200 alt="Tokens" src=".github/assets/Tokens.png">](.github/assets/Tokens.png)
+[<img width=200 alt="Settings" src=".github/assets/Settings.png">](.github/assets/Settings.png)
+[<img width=200 alt="Edit Token" src=".github/assets/Edit.png">](.github/assets/Edit.png)
+
 ## License
 
 This project is licensed under the GNU Affero General Public License v3.0 - see the [LICENSE](LICENSE) file for details.

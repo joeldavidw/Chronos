@@ -1,15 +1,21 @@
 import Factory
+import LinkPresentation
 import SwiftUI
 
 struct SettingsTab: View {
-    @EnvironmentObject var loginStatus: LoginStatus
+    @EnvironmentObject private var loginStatus: LoginStatus
+    @Environment(\.scenePhase) private var scenePhase
 
-    @AppStorage(StateEnum.BIOMETRICS_AUTH_ENABLED.rawValue) var stateBiometricsAuth: Bool = false
-    @AppStorage(StateEnum.ICLOUD_BACKUP_ENABLED.rawValue) var isICloudEnabled: Bool = false
+    @AppStorage(StateEnum.BIOMETRICS_AUTH_ENABLED.rawValue) private var stateBiometricsAuth: Bool = false
+    @AppStorage(StateEnum.ICLOUD_BACKUP_ENABLED.rawValue) private var isICloudEnabled: Bool = false
 
-    let secureEnclaveService = Container.shared.secureEnclaveService()
-    let swiftDataService = Container.shared.swiftDataService()
-    let stateService = Container.shared.stateService()
+    private let secureEnclaveService = Container.shared.secureEnclaveService()
+    private let swiftDataService = Container.shared.swiftDataService()
+    private let stateService = Container.shared.stateService()
+    private let exportService = Container.shared.exportService()
+
+    @State private var showExportJsonConfirmation: Bool = false
+    @State private var showExportJsonSheet: Bool = false
 
     @State private var showLogoutConfirmation = false
 
@@ -21,6 +27,51 @@ struct SettingsTab: View {
                         Text("iCloud Backup")
                     }).disabled(true)
                 }
+
+                Section {
+                    Button {
+                        showExportJsonConfirmation = true
+                    } label: {
+                        Text("Export")
+                            .foregroundStyle(.blue)
+                            .frame(maxWidth: .infinity)
+                    }
+                    .confirmationDialog("Confirm Export", isPresented: $showExportJsonConfirmation, titleVisibility: .visible) {
+                        Button("Confirm", role: .destructive, action: {
+                            self.showExportJsonConfirmation = false
+                            self.showExportJsonSheet = true
+                        })
+
+                        Button("Cancel", role: .cancel, action: {
+                            self.showExportJsonConfirmation = false
+                            self.showExportJsonSheet = false
+                        })
+                    } message: {
+                        Text("This export contains your token data in an unencrypted format. This file should not be stored or sent over unsecured channels.")
+                    }
+                    .sheet(isPresented: $showExportJsonSheet) {
+                        if let fileurl = exportService.exportToUnencryptedJson() {
+                            ActivityView(fileUrl: fileurl)
+                                .presentationDetents([.medium, .large])
+                                .presentationDragIndicator(Visibility.hidden)
+                        } else {
+                            VStack {
+                                Image(systemName: "xmark.circle")
+                                    .fontWeight(.light)
+                                    .font(.system(size: 64))
+                                    .padding(.bottom, 8)
+                                Text("An error occurred while during the export process")
+                            }
+                        }
+                    }
+                    .onChange(of: scenePhase) { _, newValue in
+                        if newValue != .active {
+                            self.showExportJsonConfirmation = false
+                            self.showExportJsonSheet = false
+                        }
+                    }
+                }
+                .listSectionSpacing(8)
 
                 Section(header: Text("Security")) {
                     Toggle(isOn: $stateBiometricsAuth, label: {
@@ -76,4 +127,14 @@ struct SettingsTab: View {
             }
         }
     }
+}
+
+struct ActivityView: UIViewControllerRepresentable {
+    let fileUrl: URL
+
+    func makeUIViewController(context _: Context) -> UIActivityViewController {
+        UIActivityViewController(activityItems: [fileUrl], applicationActivities: nil)
+    }
+
+    func updateUIViewController(_: UIActivityViewController, context _: Context) {}
 }

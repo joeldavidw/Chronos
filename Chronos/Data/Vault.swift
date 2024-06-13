@@ -1,6 +1,6 @@
 import Foundation
 
-class ChronosData: Codable {
+class Vault: Codable {
     var tokens: [Token]?
     var errors: [String]?
 }

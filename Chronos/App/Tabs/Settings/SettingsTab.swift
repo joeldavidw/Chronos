@@ -3,16 +3,16 @@ import LinkPresentation
 import SwiftUI
 
 struct SettingsTab: View {
-    @EnvironmentObject var loginStatus: LoginStatus
+    @EnvironmentObject private var loginStatus: LoginStatus
     @Environment(\.scenePhase) private var scenePhase
 
-    @AppStorage(StateEnum.BIOMETRICS_AUTH_ENABLED.rawValue) var stateBiometricsAuth: Bool = false
-    @AppStorage(StateEnum.ICLOUD_BACKUP_ENABLED.rawValue) var isICloudEnabled: Bool = false
+    @AppStorage(StateEnum.BIOMETRICS_AUTH_ENABLED.rawValue) private var stateBiometricsAuth: Bool = false
+    @AppStorage(StateEnum.ICLOUD_BACKUP_ENABLED.rawValue) private var isICloudEnabled: Bool = false
 
-    let secureEnclaveService = Container.shared.secureEnclaveService()
-    let swiftDataService = Container.shared.swiftDataService()
-    let stateService = Container.shared.stateService()
-    let exportService = Container.shared.exportService()
+    private let secureEnclaveService = Container.shared.secureEnclaveService()
+    private let swiftDataService = Container.shared.swiftDataService()
+    private let stateService = Container.shared.stateService()
+    private let exportService = Container.shared.exportService()
 
     @State private var showExportJsonConfirmation: Bool = false
     @State private var showExportJsonSheet: Bool = false
@@ -50,9 +50,7 @@ struct SettingsTab: View {
                         Text("This export contains your token data in an unencrypted format. This file should not be stored or sent over unsecured channels.")
                     }
                     .sheet(isPresented: $showExportJsonSheet) {
-                        let fileurl = exportService.exportToUnencryptedJson()
-
-                        if let fileurl = fileurl {
+                        if let fileurl = exportService.exportToUnencryptedJson() {
                             ActivityView(fileUrl: fileurl)
                                 .presentationDetents([.medium, .large])
                                 .presentationDragIndicator(Visibility.hidden)

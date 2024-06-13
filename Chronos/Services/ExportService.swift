@@ -38,7 +38,7 @@ public class ExportService {
             logger.error("\(numOfTokenFailedToDecode) out of \(encryptedTokenArr.count) tokens failed to be export")
             errors.append("\(numOfTokenFailedToDecode) out of \(encryptedTokenArr.count) tokens failed to be export")
         }
-        
+
         chronosData.tokens = tokens
         chronosData.errors = errors
 

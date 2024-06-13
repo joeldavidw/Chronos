@@ -9,14 +9,12 @@ struct PasswordParams: Codable {
     var salt: String
 }
 
-enum KdfEnum: String, Codable, CaseIterable, Identifiable {
-    var id: String { rawValue }
 
-    case SCRYPT
-}
+// Type:
+// 0: Scrypt
 
 struct KdfParams: Codable {
-    var type: KdfEnum
+    var type: Int
     var n: Int
     var r: Int
     var p: Int
@@ -24,12 +22,15 @@ struct KdfParams: Codable {
 
 @Model
 class ChronosCrypto {
+    var vault: Vault?
+    
     var key: [UInt8]?
     var keyParams: KeyParams?
     var passwordParams: PasswordParams?
     var kdfParams: KdfParams?
 
-    init(key: [UInt8], keyParams: KeyParams, passwordParams: PasswordParams, kdfParams: KdfParams) {
+    init(vault: Vault, key: [UInt8]? = nil, keyParams: KeyParams? = nil, passwordParams: PasswordParams? = nil, kdfParams: KdfParams? = nil) {
+        self.vault = vault
         self.key = key
         self.keyParams = keyParams
         self.passwordParams = passwordParams

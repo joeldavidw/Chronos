@@ -11,7 +11,7 @@ public class SwiftDataService {
 
     private lazy var cloudModelContainer: ModelContainer = setupModelContainer(storeName: "onlineChronos.sqlite", cloudKitDatabase: .automatic)
 
-    let schema = Schema([ChronosCrypto.self, EncryptedToken.self])
+    let schema = Schema([Vault.self, ChronosCrypto.self, EncryptedToken.self])
 
     init() {
         _ = localModelContainer

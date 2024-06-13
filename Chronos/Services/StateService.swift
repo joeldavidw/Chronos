@@ -2,6 +2,8 @@ import Factory
 import Foundation
 
 enum StateEnum: String {
+    case VAULT
+    
     case ICLOUD_BACKUP_ENABLED
     case BIOMETRICS_AUTH_ENABLED
     case ONBOARDING_COMPLETED
@@ -13,6 +15,7 @@ public class StateService {
     private let defaults = UserDefaults.standard
 
     var masterKey: SecureBytes = .init(bytes: [])
+    var vault: Vault?
 
     func resetAllStates() {
         defaults.setValue(false, forKey: StateEnum.ICLOUD_BACKUP_ENABLED.rawValue)

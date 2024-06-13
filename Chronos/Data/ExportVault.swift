@@ -1,6 +1,6 @@
 import Foundation
 
-class Vault: Codable {
+class ExportVault: Codable {
     var tokens: [Token]?
     var errors: [String]?
 }

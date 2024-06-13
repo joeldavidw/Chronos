@@ -1,14 +1,16 @@
 import Factory
 import LinkPresentation
 import SwiftUI
+import SwiftData
 
 struct SettingsTab: View {
     @EnvironmentObject private var loginStatus: LoginStatus
     @Environment(\.scenePhase) private var scenePhase
+    @Environment(\.modelContext) private var modelContext
 
     @AppStorage(StateEnum.BIOMETRICS_AUTH_ENABLED.rawValue) private var stateBiometricsAuth: Bool = false
     @AppStorage(StateEnum.ICLOUD_BACKUP_ENABLED.rawValue) private var isICloudEnabled: Bool = false
-
+    
     private let secureEnclaveService = Container.shared.secureEnclaveService()
     private let swiftDataService = Container.shared.swiftDataService()
     private let stateService = Container.shared.stateService()
@@ -102,6 +104,17 @@ struct SettingsTab: View {
                         showLogoutConfirmation = true
                     } label: {
                         Text("Log Out")
+                            .foregroundStyle(.red)
+                            .frame(maxWidth: .infinity)
+                    }
+                }
+                .listSectionSpacing(8)
+                
+                Section {
+                    Button {
+                        modelContext.delete(stateService.vault!)
+                    } label: {
+                        Text("Delete Vault")
                             .foregroundStyle(.red)
                             .frame(maxWidth: .infinity)
                     }

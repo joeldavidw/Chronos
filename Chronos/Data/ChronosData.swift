@@ -1,5 +1,6 @@
 import Foundation
 
-struct ChronosData: Codable {
-    let tokens: [Token]
+class ChronosData: Codable {
+    var tokens: [Token]?
+    var errors: [String]?
 }

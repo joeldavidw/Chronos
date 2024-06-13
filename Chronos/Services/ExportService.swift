@@ -1,10 +1,12 @@
 import Factory
 import Foundation
+import Logging
 import SwiftData
 
 public class ExportService {
-    let swiftDataService = Container.shared.swiftDataService()
-    let cryptoService = Container.shared.cryptoService()
+    private let logger = Logger(label: "ExportService")
+    private let swiftDataService = Container.shared.swiftDataService()
+    private let cryptoService = Container.shared.cryptoService()
 
     let verbatimStyle = Date.VerbatimFormatStyle(
         format: "\(day: .twoDigits)-\(month: .twoDigits)-\(year: .defaultDigits)",
@@ -16,26 +18,42 @@ public class ExportService {
         let context = ModelContext(swiftDataService.getModelContainer())
         let encryptedTokenArr = try! context.fetch(FetchDescriptor<EncryptedToken>())
 
+        let chronosData = ChronosData()
+
         var tokens: [Token] = []
+        var errors: [String] = []
 
-        do {
-            for encToken in encryptedTokenArr {
-                let token = cryptoService.decryptToken(encryptedToken: encToken)
-                tokens.append(token!)
+        var numOfTokenFailedToDecode = 0
+
+        for encToken in encryptedTokenArr {
+            guard let token = cryptoService.decryptToken(encryptedToken: encToken) else {
+                logger.error("Unable to decode token")
+                numOfTokenFailedToDecode += 1
+                continue
             }
+            tokens.append(token)
+        }
 
-            let data = ChronosData(tokens: tokens)
+        if numOfTokenFailedToDecode != 0 {
+            errors.append("\(numOfTokenFailedToDecode) out of \(encryptedTokenArr.count) tokens failed to be export")
+        }
 
-            let url = FileManager.default.temporaryDirectory
-                .appendingPathComponent("Chronos_" + Date().formatted(verbatimStyle))
-                .appendingPathExtension("json")
+        let url = FileManager.default.temporaryDirectory
+            .appendingPathComponent("Chronos_" + Date().formatted(verbatimStyle))
+            .appendingPathExtension("json")
 
-            let jsonData = try JSONEncoder().encode(data)
-            try jsonData.write(to: url)
-
-            return url
-        } catch {
+        guard let jsonData = try? JSONEncoder().encode(chronosData) else {
+            logger.error("Unable to encode ChronosData")
             return nil
         }
+
+        do {
+            try jsonData.write(to: url)
+        } catch {
+            logger.error("Unable to write json file: \(error.localizedDescription)")
+            return nil
+        }
+
+        return url
     }
 }

@@ -22,4 +22,8 @@ extension Container {
         Factory(self) { StateService() }
             .singleton
     }
+
+    var exportService: Factory<ExportService> {
+        Factory(self) { ExportService() }
+    }
 }

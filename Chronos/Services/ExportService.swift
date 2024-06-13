@@ -18,7 +18,7 @@ public class ExportService {
         let context = ModelContext(swiftDataService.getModelContainer())
         let encryptedTokenArr = try! context.fetch(FetchDescriptor<EncryptedToken>())
 
-        let chronosData = ChronosData()
+        let vault = Vault()
 
         var tokens: [Token] = []
         var errors: [String] = []
@@ -39,15 +39,15 @@ public class ExportService {
             errors.append("\(numOfTokenFailedToDecode) out of \(encryptedTokenArr.count) tokens failed to be export")
         }
 
-        chronosData.tokens = tokens
-        chronosData.errors = errors
+        vault.tokens = tokens
+        vault.errors = errors
 
         let url = FileManager.default.temporaryDirectory
             .appendingPathComponent("Chronos_" + Date().formatted(verbatimStyle))
             .appendingPathExtension("json")
 
-        guard let jsonData = try? JSONEncoder().encode(chronosData) else {
-            logger.error("Unable to encode ChronosData")
+        guard let jsonData = try? JSONEncoder().encode(vault) else {
+            logger.error("Unable to encode vault")
             return nil
         }
 

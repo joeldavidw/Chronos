@@ -8,7 +8,7 @@ public class ExportService {
     private let swiftDataService = Container.shared.swiftDataService()
     private let cryptoService = Container.shared.cryptoService()
 
-    let verbatimStyle = Date.VerbatimFormatStyle(
+    private let verbatimStyle = Date.VerbatimFormatStyle(
         format: "\(day: .twoDigits)-\(month: .twoDigits)-\(year: .defaultDigits)",
         timeZone: .autoupdatingCurrent,
         calendar: Calendar(identifier: .gregorian)

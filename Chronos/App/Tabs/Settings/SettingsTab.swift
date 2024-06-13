@@ -1,24 +1,24 @@
 import Factory
-import SwiftUI
 import LinkPresentation
+import SwiftUI
 
 struct SettingsTab: View {
     @EnvironmentObject var loginStatus: LoginStatus
     @Environment(\.scenePhase) private var scenePhase
-    
+
     @AppStorage(StateEnum.BIOMETRICS_AUTH_ENABLED.rawValue) var stateBiometricsAuth: Bool = false
     @AppStorage(StateEnum.ICLOUD_BACKUP_ENABLED.rawValue) var isICloudEnabled: Bool = false
-    
+
     let secureEnclaveService = Container.shared.secureEnclaveService()
     let swiftDataService = Container.shared.swiftDataService()
     let stateService = Container.shared.stateService()
     let exportService = Container.shared.exportService()
-    
+
     @State private var showExportJsonConfirmation: Bool = false
     @State private var showExportJsonSheet: Bool = false
-    
+
     @State private var showLogoutConfirmation = false
-    
+
     var body: some View {
         NavigationStack {
             Form {
@@ -27,7 +27,7 @@ struct SettingsTab: View {
                         Text("iCloud Backup")
                     }).disabled(true)
                 }
-                
+
                 Section {
                     Button {
                         showExportJsonConfirmation = true
@@ -41,7 +41,7 @@ struct SettingsTab: View {
                             self.showExportJsonConfirmation = false
                             self.showExportJsonSheet = true
                         })
-                        
+
                         Button("Cancel", role: .cancel, action: {
                             self.showExportJsonConfirmation = false
                             self.showExportJsonSheet = false
@@ -50,9 +50,21 @@ struct SettingsTab: View {
                         Text("This export contains your token data in an unencrypted format. This file should not be stored or sent over unsecured channels.")
                     }
                     .sheet(isPresented: $showExportJsonSheet) {
-                        ActivityView(fileUrl: exportService.exportToUnencryptedJson())
-                            .presentationDetents([.medium, .large])
-                            .presentationDragIndicator(Visibility.hidden)
+                        let fileurl = exportService.exportToUnencryptedJson()
+
+                        if let fileurl = fileurl {
+                            ActivityView(fileUrl: fileurl)
+                                .presentationDetents([.medium, .large])
+                                .presentationDragIndicator(Visibility.hidden)
+                        } else {
+                            VStack {
+                                Image(systemName: "xmark.circle")
+                                    .fontWeight(.light)
+                                    .font(.system(size: 64))
+                                    .padding(.bottom, 8)
+                                Text("An error occurred while during the export process")
+                            }
+                        }
                     }
                     .onChange(of: scenePhase) { _, newValue in
                         if newValue != .active {
@@ -62,7 +74,7 @@ struct SettingsTab: View {
                     }
                 }
                 .listSectionSpacing(8)
-                
+
                 Section(header: Text("Security")) {
                     Toggle(isOn: $stateBiometricsAuth, label: {
                         Text("Biometics Authentication")
@@ -75,7 +87,7 @@ struct SettingsTab: View {
                         }
                     }
                 }
-                
+
                 Section {
                     Button {
                         loginStatus.loggedIn = false
@@ -86,7 +98,7 @@ struct SettingsTab: View {
                             .frame(maxWidth: .infinity)
                     }
                 }
-                
+
                 Section {
                     Button {
                         showLogoutConfirmation = true
@@ -108,7 +120,7 @@ struct SettingsTab: View {
                     secureEnclaveService.reset()
                     stateService.resetAllStates()
                 })
-                
+
                 Button("Cancel", role: .cancel, action: {
                     self.showLogoutConfirmation = false
                 })
@@ -121,10 +133,10 @@ struct SettingsTab: View {
 
 struct ActivityView: UIViewControllerRepresentable {
     let fileUrl: URL
-    
+
     func makeUIViewController(context _: Context) -> UIActivityViewController {
         UIActivityViewController(activityItems: [fileUrl], applicationActivities: nil)
     }
-    
+
     func updateUIViewController(_: UIActivityViewController, context _: Context) {}
 }

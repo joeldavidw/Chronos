@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		6B12B0A02C19DB7800E9ED2D /* ExportService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B12B09F2C19DB7800E9ED2D /* ExportService.swift */; };
 		6B12B0A22C19F1E600E9ED2D /* ChronosData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B12B0A12C19F1E600E9ED2D /* ChronosData.swift */; };
-		6B12B0A52C1ADF5200E9ED2D /* ChronosTransferable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B12B0A42C1ADF5200E9ED2D /* ChronosTransferable.swift */; };
 		6B19CA722B7A70B800690390 /* WelcomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B19CA712B7A70B800690390 /* WelcomeView.swift */; };
 		6B19CA742B7A769900690390 /* PasswordSetupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B19CA732B7A769900690390 /* PasswordSetupView.swift */; };
 		6B2583AF2B96048700938F3A /* SettingsTab.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B2583AE2B96048700938F3A /* SettingsTab.swift */; };
@@ -55,7 +54,6 @@
 /* Begin PBXFileReference section */
 		6B12B09F2C19DB7800E9ED2D /* ExportService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExportService.swift; sourceTree = "<group>"; };
 		6B12B0A12C19F1E600E9ED2D /* ChronosData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChronosData.swift; sourceTree = "<group>"; };
-		6B12B0A42C1ADF5200E9ED2D /* ChronosTransferable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChronosTransferable.swift; sourceTree = "<group>"; };
 		6B19CA712B7A70B800690390 /* WelcomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeView.swift; sourceTree = "<group>"; };
 		6B19CA732B7A769900690390 /* PasswordSetupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordSetupView.swift; sourceTree = "<group>"; };
 		6B2583AE2B96048700938F3A /* SettingsTab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsTab.swift; sourceTree = "<group>"; };
@@ -112,14 +110,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		6B12B0A32C1ADF3A00E9ED2D /* Transferable */ = {
-			isa = PBXGroup;
-			children = (
-				6B12B0A42C1ADF5200E9ED2D /* ChronosTransferable.swift */,
-			);
-			path = Transferable;
-			sourceTree = "<group>";
-		};
 		6B19CA6E2B7A695200690390 /* Onboarding */ = {
 			isa = PBXGroup;
 			children = (
@@ -160,7 +150,6 @@
 		6B3BB0AF2B4EA87C00DCEF0B /* Chronos */ = {
 			isa = PBXGroup;
 			children = (
-				6B12B0A32C1ADF3A00E9ED2D /* Transferable */,
 				6B9D74662C15534E008E6582 /* Crypto */,
 				6BD0562B2BDF7F190099616B /* Extensions */,
 				6B7383E12B9C3975008E8867 /* Services */,
@@ -435,7 +424,6 @@
 				6BE122922BD6413D008636D2 /* ChronosCrypto.swift in Sources */,
 				6B19CA742B7A769900690390 /* PasswordSetupView.swift in Sources */,
 				6B7A54742B94B7A30057DCF9 /* PrivacyView.swift in Sources */,
-				6B12B0A52C1ADF5200E9ED2D /* ChronosTransferable.swift in Sources */,
 				6BD90AA52B8E34BB00FABD91 /* PasswordLoginView.swift in Sources */,
 				6B9D74682C1553A1008E6582 /* SecureBytes.swift in Sources */,
 				6B3BB0E22B4ED19300DCEF0B /* TokensTab.swift in Sources */,

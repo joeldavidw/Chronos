@@ -33,8 +33,6 @@ public class ExportService {
             let jsonData = try JSONEncoder().encode(data)
             try jsonData.write(to: url)
 
-            throw OTPError.invalidSecret
-
             return url
         } catch {
             return nil

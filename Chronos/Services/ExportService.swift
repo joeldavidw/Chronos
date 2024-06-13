@@ -35,8 +35,12 @@ public class ExportService {
         }
 
         if numOfTokenFailedToDecode != 0 {
+            logger.error("\(numOfTokenFailedToDecode) out of \(encryptedTokenArr.count) tokens failed to be export")
             errors.append("\(numOfTokenFailedToDecode) out of \(encryptedTokenArr.count) tokens failed to be export")
         }
+        
+        chronosData.tokens = tokens
+        chronosData.errors = errors
 
         let url = FileManager.default.temporaryDirectory
             .appendingPathComponent("Chronos_" + Date().formatted(verbatimStyle))

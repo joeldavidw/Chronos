@@ -10,8 +10,8 @@ public class VaultService {
     private let swiftDataService = Container.shared.swiftDataService()
 
     // TODO(joeldavidw): Selects first vault for now. Selection page should be shown if there are more than one vault.
-    func getFirstVault() -> Vault? {
-        let context = ModelContext(swiftDataService.getModelContainer())
+    func getFirstVault(isRestore: Bool) -> Vault? {
+        let context = ModelContext(swiftDataService.getModelContainer(isRestore: isRestore))
 
         guard let vaultArr = try? context.fetch(FetchDescriptor<Vault>(sortBy: [SortDescriptor(\.createdAt)])) else {
             logger.error("No vaults found")

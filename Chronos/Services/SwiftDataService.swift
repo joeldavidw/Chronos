@@ -70,9 +70,10 @@ extension SwiftDataService {
         return !cryptoArr.isEmpty
     }
 
-    func deleteLocalChronosCryptoData() {
-        let container = getLocalModelContainer()
-        container.deleteAllData()
+    func deleteLocallyPersistedChronosData() {
+        getLocalModelContainer().deleteAllData()
+        getCloudModelContainer().deleteAllData()
+        resetModelContainers()
     }
 
     func deleteCloudChronosCryptoData() -> Bool {

@@ -13,9 +13,8 @@ public class CryptoService {
     private let logger = Logger(label: "CryptoService")
 
     private let stateService = Container.shared.stateService()
+    private let vaultService = Container.shared.vaultService()
     private let swiftDataService = Container.shared.swiftDataService()
-
-    private let defaults = UserDefaults.standard
 
     // scrypt paramaters - n: 2^17, r: 8, p: 1
     private let kdfParams = KdfParams(type: 0, n: 1 << 17, r: 8, p: 1)
@@ -34,7 +33,7 @@ public class CryptoService {
 
             let keyParams = KeyParams(iv: iv, tag: encrypt.authenticationTag)
 
-            let newPasswordCrypto = ChronosCrypto(vault: stateService.vault!, key: encrypt.cipherText, keyParams: keyParams, passwordParams: passwordParams, kdfParams: kdfParams)
+            let newPasswordCrypto = ChronosCrypto(vault: vaultService.getVault()!, key: encrypt.cipherText, keyParams: keyParams, passwordParams: passwordParams, kdfParams: kdfParams)
 
             let context = ModelContext(swiftDataService.getModelContainer())
 
@@ -46,16 +45,7 @@ public class CryptoService {
     }
 
     func unwrapMasterKeyWithUserPassword(password: [UInt8], isRestore: Bool = false) async -> Bool {
-        let context = ModelContext(swiftDataService.getModelContainer(isRestore: isRestore))
-
-        // TODO(joeldavidw): Selects first vault for now. Selection page should be shown if there are more than one vault.
-        guard let vaultArr = try? context.fetch(FetchDescriptor<Vault>(sortBy: [SortDescriptor(\.createdAt)])) else {
-            logger.error("No vaults found")
-            return false
-        }
-
-        guard let vault = vaultArr.first else {
-            logger.error("Empty vaultArr")
+        guard let vault = vaultService.getFirstVault() else {
             return false
         }
 
@@ -88,6 +78,8 @@ public class CryptoService {
 
             if decrypt.success {
                 stateService.masterKey = SecureBytes(bytes: decrypt.plainText)
+                stateService.setVaultId(vaultId: vault.vaultId!)
+                
                 decrypt.plainText.removeAll()
                 return true
             } else {
@@ -110,7 +102,7 @@ extension CryptoService {
             let tokenJson = try JSONEncoder().encode(token)
             let encrypt = try AEADXChaCha20Poly1305.encrypt(Array(tokenJson), key: Array(stateService.masterKey), iv: iv, authenticationHeader: header)
 
-            return EncryptedToken(vault: stateService.vault!, encryptedTokenCiper: encrypt.cipherText, iv: iv, authenticationTag: encrypt.authenticationTag, createdAt: Date())
+            return EncryptedToken(vault: vaultService.getVault()!, encryptedTokenCiper: encrypt.cipherText, iv: iv, authenticationTag: encrypt.authenticationTag, createdAt: Date())
         } catch {
             fatalError(error.localizedDescription)
         }

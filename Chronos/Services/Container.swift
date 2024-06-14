@@ -10,6 +10,10 @@ extension Container {
             .singleton
     }
 
+    var vaultService: Factory<VaultService> {
+        Factory(self) { VaultService() }
+    }
+    
     var cryptoService: Factory<CryptoService> {
         Factory(self) { CryptoService() }
     }

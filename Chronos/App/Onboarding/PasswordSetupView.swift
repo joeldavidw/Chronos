@@ -18,8 +18,6 @@ struct PasswordSetupView: View {
 
     @FocusState private var focusedField: FocusedField?
 
-    @AppStorage(StateEnum.VAULT.rawValue) var stateVaultId: String?
-
     let cryptoService = Container.shared.cryptoService()
     let stateService = Container.shared.stateService()
 

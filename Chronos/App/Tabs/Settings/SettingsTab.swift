@@ -114,7 +114,7 @@ struct SettingsTab: View {
             .navigationBarTitleDisplayMode(.inline)
             .confirmationDialog("Log Out", isPresented: $showLogoutConfirmation, titleVisibility: .visible) {
                 Button("Log out & Remove Local Data", role: .destructive, action: {
-                    swiftDataService.deleteLocalChronosCryptoData()
+                    swiftDataService.deleteLocallyPersistedChronosData()
                     secureEnclaveService.reset()
                     stateService.resetAllStates()
                 })

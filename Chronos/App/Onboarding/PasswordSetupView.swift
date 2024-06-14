@@ -104,6 +104,9 @@ extension PasswordSetupView {
 
         let vault = Vault(vaultId: UUID(), createdAt: Date(), chronosCryptos: [], encryptedTokens: [])
         modelContext.insert(vault)
+        try? modelContext.save()
+
+        stateService.setVaultId(vaultId: vault.vaultId!)
 
         await cryptoService.wrapMasterKeyWithUserPassword(password: Array(password.utf8))
         nextBtnPressed = true

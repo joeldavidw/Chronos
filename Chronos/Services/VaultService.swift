@@ -11,7 +11,7 @@ public class VaultService {
 
     // TODO(joeldavidw): Selects first vault for now. Selection page should be shown if there are more than one vault.
     func getFirstVault() -> Vault? {
-        let context = ModelContext(swiftDataService.getCloudModelContainer())
+        let context = ModelContext(swiftDataService.getModelContainer())
 
         guard let vaultArr = try? context.fetch(FetchDescriptor<Vault>(sortBy: [SortDescriptor(\.createdAt)])) else {
             logger.error("No vaults found")
@@ -22,8 +22,6 @@ public class VaultService {
             logger.error("Empty vaultArr")
             return nil
         }
-
-        stateService.setVaultId(vaultId: vault.vaultId!)
 
         return vault
     }

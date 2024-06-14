@@ -3,15 +3,15 @@ import Logging
 import SwiftData
 
 public class SwiftDataService {
-    let logger = Logger(label: "SwiftDataModelSingleton")
+    private let logger = Logger(label: "SwiftDataModelSingleton")
 
-    let defaults = UserDefaults.standard
+    private let defaults = UserDefaults.standard
 
     private lazy var localModelContainer: ModelContainer = setupModelContainer(storeName: "localChronos.sqlite", cloudKitDatabase: .none)
 
     private lazy var cloudModelContainer: ModelContainer = setupModelContainer(storeName: "onlineChronos.sqlite", cloudKitDatabase: .automatic)
 
-    let schema = Schema([Vault.self, ChronosCrypto.self, EncryptedToken.self])
+    private let schema = Schema([Vault.self, ChronosCrypto.self, EncryptedToken.self])
 
     init() {
         _ = localModelContainer

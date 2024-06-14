@@ -13,6 +13,8 @@ struct RestoreBackupView: View {
     @FocusState private var focusedField: FocusedField?
 
     let cryptoService = Container.shared.cryptoService()
+    let vaultService = Container.shared.vaultService()
+    let stateService = Container.shared.stateService()
 
     var body: some View {
         VStack {
@@ -58,11 +60,13 @@ struct RestoreBackupView: View {
                     restoreBtnPressed = false
 
                     if passwordVerified {
+                        let vault = vaultService.getFirstVault()
+                        stateService.setVaultId(vaultId: vault!.vaultId!)
+
                         isICloudEnabled = true
                     } else {
                         passwordInvalid = true
-                        let notificationGenerator = UINotificationFeedbackGenerator()
-                        notificationGenerator.notificationOccurred(.error)
+                        UINotificationFeedbackGenerator().notificationOccurred(.error)
                     }
                 }
             } label: {

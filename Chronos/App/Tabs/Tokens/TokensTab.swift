@@ -4,7 +4,7 @@ import SwiftUI
 
 struct TokensTab: View {
     @Query(sort: \EncryptedToken.createdAt) private var encyptedTokens: [EncryptedToken]
-
+    
     @State private var showTokenAddSheet = false
     @State private var showTokenUpdateSheet = false
     @State private var showTokenDeleteSheet = false
@@ -13,11 +13,19 @@ struct TokensTab: View {
     @State private var selectedTokenForUpdate: Token? = nil
     @State var detentHeight: CGFloat = 0
 
+    let stateService = Container.shared.stateService()
+    
+    private var filteredEncyptedTokens: [EncryptedToken] {
+        return encyptedTokens.compactMap { encToken in
+            return encToken.vault?.vaultId == stateService.getVaultId() ? encToken : nil
+        }
+    }
+    
     var body: some View {
         ZStack {
             NavigationStack {
                 ScrollViewReader { _ in
-                    List(encyptedTokens) { encyptedToken in
+                    List(filteredEncyptedTokens) { encyptedToken in
                         TokenRowView(tokenRowViewModel: TokenRowViewModel(encyptedToken: encyptedToken))
                     }
                     .listStyle(.plain)
@@ -40,6 +48,8 @@ struct TokensTab: View {
                             .presentationDetents([.height(self.detentHeight)])
                     }
                 }
+            }.onAppear {
+                stateService.getAllStates()
             }
         }
     }

@@ -17,7 +17,3 @@ struct PrivacyView: View {
         .background(Color(red: 0.04, green: 0, blue: 0.11))
     }
 }
-
-#Preview {
-    PrivacyView()
-}

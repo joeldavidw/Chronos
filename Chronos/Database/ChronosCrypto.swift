@@ -9,7 +9,6 @@ struct PasswordParams: Codable {
     var salt: String
 }
 
-
 // Type:
 // 0: Scrypt
 
@@ -23,7 +22,7 @@ struct KdfParams: Codable {
 @Model
 class ChronosCrypto {
     var vault: Vault?
-    
+
     var key: [UInt8]?
     var keyParams: KeyParams?
     var passwordParams: PasswordParams?

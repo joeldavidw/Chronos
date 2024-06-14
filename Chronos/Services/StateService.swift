@@ -3,7 +3,7 @@ import Foundation
 
 enum StateEnum: String {
     case VAULT
-    
+
     case ICLOUD_BACKUP_ENABLED
     case BIOMETRICS_AUTH_ENABLED
     case ONBOARDING_COMPLETED

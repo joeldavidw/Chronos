@@ -4,7 +4,7 @@ import SwiftData
 @Model
 class EncryptedToken {
     var vault: Vault?
-    
+
     var encryptedTokenCiper: [UInt8]?
     var iv: [UInt8]?
     var authenticationTag: [UInt8]?

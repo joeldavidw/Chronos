@@ -1,7 +1,7 @@
 import Factory
 import LinkPresentation
-import SwiftUI
 import SwiftData
+import SwiftUI
 
 struct SettingsTab: View {
     @EnvironmentObject private var loginStatus: LoginStatus
@@ -10,7 +10,7 @@ struct SettingsTab: View {
 
     @AppStorage(StateEnum.BIOMETRICS_AUTH_ENABLED.rawValue) private var stateBiometricsAuth: Bool = false
     @AppStorage(StateEnum.ICLOUD_BACKUP_ENABLED.rawValue) private var isICloudEnabled: Bool = false
-    
+
     private let secureEnclaveService = Container.shared.secureEnclaveService()
     private let swiftDataService = Container.shared.swiftDataService()
     private let stateService = Container.shared.stateService()
@@ -109,7 +109,7 @@ struct SettingsTab: View {
                     }
                 }
                 .listSectionSpacing(8)
-                
+
                 Section {
                     Button {
                         modelContext.delete(stateService.vault!)

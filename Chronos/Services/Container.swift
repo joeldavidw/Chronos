@@ -13,7 +13,7 @@ extension Container {
     var vaultService: Factory<VaultService> {
         Factory(self) { VaultService() }
     }
-    
+
     var cryptoService: Factory<CryptoService> {
         Factory(self) { CryptoService() }
     }

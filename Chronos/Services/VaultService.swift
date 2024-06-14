@@ -1,14 +1,14 @@
 import Factory
 import Foundation
-import SwiftData
 import Logging
+import SwiftData
 
 public class VaultService {
     private let logger = Logger(label: "VaultService")
 
     private let stateService = Container.shared.stateService()
     private let swiftDataService = Container.shared.swiftDataService()
-        
+
     // TODO(joeldavidw): Selects first vault for now. Selection page should be shown if there are more than one vault.
     func getFirstVault() -> Vault? {
         let context = ModelContext(swiftDataService.getCloudModelContainer())
@@ -17,17 +17,17 @@ public class VaultService {
             logger.error("No vaults found")
             return nil
         }
-        
+
         guard let vault = vaultArr.first else {
             logger.error("Empty vaultArr")
             return nil
         }
-        
+
         stateService.setVaultId(vaultId: vault.vaultId!)
-        
+
         return vault
     }
-    
+
     func getVault() -> Vault? {
         guard let vaultId: UUID = stateService.getVaultId() else {
             logger.error("vaultId not found in AppStorage")
@@ -42,7 +42,7 @@ public class VaultService {
             logger.error("No vaults found")
             return nil
         }
-                
+
         return vaultArr.first
     }
 }

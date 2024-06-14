@@ -44,7 +44,7 @@ public class CryptoService {
         }
     }
 
-    func unwrapMasterKeyWithUserPassword(password: [UInt8], isRestore: Bool = false) async -> Bool {
+    func unwrapMasterKeyWithUserPassword(password: [UInt8], isRestore _: Bool = false) async -> Bool {
         guard let vault = vaultService.getFirstVault() else {
             return false
         }
@@ -79,7 +79,7 @@ public class CryptoService {
             if decrypt.success {
                 stateService.masterKey = SecureBytes(bytes: decrypt.plainText)
                 stateService.setVaultId(vaultId: vault.vaultId!)
-                
+
                 decrypt.plainText.removeAll()
                 return true
             } else {

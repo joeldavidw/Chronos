@@ -15,7 +15,6 @@ public class StateService {
     private let defaults = UserDefaults.standard
 
     var masterKey: SecureBytes = .init(bytes: [])
-    var vault: Vault?
 
     func setVaultId(vaultId: UUID) {
         defaults.setValue(vaultId.uuidString, forKey: StateEnum.VAULT_ID.rawValue)

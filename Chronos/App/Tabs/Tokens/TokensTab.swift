@@ -29,12 +29,17 @@ struct TokensTab: View {
             return []
         }
 
-        return vault.encryptedTokens!.compactMap { encToken in
+        let tokenPairs: [TokenPair] = vault.encryptedTokens?.compactMap { encToken in
             guard let decryptedToken = cryptoService.decryptToken(encryptedToken: encToken) else {
                 return nil
             }
             return TokenPair(id: encToken.id, token: decryptedToken, encToken: encToken)
         }
+        .sorted(by: { token1, token2 in
+            token1.token.issuer.localizedCaseInsensitiveCompare(token2.token.issuer) == .orderedAscending
+        }) ?? []
+
+        return tokenPairs
     }
 
     var body: some View {

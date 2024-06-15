@@ -2,22 +2,6 @@ import AlertKit
 import Factory
 import SwiftUI
 
-@Observable
-class TokenRowViewModel {
-    var encryptedToken: EncryptedToken
-    var token: Token?
-    let cryptoService = Container.shared.cryptoService()
-
-    init(encyptedToken: EncryptedToken) {
-        encryptedToken = encyptedToken
-        decryptToken()
-    }
-
-    private func decryptToken() {
-        token = cryptoService.decryptToken(encryptedToken: encryptedToken)
-    }
-}
-
 struct TokenRowView: View {
     @Environment(\.modelContext) private var modelContext
 
@@ -27,29 +11,36 @@ struct TokenRowView: View {
     @State private var selectedTokenForDeletion: Token?
     @State private var selectedTokenForUpdate: Token?
 
-    let tokenRowViewModel: TokenRowViewModel
+    let tokenPair: TokenPair
+
+    var token: Token {
+        return tokenPair.token
+    }
+
+    var encryptedToken: EncryptedToken {
+        return tokenPair.encToken
+    }
+
     let otpService = Container.shared.otpService()
 
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
-            if let token = tokenRowViewModel.token {
-                HStack(spacing: 4) {
-                    Text(!token.issuer.isEmpty ? token.issuer : token.account)
-                        .fontWeight(.semibold)
+            HStack(spacing: 4) {
+                Text(!token.issuer.isEmpty ? token.issuer : token.account)
+                    .fontWeight(.semibold)
 
-                    if !token.issuer.isEmpty && !token.account.isEmpty {
-                        Text("- \(token.account)")
-                            .foregroundStyle(.gray)
-                    }
+                if !token.issuer.isEmpty && !token.account.isEmpty {
+                    Text("- \(token.account)")
+                        .foregroundStyle(.gray)
                 }
+            }
 
-                HStack {
-                    switch token.type {
-                    case TokenTypeEnum.TOTP:
-                        TOTPRowView(token: token)
-                    case TokenTypeEnum.HOTP:
-                        HOTPRowView(token: token, encryptedToken: tokenRowViewModel.encryptedToken)
-                    }
+            HStack {
+                switch token.type {
+                case TokenTypeEnum.TOTP:
+                    TOTPRowView(token: token)
+                case TokenTypeEnum.HOTP:
+                    HOTPRowView(token: token, encryptedToken: encryptedToken)
                 }
             }
         }
@@ -57,21 +48,19 @@ struct TokenRowView: View {
         .padding(CGFloat(4))
         .listRowBackground(Color(red: 0.04, green: 0, blue: 0.11))
         .onTapGesture {
-            if let token = tokenRowViewModel.token {
-                switch token.type {
-                case TokenTypeEnum.TOTP:
-                    UIPasteboard.general.string = otpService.generateTOTP(token: token)
-                case TokenTypeEnum.HOTP:
-                    UIPasteboard.general.string = otpService.generateHOTP(token: token)
-                }
-
-                AlertKitAPI.present(
-                    title: "Copied",
-                    icon: .done,
-                    style: .iOS17AppleMusic,
-                    haptic: .success
-                )
+            switch token.type {
+            case TokenTypeEnum.TOTP:
+                UIPasteboard.general.string = otpService.generateTOTP(token: token)
+            case TokenTypeEnum.HOTP:
+                UIPasteboard.general.string = otpService.generateHOTP(token: token)
             }
+
+            AlertKitAPI.present(
+                title: "Copied",
+                icon: .done,
+                style: .iOS17AppleMusic,
+                haptic: .success
+            )
         }
         .swipeActions(edge: .leading) {
             TokenRowLeftToRightSwipeView()
@@ -81,14 +70,14 @@ struct TokenRowView: View {
         }
         .sheet(item: $selectedTokenForUpdate) { tokenToUpdate in
             NavigationView {
-                UpdateTokenView(token: tokenToUpdate, encryptedToken: tokenRowViewModel.encryptedToken)
+                UpdateTokenView(token: tokenToUpdate, encryptedToken: encryptedToken)
                     .interactiveDismissDisabled(true)
             }
         }
         .confirmationDialog("Delete?", isPresented: $showTokenDeleteSheet, titleVisibility: .visible) {
             Button("Delete", role: .destructive, action: {
                 do {
-                    modelContext.delete(tokenRowViewModel.encryptedToken)
+                    modelContext.delete(encryptedToken)
                     try modelContext.save()
                 } catch {
                     print(error.localizedDescription)
@@ -109,7 +98,7 @@ struct TokenRowView: View {
     func TokenRowLeftToRightSwipeView() -> some View {
         return Group {
             Button {
-                self.selectedTokenForDeletion = tokenRowViewModel.token
+                self.selectedTokenForDeletion = token
                 self.showTokenDeleteSheet.toggle()
             } label: {
                 VStack(alignment: .center) {
@@ -124,7 +113,7 @@ struct TokenRowView: View {
     func TokenRowRightToLeftSwipeView() -> some View {
         return Group {
             Button {
-                self.selectedTokenForUpdate = tokenRowViewModel.token
+                self.selectedTokenForUpdate = token
                 self.showTokenUpdateSheet.toggle()
             } label: {
                 VStack(alignment: .center) {

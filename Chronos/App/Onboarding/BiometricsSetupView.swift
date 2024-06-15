@@ -29,7 +29,6 @@ struct BiometricsSetupView: View {
                 activateBiometricsAuth()
 
                 loginStatus.loggedIn = true
-
                 stateBiometricsAuth = true
                 stateOnboardingCompleted = true
             } label: {

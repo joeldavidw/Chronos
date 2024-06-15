@@ -28,8 +28,7 @@ class ChronosCrypto {
     var passwordParams: PasswordParams?
     var kdfParams: KdfParams?
 
-    init(vault: Vault, key: [UInt8]? = nil, keyParams: KeyParams? = nil, passwordParams: PasswordParams? = nil, kdfParams: KdfParams? = nil) {
-        self.vault = vault
+    init(key: [UInt8], keyParams: KeyParams, passwordParams: PasswordParams, kdfParams: KdfParams) {
         self.key = key
         self.keyParams = keyParams
         self.passwordParams = passwordParams

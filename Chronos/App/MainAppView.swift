@@ -9,9 +9,15 @@ struct MainAppView: View {
     @Environment(\.scenePhase) private var scenePhase
     @EnvironmentObject var loginStatus: LoginStatus
 
-    @Query var chronosCryptos: [ChronosCrypto]
+    private let stateService = Container.shared.stateService()
 
-    let stateService = Container.shared.stateService()
+    @Query(sort: \Vault.createdAt) private var vaults: [Vault]
+
+    private var filteredVault: [Vault] {
+        return vaults.compactMap { vault in
+            vault.vaultId == stateService.getVaultId() ? vault : nil
+        }
+    }
 
     var body: some View {
         ZStack {
@@ -34,12 +40,12 @@ struct MainAppView: View {
             }
         }
         .onAppear {
-            if chronosCryptos.isEmpty {
+            if filteredVault.isEmpty {
                 stateService.resetAllStates()
                 loginStatus.loggedIn = false
             }
         }
-        .onChange(of: chronosCryptos) { _, newValue in
+        .onChange(of: filteredVault) { _, newValue in
             if newValue.isEmpty {
                 stateService.resetAllStates()
                 loginStatus.loggedIn = false

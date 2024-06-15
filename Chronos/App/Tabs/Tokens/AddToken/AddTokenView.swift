@@ -4,14 +4,13 @@ import Factory
 import SwiftUI
 
 struct AddTokenView: View {
-    @Environment(\.modelContext) private var modelContext
-
     @Environment(\.dismiss) var dismiss
     @State private var unableToAccessCamera = false
     @State private var showTokenManualAddSheet = false
 
     let cryptoService = Container.shared.cryptoService()
     let otpService = Container.shared.otpService()
+    let vaultService = Container.shared.vaultService()
 
     var body: some View {
         VStack {
@@ -94,10 +93,8 @@ struct AddTokenView: View {
 
             do {
                 let newToken = try otpService.parseOtpAuthUrl(otpAuthStr: otpAuthStr)
-
                 let newEncToken = cryptoService.encryptToken(token: newToken)
-                modelContext.insert(newEncToken)
-                try modelContext.save()
+                vaultService.insertEncryptedToken(newEncToken)
 
                 dismiss()
 
@@ -121,8 +118,4 @@ struct AddTokenView: View {
             }
         }
     }
-}
-
-#Preview {
-    AddTokenView()
 }

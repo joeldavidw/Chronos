@@ -48,8 +48,6 @@ struct TokensTab: View {
                             .presentationDetents([.height(self.detentHeight)])
                     }
                 }
-            }.onAppear {
-                stateService.getAllStates()
             }
         }
     }

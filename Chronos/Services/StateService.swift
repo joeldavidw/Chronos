@@ -43,13 +43,4 @@ public class StateService {
     func clearMasterKey() {
         masterKey.clear()
     }
-
-    func getAllStates() {
-        print("DUCK")
-        print(defaults.value(forKey: StateEnum.VAULT_ID.rawValue))
-        print(defaults.value(forKey: StateEnum.ICLOUD_BACKUP_ENABLED.rawValue))
-        print(defaults.value(forKey: StateEnum.BIOMETRICS_AUTH_ENABLED.rawValue))
-        print(defaults.value(forKey: StateEnum.ONBOARDING_COMPLETED.rawValue))
-        print(defaults.value(forKey: StateEnum.LAST_BIOMETRICS_AUTH_ATTEMPT.rawValue))
-    }
 }

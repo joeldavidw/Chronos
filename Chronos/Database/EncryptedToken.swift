@@ -10,8 +10,7 @@ class EncryptedToken {
     var authenticationTag: [UInt8]?
     var createdAt: Date?
 
-    init(vault: Vault, encryptedTokenCiper: [UInt8]? = nil, iv: [UInt8]? = nil, authenticationTag: [UInt8]? = nil, createdAt: Date? = nil) {
-        self.vault = vault
+    init(encryptedTokenCiper: [UInt8], iv: [UInt8], authenticationTag: [UInt8], createdAt: Date) {
         self.encryptedTokenCiper = encryptedTokenCiper
         self.iv = iv
         self.authenticationTag = authenticationTag

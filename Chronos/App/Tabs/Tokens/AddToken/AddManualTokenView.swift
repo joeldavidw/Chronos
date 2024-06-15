@@ -2,7 +2,6 @@ import Factory
 import SwiftUI
 
 struct AddManualTokenView: View {
-    @Environment(\.modelContext) private var modelContext
     @Environment(\.dismiss) var dismiss
     @Environment(\.colorScheme) var colorScheme
 
@@ -18,6 +17,7 @@ struct AddManualTokenView: View {
     @State private var period: Int = 30
 
     let cryptoService = Container.shared.cryptoService()
+    let vaultService = Container.shared.vaultService()
 
     let parentDismiss: DismissAction
 
@@ -127,8 +127,7 @@ struct AddManualTokenView: View {
             newToken.period = period
 
             let newEncToken = cryptoService.encryptToken(token: newToken)
-            modelContext.insert(newEncToken)
-            try? modelContext.save()
+            vaultService.insertEncryptedToken(newEncToken)
 
             parentDismiss()
             dismiss()

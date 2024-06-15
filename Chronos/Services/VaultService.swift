@@ -9,6 +9,26 @@ public class VaultService {
     private let stateService = Container.shared.stateService()
     private let swiftDataService = Container.shared.swiftDataService()
 
+    func createVault(chronosCrypto: ChronosCrypto) -> Vault? {
+        let context = ModelContext(swiftDataService.getModelContainer())
+
+        let vault = Vault(vaultId: UUID(), createdAt: Date())
+
+        vault.chronosCryptos = [chronosCrypto]
+
+        context.insert(vault)
+
+        do {
+            try context.save()
+            logger.info("Successfully saved vault")
+
+            return vault
+        } catch {
+            logger.error("Failed to save context: \(error.localizedDescription)")
+            return nil
+        }
+    }
+
     // TODO(joeldavidw): Selects first vault for now. Selection page should be shown if there are more than one vault.
     func getFirstVault(isRestore: Bool) -> Vault? {
         let context = ModelContext(swiftDataService.getModelContainer(isRestore: isRestore))
@@ -42,5 +62,41 @@ public class VaultService {
         }
 
         return vaultArr.first
+    }
+}
+
+extension VaultService {
+    func insertEncryptedToken(_ encryptedToken: EncryptedToken) {
+        let context = ModelContext(swiftDataService.getModelContainer())
+
+        let vault = getVault()!
+
+        vault.encryptedTokens?.append(encryptedToken)
+
+        context.insert(vault)
+
+        do {
+            try context.save()
+            logger.info("Successfully saved vault")
+        } catch {
+            logger.error("Failed to save context: \(error.localizedDescription)")
+        }
+    }
+
+    func deleteEncryptedToken(_ encryptedToken: EncryptedToken) {
+        let context = ModelContext(swiftDataService.getModelContainer())
+
+        var vault = getVault()!
+
+        vault.encryptedTokens?.append(encryptedToken)
+
+        context.insert(vault)
+
+        do {
+            try context.save()
+            logger.info("Successfully saved vault")
+        } catch {
+            logger.error("Failed to save context: \(error.localizedDescription)")
+        }
     }
 }

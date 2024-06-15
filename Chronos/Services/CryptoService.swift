@@ -19,7 +19,7 @@ public class CryptoService {
     // scrypt paramaters - n: 2^17, r: 8, p: 1
     private let kdfParams = KdfParams(type: 0, n: 1 << 17, r: 8, p: 1)
 
-    func wrapMasterKeyWithUserPassword(password: [UInt8]) async {
+    func wrapMasterKeyWithUserPassword(password: [UInt8]) async -> ChronosCrypto {
         let passwordSalt = try! generateRandomSaltHexString()
         let passwordParams = PasswordParams(salt: passwordSalt)
 
@@ -33,12 +33,9 @@ public class CryptoService {
 
             let keyParams = KeyParams(iv: iv, tag: encrypt.authenticationTag)
 
-            let newPasswordCrypto = ChronosCrypto(vault: vaultService.getVault()!, key: encrypt.cipherText, keyParams: keyParams, passwordParams: passwordParams, kdfParams: kdfParams)
+            let newPasswordCrypto = ChronosCrypto(key: encrypt.cipherText, keyParams: keyParams, passwordParams: passwordParams, kdfParams: kdfParams)
 
-            let context = ModelContext(swiftDataService.getModelContainer())
-
-            context.insert(newPasswordCrypto)
-            try context.save()
+            return newPasswordCrypto
         } catch {
             fatalError(error.localizedDescription)
         }
@@ -102,7 +99,7 @@ extension CryptoService {
             let tokenJson = try JSONEncoder().encode(token)
             let encrypt = try AEADXChaCha20Poly1305.encrypt(Array(tokenJson), key: Array(stateService.masterKey), iv: iv, authenticationHeader: header)
 
-            return EncryptedToken(vault: vaultService.getVault()!, encryptedTokenCiper: encrypt.cipherText, iv: iv, authenticationTag: encrypt.authenticationTag, createdAt: Date())
+            return EncryptedToken(encryptedTokenCiper: encrypt.cipherText, iv: iv, authenticationTag: encrypt.authenticationTag, createdAt: Date())
         } catch {
             fatalError(error.localizedDescription)
         }

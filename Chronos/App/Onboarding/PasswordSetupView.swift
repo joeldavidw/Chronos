@@ -20,6 +20,7 @@ struct PasswordSetupView: View {
 
     let cryptoService = Container.shared.cryptoService()
     let stateService = Container.shared.stateService()
+    let vaultService = Container.shared.vaultService()
 
     var body: some View {
         ScrollView {
@@ -102,13 +103,11 @@ extension PasswordSetupView {
     func generateAndEncryptMasterKey() async {
         stateService.masterKey = try! cryptoService.generateRandomMasterKey()
 
-        let vault = Vault(vaultId: UUID(), createdAt: Date(), chronosCryptos: [], encryptedTokens: [])
-        modelContext.insert(vault)
-        try? modelContext.save()
+        let chronosCrypto = await cryptoService.wrapMasterKeyWithUserPassword(password: Array(password.utf8))
 
+        let vault = vaultService.createVault(chronosCrypto: chronosCrypto)!
         stateService.setVaultId(vaultId: vault.vaultId!)
 
-        await cryptoService.wrapMasterKeyWithUserPassword(password: Array(password.utf8))
         nextBtnPressed = true
     }
 }

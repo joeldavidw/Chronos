@@ -38,16 +38,21 @@ struct AddManualTokenView: View {
             Section(header: Text("Information")) {
                 LabeledContent {
                     TextField("Issuer", text: $issuer)
+                        .disableAutocorrection(true)
                 } label: {
                     Text("Issuer")
                 }
                 LabeledContent("Account") {
                     TextField("Account", text: $account)
+                        .disableAutocorrection(true)
+                        .autocapitalization(/*@START_MENU_TOKEN@*/.none/*@END_MENU_TOKEN@*/)
                 }
                 LabeledContent("Secret") {
                     Group {
                         if showSecret {
                             TextField("Secret", text: $secret)
+                                .disableAutocorrection(true)
+                                .autocapitalization(/*@START_MENU_TOKEN@*/.none/*@END_MENU_TOKEN@*/)
                         } else {
                             SecureField("Secret", text: $secret)
                         }

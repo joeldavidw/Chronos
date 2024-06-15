@@ -59,21 +59,17 @@ struct StorageSetupView: View {
         .navigationDestination(isPresented: $nextBtnPressed) {
             PasswordSetupView()
         }
-        .confirmationDialog("Backup Exists", isPresented: $showICloudOverwriteConfirmation, titleVisibility: .visible) {
-            Button("Remove & Continue", role: .destructive, action: {
-                let cryptoDeleted = swiftDataService.deleteCloudChronosCryptoData()
-
-                if cryptoDeleted {
-                    isICloudEnabled = true
-                    nextBtnPressed = true
-                }
+        .confirmationDialog("Vault Exists", isPresented: $showICloudOverwriteConfirmation, titleVisibility: .visible) {
+            Button("Continue", role: .destructive, action: {
+                isICloudEnabled = true
+                nextBtnPressed = true
             })
 
             Button("Cancel", role: .cancel, action: {
                 self.showICloudOverwriteConfirmation = false
             })
         } message: {
-            Text("A Chronos backup already exists in iCloud. Are you sure you want to remove all data?")
+            Text("A vault already exists in iCloud. Are you sure you want to create a new one?")
         }
     }
 }

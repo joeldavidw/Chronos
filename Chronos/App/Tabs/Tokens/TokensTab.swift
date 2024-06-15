@@ -10,7 +10,7 @@ struct TokenPair: Identifiable {
 }
 
 struct TokensTab: View {
-    @Query(sort: \Vault.createdAt) private var vaults: [Vault]
+    @Query private var vaults: [Vault]
 
     @State private var showTokenAddSheet = false
     @State private var showTokenUpdateSheet = false
@@ -25,9 +25,11 @@ struct TokensTab: View {
 
     private var tokenPairs: [TokenPair] {
         let vaultId = stateService.getVaultId()
-        let vault = vaults.filter { $0.vaultId == vaultId }
+        guard let vault = vaults.filter({ $0.vaultId == vaultId }).first else {
+            return []
+        }
 
-        return vault.first!.encryptedTokens!.compactMap { encToken in
+        return vault.encryptedTokens!.compactMap { encToken in
             guard let decryptedToken = cryptoService.decryptToken(encryptedToken: encToken) else {
                 return nil
             }

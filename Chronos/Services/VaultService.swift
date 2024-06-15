@@ -86,7 +86,7 @@ extension VaultService {
     func deleteEncryptedToken(_ encryptedToken: EncryptedToken) {
         let context = ModelContext(swiftDataService.getModelContainer())
 
-        var vault = getVault()!
+        let vault = getVault()!
 
         vault.encryptedTokens?.append(encryptedToken)
 

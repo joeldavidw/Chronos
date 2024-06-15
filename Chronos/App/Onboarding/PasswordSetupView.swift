@@ -1,5 +1,4 @@
 import Factory
-import SwiftData
 import SwiftUI
 
 enum FocusedField {
@@ -7,14 +6,10 @@ enum FocusedField {
 }
 
 struct PasswordSetupView: View {
-    @Environment(\.modelContext) private var modelContext
-
     @State private var password: String = ""
     @State private var verifyPassword: String = ""
     @State private var nextBtnPressed: Bool = false
     @State private var isEncrypting: Bool = false
-
-    @Query() private var vaults: [Vault]
 
     @FocusState private var focusedField: FocusedField?
 

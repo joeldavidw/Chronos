@@ -27,7 +27,7 @@ struct AddTokenView: View {
                     CodeScannerView(
                         codeTypes: [.qr],
                         scanMode: .oncePerCode,
-                        scanInterval: 1.0,
+                        scanInterval: 0.1,
                         shouldVibrateOnSuccess: false,
                         isPaused: showTokenManualAddSheet,
                         completion: handleScan

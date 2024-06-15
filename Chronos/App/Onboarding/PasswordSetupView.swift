@@ -1,4 +1,5 @@
 import Factory
+import SwiftData
 import SwiftUI
 
 enum FocusedField {
@@ -6,10 +7,14 @@ enum FocusedField {
 }
 
 struct PasswordSetupView: View {
+    @Environment(\.modelContext) private var modelContext
+
     @State private var password: String = ""
     @State private var verifyPassword: String = ""
     @State private var nextBtnPressed: Bool = false
     @State private var isEncrypting: Bool = false
+
+    @Query() private var vaults: [Vault]
 
     @FocusState private var focusedField: FocusedField?
 
@@ -96,6 +101,12 @@ struct PasswordSetupView: View {
 extension PasswordSetupView {
     func generateAndEncryptMasterKey() async {
         stateService.masterKey = try! cryptoService.generateRandomMasterKey()
+
+        let vault = Vault(vaultId: UUID(), createdAt: Date(), chronosCryptos: [], encryptedTokens: [])
+        modelContext.insert(vault)
+        try? modelContext.save()
+
+        stateService.setVaultId(vaultId: vault.vaultId!)
 
         await cryptoService.wrapMasterKeyWithUserPassword(password: Array(password.utf8))
         nextBtnPressed = true

@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		6B12B0A02C19DB7800E9ED2D /* ExportService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B12B09F2C19DB7800E9ED2D /* ExportService.swift */; };
-		6B12B0A22C19F1E600E9ED2D /* Vault.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B12B0A12C19F1E600E9ED2D /* Vault.swift */; };
+		6B12B0A22C19F1E600E9ED2D /* ExportVault.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B12B0A12C19F1E600E9ED2D /* ExportVault.swift */; };
 		6B19CA722B7A70B800690390 /* WelcomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B19CA712B7A70B800690390 /* WelcomeView.swift */; };
 		6B19CA742B7A769900690390 /* PasswordSetupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B19CA732B7A769900690390 /* PasswordSetupView.swift */; };
 		6B2583AF2B96048700938F3A /* SettingsTab.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B2583AE2B96048700938F3A /* SettingsTab.swift */; };
@@ -30,6 +30,8 @@
 		6B3BB1202B511A9E00DCEF0B /* SwiftOTP in Frameworks */ = {isa = PBXBuildFile; productRef = 6B3BB11F2B511A9E00DCEF0B /* SwiftOTP */; };
 		6B3C7A382BE764E70043FEBD /* StorageSetupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B3C7A372BE764E70043FEBD /* StorageSetupView.swift */; };
 		6B3C7A3D2BE9E0600043FEBD /* Logging in Frameworks */ = {isa = PBXBuildFile; productRef = 6B3C7A3C2BE9E0600043FEBD /* Logging */; };
+		6B3F92A92C1B45AA004125A8 /* Vault.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B3F92A82C1B45AA004125A8 /* Vault.swift */; };
+		6B3F92AB2C1C7987004125A8 /* VaultService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B3F92AA2C1C7987004125A8 /* VaultService.swift */; };
 		6B4B48F32BD7BB3C007D357D /* Token.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B4B48F22BD7BB3C007D357D /* Token.swift */; };
 		6B5E41CE2BD790F80045DBC6 /* EncryptedToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B5E41CD2BD790F80045DBC6 /* EncryptedToken.swift */; };
 		6B66D5E72B526315006DB79D /* AddTokenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B66D5E62B526315006DB79D /* AddTokenView.swift */; };
@@ -53,7 +55,7 @@
 
 /* Begin PBXFileReference section */
 		6B12B09F2C19DB7800E9ED2D /* ExportService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExportService.swift; sourceTree = "<group>"; };
-		6B12B0A12C19F1E600E9ED2D /* Vault.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Vault.swift; sourceTree = "<group>"; };
+		6B12B0A12C19F1E600E9ED2D /* ExportVault.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExportVault.swift; sourceTree = "<group>"; };
 		6B19CA712B7A70B800690390 /* WelcomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeView.swift; sourceTree = "<group>"; };
 		6B19CA732B7A769900690390 /* PasswordSetupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordSetupView.swift; sourceTree = "<group>"; };
 		6B2583AE2B96048700938F3A /* SettingsTab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsTab.swift; sourceTree = "<group>"; };
@@ -73,6 +75,8 @@
 		6B3BB0DF2B4ECE6F00DCEF0B /* TOTPRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TOTPRowView.swift; sourceTree = "<group>"; };
 		6B3BB0E12B4ED19300DCEF0B /* TokensTab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokensTab.swift; sourceTree = "<group>"; };
 		6B3C7A372BE764E70043FEBD /* StorageSetupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageSetupView.swift; sourceTree = "<group>"; };
+		6B3F92A82C1B45AA004125A8 /* Vault.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Vault.swift; sourceTree = "<group>"; };
+		6B3F92AA2C1C7987004125A8 /* VaultService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VaultService.swift; sourceTree = "<group>"; };
 		6B4B48F22BD7BB3C007D357D /* Token.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Token.swift; sourceTree = "<group>"; };
 		6B5E41CD2BD790F80045DBC6 /* EncryptedToken.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EncryptedToken.swift; sourceTree = "<group>"; };
 		6B66D5E62B526315006DB79D /* AddTokenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTokenView.swift; sourceTree = "<group>"; };
@@ -219,6 +223,7 @@
 			children = (
 				6BE122912BD6413D008636D2 /* ChronosCrypto.swift */,
 				6B5E41CD2BD790F80045DBC6 /* EncryptedToken.swift */,
+				6B3F92A82C1B45AA004125A8 /* Vault.swift */,
 			);
 			path = Database;
 			sourceTree = "<group>";
@@ -242,6 +247,7 @@
 				6BD6D2002C11FEB4004512BF /* OTPService.swift */,
 				6B9D74642C14ADDC008E6582 /* StateService.swift */,
 				6B12B09F2C19DB7800E9ED2D /* ExportService.swift */,
+				6B3F92AA2C1C7987004125A8 /* VaultService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -258,7 +264,7 @@
 			isa = PBXGroup;
 			children = (
 				6B4B48F22BD7BB3C007D357D /* Token.swift */,
-				6B12B0A12C19F1E600E9ED2D /* Vault.swift */,
+				6B12B0A12C19F1E600E9ED2D /* ExportVault.swift */,
 			);
 			path = Data;
 			sourceTree = "<group>";
@@ -410,7 +416,8 @@
 			files = (
 				6B3BB0B32B4EA87C00DCEF0B /* ContentView.swift in Sources */,
 				6B3BB0B12B4EA87C00DCEF0B /* ChronosApp.swift in Sources */,
-				6B12B0A22C19F1E600E9ED2D /* Vault.swift in Sources */,
+				6B3F92AB2C1C7987004125A8 /* VaultService.swift in Sources */,
+				6B12B0A22C19F1E600E9ED2D /* ExportVault.swift in Sources */,
 				6B7383E52B9C4230008E8867 /* Container.swift in Sources */,
 				6B3C7A382BE764E70043FEBD /* StorageSetupView.swift in Sources */,
 				6BC3C3B52BA6B91E00B181B9 /* BiometricsSetupView.swift in Sources */,
@@ -420,6 +427,7 @@
 				6B66D5E72B526315006DB79D /* AddTokenView.swift in Sources */,
 				6B2583AF2B96048700938F3A /* SettingsTab.swift in Sources */,
 				6B39629C2BF5EB3E000410B0 /* AuthenticationView.swift in Sources */,
+				6B3F92A92C1B45AA004125A8 /* Vault.swift in Sources */,
 				6B9581E22B62AFF80029EF3C /* ViewModifier.swift in Sources */,
 				6BE122922BD6413D008636D2 /* ChronosCrypto.swift in Sources */,
 				6B19CA742B7A769900690390 /* PasswordSetupView.swift in Sources */,

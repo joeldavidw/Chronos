@@ -13,11 +13,19 @@ struct TokensTab: View {
     @State private var selectedTokenForUpdate: Token? = nil
     @State var detentHeight: CGFloat = 0
 
+    let stateService = Container.shared.stateService()
+
+    private var filteredEncyptedTokens: [EncryptedToken] {
+        return encyptedTokens.compactMap { encToken in
+            encToken.vault?.vaultId == stateService.getVaultId() ? encToken : nil
+        }
+    }
+
     var body: some View {
         ZStack {
             NavigationStack {
                 ScrollViewReader { _ in
-                    List(encyptedTokens) { encyptedToken in
+                    List(filteredEncyptedTokens) { encyptedToken in
                         TokenRowView(tokenRowViewModel: TokenRowViewModel(encyptedToken: encyptedToken))
                     }
                     .listStyle(.plain)

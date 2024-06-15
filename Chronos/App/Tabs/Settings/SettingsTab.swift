@@ -1,5 +1,4 @@
 import Factory
-import LinkPresentation
 import SwiftUI
 
 struct SettingsTab: View {

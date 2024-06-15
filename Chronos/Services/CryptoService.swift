@@ -1,6 +1,7 @@
 import CryptoSwift
 import Factory
 import Foundation
+import Logging
 import SwiftData
 
 enum CryptoError: Error {
@@ -9,13 +10,14 @@ enum CryptoError: Error {
 }
 
 public class CryptoService {
-    let stateService = Container.shared.stateService()
-    let swiftDataService = Container.shared.swiftDataService()
+    private let logger = Logger(label: "CryptoService")
 
-    let defaults = UserDefaults.standard
+    private let stateService = Container.shared.stateService()
+    private let vaultService = Container.shared.vaultService()
+    private let swiftDataService = Container.shared.swiftDataService()
 
     // scrypt paramaters - n: 2^17, r: 8, p: 1
-    let kdfParams = KdfParams(type: KdfEnum.SCRYPT, n: 1 << 17, r: 8, p: 1)
+    private let kdfParams = KdfParams(type: 0, n: 1 << 17, r: 8, p: 1)
 
     func wrapMasterKeyWithUserPassword(password: [UInt8]) async {
         let passwordSalt = try! generateRandomSaltHexString()
@@ -31,9 +33,10 @@ public class CryptoService {
 
             let keyParams = KeyParams(iv: iv, tag: encrypt.authenticationTag)
 
-            let newPasswordCrypto = ChronosCrypto(key: encrypt.cipherText, keyParams: keyParams, passwordParams: passwordParams, kdfParams: kdfParams)
+            let newPasswordCrypto = ChronosCrypto(vault: vaultService.getVault()!, key: encrypt.cipherText, keyParams: keyParams, passwordParams: passwordParams, kdfParams: kdfParams)
 
             let context = ModelContext(swiftDataService.getModelContainer())
+
             context.insert(newPasswordCrypto)
             try context.save()
         } catch {
@@ -42,15 +45,24 @@ public class CryptoService {
     }
 
     func unwrapMasterKeyWithUserPassword(password: [UInt8], isRestore: Bool = false) async -> Bool {
-        let context = ModelContext(swiftDataService.getModelContainer(isRestore: isRestore))
-
-        let cryptoArr = try! context.fetch(FetchDescriptor<ChronosCrypto>())
-
-        if cryptoArr.isEmpty {
-            stateService.resetAllStates()
+        guard let vault = vaultService.getFirstVault(isRestore: isRestore) else {
+            return false
         }
 
-        let crypto: ChronosCrypto = cryptoArr.first!
+        guard let cryptoArr = vault.chronosCryptos else {
+            logger.error("No crypto found in vault")
+            return false
+        }
+
+        if cryptoArr.isEmpty {
+            logger.error("Empty crypto found in vault")
+            return false
+        }
+
+        guard let crypto = cryptoArr.first else {
+            logger.error("Empty crypto found in vault")
+            return false
+        }
 
         let passwordHash = Array(createPasswordHash(password: password, salt: crypto.passwordParams!.salt, kdfParms: kdfParams)!)
 
@@ -58,20 +70,25 @@ public class CryptoService {
 
         do {
             guard let cryptoKey = crypto.key, let keyParams = crypto.keyParams else {
-                fatalError("var nil")
+                logger.error("cryptoKey or keyParams is nil")
+                return false
             }
 
             var decrypt = try AEADXChaCha20Poly1305.decrypt(cryptoKey, key: passwordHash, iv: keyParams.iv, authenticationHeader: header, authenticationTag: keyParams.tag)
 
             if decrypt.success {
                 stateService.masterKey = SecureBytes(bytes: decrypt.plainText)
+                stateService.setVaultId(vaultId: vault.vaultId!)
+
                 decrypt.plainText.removeAll()
                 return true
             } else {
+                logger.error("Unable to decrypt crypto with passwordHash")
                 return false
             }
         } catch {
-            fatalError(error.localizedDescription)
+            logger.error("Error encountered while decrypting crypto. Error: \(error.localizedDescription)")
+            return false
         }
     }
 }
@@ -85,7 +102,7 @@ extension CryptoService {
             let tokenJson = try JSONEncoder().encode(token)
             let encrypt = try AEADXChaCha20Poly1305.encrypt(Array(tokenJson), key: Array(stateService.masterKey), iv: iv, authenticationHeader: header)
 
-            return EncryptedToken(encryptedTokenCiper: encrypt.cipherText, iv: iv, authenticationTag: encrypt.authenticationTag, createdAt: Date())
+            return EncryptedToken(vault: vaultService.getVault()!, encryptedTokenCiper: encrypt.cipherText, iv: iv, authenticationTag: encrypt.authenticationTag, createdAt: Date())
         } catch {
             fatalError(error.localizedDescription)
         }

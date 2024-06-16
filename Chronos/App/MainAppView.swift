@@ -3,6 +3,8 @@ import SwiftData
 import SwiftUI
 
 struct MainAppView: View {
+    @Query private var vaults: [Vault]
+
     @State private var currentTab: String = "Tokens"
 
     @Environment(\.modelContext) private var modelContext
@@ -10,8 +12,6 @@ struct MainAppView: View {
     @EnvironmentObject var loginStatus: LoginStatus
 
     private let stateService = Container.shared.stateService()
-
-    @Query(sort: \Vault.createdAt) private var vaults: [Vault]
 
     private var filteredVault: [Vault] {
         return vaults.compactMap { vault in

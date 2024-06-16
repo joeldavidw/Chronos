@@ -75,13 +75,4 @@ extension SwiftDataService {
         getCloudModelContainer().deleteAllData()
         resetModelContainers()
     }
-
-    func deleteCloudChronosCryptoData() -> Bool {
-        let container = getCloudModelContainer()
-        let modelContext = ModelContext(container)
-        try? modelContext.delete(model: ChronosCrypto.self)
-        try? modelContext.delete(model: EncryptedToken.self)
-        try? modelContext.save()
-        return true
-    }
 }

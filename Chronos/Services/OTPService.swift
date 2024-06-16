@@ -50,9 +50,16 @@ public class OTPService {
             throw OTPError.invalidURL
         }
 
+        var path = components.path
+
         let tokenType = try getTokenType(from: host)
         var token = Token()
         token.type = tokenType
+
+        if !path.isEmpty {
+            path.remove(at: path.startIndex)
+            token.account = path
+        }
 
         try updateToken(&token, with: components.queryItems)
 

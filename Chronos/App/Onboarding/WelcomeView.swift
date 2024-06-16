@@ -16,8 +16,13 @@ struct WelcomeView: View {
     var body: some View {
         NavigationStack {
             VStack {
+                Image("Logo")
+                    .resizable()
+                    .frame(width: 128, height: 128)
+                    .padding(.bottom, 8)
+
                 Button {
-                    getStartedPressed.toggle()
+                    getStartedPressed = true
                 } label: {
                     Text("Get started")
                         .bold()
@@ -27,20 +32,21 @@ struct WelcomeView: View {
                 .buttonStyle(.bordered)
 
                 Button {
-                    restorePressed.toggle()
+                    restorePressed = true
                 } label: {
                     Text("Restore")
                         .bold()
                         .frame(minWidth: 0, maxWidth: .infinity)
                         .frame(height: 32)
                 }
+                .padding(.top, 4)
                 .disabled(chronosCryptos.isEmpty)
                 .buttonStyle(.borderless)
+                .padding(.bottom, 32)
             }
             .padding([.horizontal], 24)
             .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity)
             .background(Color(red: 0.04, green: 0, blue: 0.11))
-            .navigationTitle("Welcome")
             .navigationBarTitleDisplayMode(.inline)
             .navigationDestination(isPresented: $getStartedPressed) {
                 StorageSetupView()
@@ -53,4 +59,8 @@ struct WelcomeView: View {
             swiftDataService.resetModelContainers()
         })
     }
+}
+
+#Preview {
+    WelcomeView()
 }

@@ -45,14 +45,14 @@ struct AddManualTokenView: View {
                 LabeledContent("Account") {
                     TextField("Account", text: $account)
                         .disableAutocorrection(true)
-                        .autocapitalization(/*@START_MENU_TOKEN@*/.none/*@END_MENU_TOKEN@*/)
+                        .autocapitalization(/*@START_MENU_TOKEN@*/ .none/*@END_MENU_TOKEN@*/)
                 }
                 LabeledContent("Secret") {
                     Group {
                         if showSecret {
                             TextField("Secret", text: $secret)
                                 .disableAutocorrection(true)
-                                .autocapitalization(/*@START_MENU_TOKEN@*/.none/*@END_MENU_TOKEN@*/)
+                                .autocapitalization(/*@START_MENU_TOKEN@*/ .none/*@END_MENU_TOKEN@*/)
                         } else {
                             SecureField("Secret", text: $secret)
                         }

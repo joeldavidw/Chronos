@@ -22,7 +22,7 @@ struct RestoreBackupView: View {
                 .font(.system(size: 44))
                 .padding(.bottom, 16)
 
-            Text("Re-enter the master key used to setup Chronos previously")
+            Text("Re-enter the master password used to setup Chronos previously")
                 .fixedSize(horizontal: false, vertical: true)
                 .multilineTextAlignment(.center)
                 .font(.subheadline)

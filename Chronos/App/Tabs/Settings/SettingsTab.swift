@@ -104,6 +104,13 @@ struct SettingsTab: View {
                             .foregroundStyle(.red)
                             .frame(maxWidth: .infinity)
                     }
+                } footer: {
+                    if let appVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String {
+                        let buildVersion = Bundle.main.infoDictionary?["CFBundleVersion"] as? String ?? "NA"
+                        Text("Chronos Authenticator Version \(appVersion) (\(buildVersion))")
+                            .padding(.top, 8)
+                            .frame(maxWidth: .infinity, alignment: .center)
+                    }
                 }
                 .listSectionSpacing(8)
             }

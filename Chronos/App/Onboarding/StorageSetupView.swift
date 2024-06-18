@@ -5,6 +5,7 @@ import SwiftUI
 struct StorageSetupView: View {
     @State private var iCloudBtnPressed: Bool = false
     @State private var showICloudOverwriteConfirmation: Bool = false
+    @State private var showNoBackupWarning: Bool = false
     @State private var nextBtnPressed: Bool = false
 
     @FocusState private var focusedField: FocusedField?
@@ -40,17 +41,41 @@ struct StorageSetupView: View {
             }
             .padding(.top, 64)
             .buttonStyle(.borderedProminent)
+            .confirmationDialog("Vault Exists", isPresented: $showICloudOverwriteConfirmation, titleVisibility: .visible) {
+                Button("Continue", role: .destructive, action: {
+                    isICloudEnabled = true
+                    nextBtnPressed = true
+                })
+
+                Button("Cancel", role: .cancel, action: {
+                    self.showICloudOverwriteConfirmation = false
+                })
+            } message: {
+                Text("A vault already exists in iCloud. Are you sure you want to create a new one?")
+                    .foregroundStyle(.white)
+            }
 
             Button {
-                isICloudEnabled = false
-                nextBtnPressed = true
+                showNoBackupWarning = true
             } label: {
-                Text("Continue without backup")
+                Text("Continue without backups")
                     .bold()
                     .frame(minWidth: 0, maxWidth: .infinity)
                     .frame(height: 32)
             }
             .buttonStyle(.bordered)
+            .confirmationDialog("Are you sure?", isPresented: $showNoBackupWarning, titleVisibility: .visible) {
+                Button("Continue without backups", role: .destructive, action: {
+                    isICloudEnabled = false
+                    nextBtnPressed = true
+                })
+
+                Button("Cancel", role: .cancel, action: {
+                    self.showNoBackupWarning = false
+                })
+            } message: {
+                Text("You will not be able to restore your data if no manual backups were made and saved.")
+            }
         }
         .padding(.vertical, 32)
         .padding([.horizontal], 24)
@@ -59,18 +84,6 @@ struct StorageSetupView: View {
         .navigationBarTitleDisplayMode(.inline)
         .navigationDestination(isPresented: $nextBtnPressed) {
             VaultSetupView()
-        }
-        .confirmationDialog("Vault Exists", isPresented: $showICloudOverwriteConfirmation, titleVisibility: .visible) {
-            Button("Continue", role: .destructive, action: {
-                isICloudEnabled = true
-                nextBtnPressed = true
-            })
-
-            Button("Cancel", role: .cancel, action: {
-                self.showICloudOverwriteConfirmation = false
-            })
-        } message: {
-            Text("A vault already exists in iCloud. Are you sure you want to create a new one?")
         }
     }
 }

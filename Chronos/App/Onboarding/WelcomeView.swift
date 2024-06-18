@@ -34,7 +34,7 @@ struct WelcomeView: View {
                 Button {
                     restorePressed = true
                 } label: {
-                    Text("Restore")
+                    Text("Restore from iCloud")
                         .bold()
                         .frame(minWidth: 0, maxWidth: .infinity)
                         .frame(height: 32)

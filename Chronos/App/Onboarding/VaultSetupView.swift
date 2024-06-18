@@ -4,7 +4,9 @@ import SwiftUI
 struct VaultSetupView: View {
     let vaultService = Container.shared.vaultService()
 
-    @State private var vaultName: String = "My Vault"
+    @AppStorage(StateEnum.ICLOUD_BACKUP_ENABLED.rawValue) var isICloudEnabled: Bool = false
+
+    @State private var vaultName: String = ""
     @State private var isCreatingVault: Bool = false
     @State private var nextBtnPressed: Bool = false
 
@@ -25,6 +27,11 @@ struct VaultSetupView: View {
                 TextField("", text: $vaultName)
                     .multilineTextAlignment(.center)
                     .background(Color.clear)
+                    .onAppear {
+                        if vaultName.isEmpty {
+                            vaultName = isICloudEnabled ? "My Vault" : "My Offline Vault"
+                        }
+                    }
             }
             .frame(height: 48)
             .background(Color(.systemGray6))

@@ -14,7 +14,7 @@ struct VaultSetupView: View {
                 .font(.system(size: 44))
                 .padding(.bottom, 16)
 
-            Text("A vault contains all your 2FA Tokens")
+            Text("A vault contains all of your Two-Factor Authentication (2FA) tokens and is secured with your own password.")
                 .fixedSize(horizontal: false, vertical: true)
                 .multilineTextAlignment(.center)
 

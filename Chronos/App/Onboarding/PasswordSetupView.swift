@@ -26,7 +26,7 @@ struct PasswordSetupView: View {
                     .font(.system(size: 44))
                     .padding(.bottom, 16)
 
-                Text("Your master password is used to encrypt your data securely. Choose a memorable, random, and unique password with at least 10 characters.")
+                Text("Your master password is used to securely encrypt your tokens in a vault. Choose a memorable, random, and unique password with at least 10 characters.")
                     .fixedSize(horizontal: false, vertical: true)
                     .multilineTextAlignment(.center)
 

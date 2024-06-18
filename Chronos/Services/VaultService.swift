@@ -27,17 +27,17 @@ public class VaultService {
         }
     }
 
-    func getVault(context: ModelContext? = nil, isRestore: Bool = false) -> Vault? {
+    func getVaultFromCloudContainer() -> Vault? {
         guard let vaultId: UUID = stateService.getVaultId() else {
             logger.error("vaultId not found in AppStorage")
             return nil
         }
 
         let predicate = #Predicate<Vault> { $0.vaultId == vaultId }
-        let _context = context ?? ModelContext(swiftDataService.getModelContainer(isRestore: isRestore))
+        let context = ModelContext(swiftDataService.getCloudModelContainer())
 
         do {
-            let vaultArr = try _context.fetch(FetchDescriptor<Vault>(predicate: predicate))
+            let vaultArr = try context.fetch(FetchDescriptor<Vault>(predicate: predicate))
             if let vault = vaultArr.first {
                 logger.info("Returning vault \(vault.name)")
                 return vault
@@ -53,6 +53,29 @@ public class VaultService {
 }
 
 extension VaultService {
+    private func getVault(context: ModelContext) -> Vault? {
+        guard let vaultId: UUID = stateService.getVaultId() else {
+            logger.error("vaultId not found in AppStorage")
+            return nil
+        }
+
+        let predicate = #Predicate<Vault> { $0.vaultId == vaultId }
+
+        do {
+            let vaultArr = try context.fetch(FetchDescriptor<Vault>(predicate: predicate))
+            if let vault = vaultArr.first {
+                logger.info("Returning vault \(vault.name)")
+                return vault
+            } else {
+                logger.error("No vaults found with the given vaultId")
+                return nil
+            }
+        } catch {
+            logger.error("Failed to fetch vaults: \(error.localizedDescription)")
+            return nil
+        }
+    }
+
     func insertEncryptedToken(_ encryptedToken: EncryptedToken) {
         let context = ModelContext(swiftDataService.getModelContainer())
 

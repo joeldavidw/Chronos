@@ -9,6 +9,20 @@ struct TokenPair: Identifiable {
     var encToken: EncryptedToken
 }
 
+enum TokenSortOrder: String {
+    case ISSUER_ASC
+    case ISSUER_DESC
+    case ACCOUNT_ASC
+    case ACCOUNT_DESC
+}
+
+let sortOptions: [(title: String, criteria: TokenSortOrder)] = [
+    ("Issuer (A - Z)", .ISSUER_ASC),
+    ("Issuer (Z - A)", .ISSUER_DESC),
+    ("Account (A - Z)", .ACCOUNT_ASC),
+    ("Account (Z - A)", .ACCOUNT_DESC),
+]
+
 struct TokensTab: View {
     @Query private var vaults: [Vault]
 
@@ -19,6 +33,7 @@ struct TokensTab: View {
     @State private var selectedTokenForDeletion: Token? = nil
     @State private var selectedTokenForUpdate: Token? = nil
     @State var detentHeight: CGFloat = 0
+    @State var sortCriteria: TokenSortOrder = .ISSUER_ASC
 
     let cryptoService = Container.shared.cryptoService()
     let stateService = Container.shared.stateService()
@@ -36,7 +51,16 @@ struct TokensTab: View {
             return TokenPair(id: encToken.id, token: decryptedToken, encToken: encToken)
         }
         .sorted(by: { token1, token2 in
-            token1.token.issuer.localizedCaseInsensitiveCompare(token2.token.issuer) == .orderedAscending
+            switch sortCriteria {
+            case .ISSUER_ASC:
+                token1.token.issuer.localizedCaseInsensitiveCompare(token2.token.issuer) == .orderedAscending
+            case .ISSUER_DESC:
+                token1.token.issuer.localizedCaseInsensitiveCompare(token2.token.issuer) == .orderedDescending
+            case .ACCOUNT_ASC:
+                token1.token.account.localizedCaseInsensitiveCompare(token2.token.account) == .orderedAscending
+            case .ACCOUNT_DESC:
+                token1.token.account.localizedCaseInsensitiveCompare(token2.token.account) == .orderedDescending
+            }
         }) ?? []
 
         return tokenPairs
@@ -55,6 +79,17 @@ struct TokensTab: View {
                 .navigationTitle("Tokens")
                 .navigationBarTitleDisplayMode(.inline)
                 .toolbar {
+                    Menu {
+                        ForEach(sortOptions, id: \.criteria) { option in
+                            Button(option.title) {
+                                sortCriteria = option.criteria
+                            }
+                        }
+                    } label: {
+                        Label("Sort Order", systemImage: "arrow.up.arrow.down")
+                    }
+                    .menuOrder(.fixed)
+
                     Button {
                         showTokenAddSheet.toggle()
                     } label: {

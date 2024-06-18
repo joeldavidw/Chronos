@@ -1,6 +1,5 @@
 import AlertKit
 import Factory
-import SwiftData
 import SwiftUI
 
 struct PasswordLoginView: View {

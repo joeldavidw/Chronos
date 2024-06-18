@@ -5,7 +5,7 @@ import SwiftUI
 struct WelcomeView: View {
     let swiftDataService = Container.shared.swiftDataService()
 
-    @Query var chronosCryptos: [ChronosCrypto]
+    @Query var vaults: [Vault]
 
     @State private var getStartedPressed: Bool = false
     @State private var restorePressed: Bool = false
@@ -40,7 +40,7 @@ struct WelcomeView: View {
                         .frame(height: 32)
                 }
                 .padding(.top, 4)
-                .disabled(chronosCryptos.isEmpty)
+                .disabled(vaults.isEmpty)
                 .buttonStyle(.borderless)
                 .padding(.bottom, 32)
             }
@@ -52,7 +52,11 @@ struct WelcomeView: View {
                 StorageSetupView()
             }
             .navigationDestination(isPresented: $restorePressed) {
-                RestoreBackupView()
+                if vaults.count == 1 {
+                    RestoreBackupView()
+                } else if vaults.count > 1 {
+                    VaultSelectionView()
+                }
             }
         }
         .onAppear(perform: {

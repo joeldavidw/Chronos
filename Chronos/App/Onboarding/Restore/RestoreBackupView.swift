@@ -60,9 +60,6 @@ struct RestoreBackupView: View {
                     restoreBtnPressed = false
 
                     if passwordVerified {
-                        let vault = vaultService.getFirstVault(isRestore: true)
-                        stateService.setVaultId(vaultId: vault!.vaultId!)
-
                         isICloudEnabled = true
                     } else {
                         passwordInvalid = true

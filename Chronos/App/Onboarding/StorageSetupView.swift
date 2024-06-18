@@ -1,4 +1,5 @@
 import Factory
+import SwiftData
 import SwiftUI
 
 struct StorageSetupView: View {
@@ -57,7 +58,7 @@ struct StorageSetupView: View {
         .navigationTitle("Storage")
         .navigationBarTitleDisplayMode(.inline)
         .navigationDestination(isPresented: $nextBtnPressed) {
-            PasswordSetupView()
+            VaultSetupView()
         }
         .confirmationDialog("Vault Exists", isPresented: $showICloudOverwriteConfirmation, titleVisibility: .visible) {
             Button("Continue", role: .destructive, action: {

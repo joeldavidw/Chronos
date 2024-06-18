@@ -10,10 +10,11 @@ struct AuthenticationView: View {
         Group {
             if !stateOnboardingCompleted {
                 WelcomeView()
+                    // Defaults to a cloud container for SwiftUI on the first load. Allows SwiftData in SwiftUI to retrieve vaults from CloudKit.
+                    .modelContainer(swiftDataService.getCloudModelContainer())
             } else {
                 PasswordLoginView()
             }
         }
-        .modelContainer(swiftDataService.getCloudModelContainer())
     }
 }

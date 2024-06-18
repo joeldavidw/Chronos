@@ -13,6 +13,8 @@ struct PasswordSetupView: View {
 
     @FocusState private var focusedField: FocusedField?
 
+    let vaultName: String
+
     let cryptoService = Container.shared.cryptoService()
     let stateService = Container.shared.stateService()
     let vaultService = Container.shared.vaultService()
@@ -24,7 +26,7 @@ struct PasswordSetupView: View {
                     .font(.system(size: 44))
                     .padding(.bottom, 16)
 
-                Text("Your master password is used to encrypt your data securely. Choose a memorable, random, and unique password with at least 10 characters.")
+                Text("Your master password is used to securely encrypt your tokens in a vault. Choose a memorable, random, and unique password with at least 10 characters.")
                     .fixedSize(horizontal: false, vertical: true)
                     .multilineTextAlignment(.center)
 
@@ -100,10 +102,7 @@ extension PasswordSetupView {
 
         let chronosCrypto = await cryptoService.wrapMasterKeyWithUserPassword(password: Array(password.utf8))
 
-        let vault = vaultService.createVault(chronosCrypto: chronosCrypto)!
-        stateService.setVaultId(vaultId: vault.vaultId!)
-
-        nextBtnPressed = true
+        nextBtnPressed = vaultService.createVaultCrypto(vaultName: vaultName, chronosCrypto: chronosCrypto)
     }
 }
 

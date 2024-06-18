@@ -42,7 +42,7 @@ public class CryptoService {
     }
 
     func unwrapMasterKeyWithUserPassword(password: [UInt8], isRestore: Bool = false) async -> Bool {
-        guard let vault = vaultService.getFirstVault(isRestore: isRestore) else {
+        guard let vault = vaultService.getVault(context: nil, isRestore: isRestore) else {
             return false
         }
 

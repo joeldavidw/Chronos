@@ -57,7 +57,7 @@ struct StorageSetupView: View {
         .navigationTitle("Storage")
         .navigationBarTitleDisplayMode(.inline)
         .navigationDestination(isPresented: $nextBtnPressed) {
-            PasswordSetupView()
+            VaultSetupView()
         }
         .confirmationDialog("Vault Exists", isPresented: $showICloudOverwriteConfirmation, titleVisibility: .visible) {
             Button("Continue", role: .destructive, action: {

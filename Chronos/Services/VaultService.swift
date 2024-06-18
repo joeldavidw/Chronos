@@ -9,59 +9,46 @@ public class VaultService {
     private let stateService = Container.shared.stateService()
     private let swiftDataService = Container.shared.swiftDataService()
 
-    func createVault(chronosCrypto: ChronosCrypto) -> Vault? {
+    func createVaultCrypto(vaultName: String, chronosCrypto: ChronosCrypto) -> Bool {
         let context = ModelContext(swiftDataService.getModelContainer())
-
-        let vault = Vault(vaultId: UUID(), createdAt: Date())
-
+        let vault = Vault(vaultId: UUID(), name: vaultName, createdAt: Date())
         vault.chronosCryptos = [chronosCrypto]
-
         context.insert(vault)
 
         do {
             try context.save()
-            logger.info("Successfully saved vault")
+            logger.info("Successfully saved vault with chronosCrypto")
 
-            return vault
+            stateService.setVaultId(vaultId: vault.vaultId!)
+            return true
         } catch {
             logger.error("Failed to save context: \(error.localizedDescription)")
-            return nil
+            return false
         }
     }
 
-    // TODO(joeldavidw): Selects first vault for now. Selection page should be shown if there are more than one vault.
-    func getFirstVault(isRestore: Bool) -> Vault? {
-        let context = ModelContext(swiftDataService.getModelContainer(isRestore: isRestore))
-
-        guard let vaultArr = try? context.fetch(FetchDescriptor<Vault>(sortBy: [SortDescriptor(\.createdAt)])) else {
-            logger.error("No vaults found")
-            return nil
-        }
-
-        guard let vault = vaultArr.first else {
-            logger.error("Empty vaultArr")
-            return nil
-        }
-
-        return vault
-    }
-
-    func getVault() -> Vault? {
+    func getVault(context: ModelContext? = nil, isRestore: Bool = false) -> Vault? {
         guard let vaultId: UUID = stateService.getVaultId() else {
             logger.error("vaultId not found in AppStorage")
             return nil
         }
 
-        let context = ModelContext(swiftDataService.getModelContainer())
-
         let predicate = #Predicate<Vault> { $0.vaultId == vaultId }
+        let _context = context ?? ModelContext(swiftDataService.getModelContainer(isRestore: isRestore))
 
-        guard let vaultArr = try? context.fetch(FetchDescriptor<Vault>(predicate: predicate)) else {
-            logger.error("No vaults found")
+        do {
+            let vaultArr = try _context.fetch(FetchDescriptor<Vault>(predicate: predicate))
+            if let vault = vaultArr.first {
+                logger.info("Returning vault \(vault.name)")
+                return vault
+            } else {
+                logger.error("No vaults found with the given vaultId")
+                return nil
+            }
+        } catch {
+            logger.error("Failed to fetch vaults: \(error.localizedDescription)")
             return nil
         }
-
-        return vaultArr.first
     }
 }
 
@@ -69,7 +56,7 @@ extension VaultService {
     func insertEncryptedToken(_ encryptedToken: EncryptedToken) {
         let context = ModelContext(swiftDataService.getModelContainer())
 
-        let vault = getVault()!
+        let vault = getVault(context: context)!
 
         vault.encryptedTokens?.append(encryptedToken)
 
@@ -86,7 +73,7 @@ extension VaultService {
     func deleteEncryptedToken(_ encryptedToken: EncryptedToken) {
         let context = ModelContext(swiftDataService.getModelContainer())
 
-        let vault = getVault()!
+        let vault = getVault(context: context)!
 
         vault.encryptedTokens?.append(encryptedToken)
 

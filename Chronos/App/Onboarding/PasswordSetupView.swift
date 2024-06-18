@@ -13,6 +13,8 @@ struct PasswordSetupView: View {
 
     @FocusState private var focusedField: FocusedField?
 
+    let vaultName: String
+
     let cryptoService = Container.shared.cryptoService()
     let stateService = Container.shared.stateService()
     let vaultService = Container.shared.vaultService()
@@ -100,10 +102,7 @@ extension PasswordSetupView {
 
         let chronosCrypto = await cryptoService.wrapMasterKeyWithUserPassword(password: Array(password.utf8))
 
-        let vault = vaultService.createVault(chronosCrypto: chronosCrypto)!
-        stateService.setVaultId(vaultId: vault.vaultId!)
-
-        nextBtnPressed = true
+        nextBtnPressed = vaultService.createVaultCrypto(vaultName: vaultName, chronosCrypto: chronosCrypto)
     }
 }
 

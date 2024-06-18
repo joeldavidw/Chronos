@@ -4,7 +4,7 @@ import SwiftData
 import SwiftUI
 
 struct VaultSelectionView: View {
-    @Query var vaults: [Vault]
+    @Query(sort: \Vault.createdAt) var vaults: [Vault]
 
     @State private var moveToNextScreen: Bool = false
 

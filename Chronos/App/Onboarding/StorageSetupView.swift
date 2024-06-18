@@ -3,8 +3,6 @@ import SwiftData
 import SwiftUI
 
 struct StorageSetupView: View {
-    @Query var vaults: [Vault]
-
     @State private var iCloudBtnPressed: Bool = false
     @State private var showICloudOverwriteConfirmation: Bool = false
     @State private var nextBtnPressed: Bool = false
@@ -27,7 +25,7 @@ struct StorageSetupView: View {
             Spacer()
 
             Button {
-                if !vaults.isEmpty {
+                if swiftDataService.doesICloudBackupExist() {
                     showICloudOverwriteConfirmation = true
                 } else {
                     isICloudEnabled = true

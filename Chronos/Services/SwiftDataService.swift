@@ -62,6 +62,14 @@ public class SwiftDataService {
 }
 
 extension SwiftDataService {
+    func doesICloudBackupExist() -> Bool {
+        let container = getCloudModelContainer()
+        let context = ModelContext(container)
+        let vaults = try! context.fetch(FetchDescriptor<Vault>())
+
+        return !vaults.isEmpty
+    }
+
     func deleteLocallyPersistedChronosData() {
         getLocalModelContainer().deleteAllData()
         getCloudModelContainer().deleteAllData()

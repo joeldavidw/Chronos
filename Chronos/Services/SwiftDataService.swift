@@ -72,7 +72,6 @@ extension SwiftDataService {
 
     func deleteLocallyPersistedChronosData() {
         getLocalModelContainer().deleteAllData()
-        getCloudModelContainer().deleteAllData()
         resetModelContainers()
     }
 }

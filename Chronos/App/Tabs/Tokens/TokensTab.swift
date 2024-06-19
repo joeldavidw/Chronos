@@ -88,8 +88,14 @@ struct TokensTab: View {
                 .toolbar {
                     Menu {
                         ForEach(sortOptions, id: \.criteria) { option in
-                            Button(option.title) {
+                            Button {
                                 sortCriteria = option.criteria
+                            } label: {
+                                if sortCriteria == option.criteria {
+                                    Label(option.title, systemImage: "checkmark")
+                                } else {
+                                    Text(option.title)
+                                }
                             }
                         }
                     } label: {

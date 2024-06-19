@@ -26,6 +26,8 @@ let sortOptions: [(title: String, criteria: TokenSortOrder)] = [
 struct TokensTab: View {
     @Query private var vaults: [Vault]
 
+    @EnvironmentObject var loginStatus: LoginStatus
+
     @State private var showTokenAddSheet = false
     @State private var showTokenUpdateSheet = false
     @State private var showTokenDeleteSheet = false
@@ -39,6 +41,11 @@ struct TokensTab: View {
     let stateService = Container.shared.stateService()
 
     private var tokenPairs: [TokenPair] {
+        // This is necessary because tokenPairs is a computed property. It gets recomputed whenever stateService changes, such as when stateService.masterKey gets cleared.
+        if !loginStatus.loggedIn {
+            return []
+        }
+
         let vaultId = stateService.getVaultId()
         guard let vault = vaults.filter({ $0.vaultId == vaultId }).first else {
             return []

@@ -16,7 +16,7 @@ struct VaultSetupView: View {
                 .font(.system(size: 44))
                 .padding(.bottom, 16)
 
-            Text("A vault contains all of your Two-Factor Authentication (2FA) tokens and is secured with your own password.")
+            Text("An online vault contains all of your Two-Factor Authentication (2FA) tokens and is secured with your own password.")
                 .fixedSize(horizontal: false, vertical: true)
                 .multilineTextAlignment(.center)
 
@@ -61,7 +61,7 @@ struct VaultSetupView: View {
         .padding(.vertical, 32)
         .padding(.horizontal, 24)
         .background(Color(red: 0.04, green: 0, blue: 0.11).ignoresSafeArea())
-        .navigationTitle("Vault")
+        .navigationTitle("Online Vault")
         .navigationBarTitleDisplayMode(.inline)
         .navigationDestination(isPresented: $nextBtnPressed) {
             PasswordSetupView(vaultName: vaultName)

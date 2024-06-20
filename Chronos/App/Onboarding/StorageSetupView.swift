@@ -3,6 +3,8 @@ import SwiftData
 import SwiftUI
 
 struct StorageSetupView: View {
+    @Query var vaults: [Vault]
+
     @State private var iCloudBtnPressed: Bool = false
     @State private var showICloudOverwriteConfirmation: Bool = false
     @State private var showNoBackupWarning: Bool = false
@@ -83,7 +85,15 @@ struct StorageSetupView: View {
         .navigationTitle("Storage")
         .navigationBarTitleDisplayMode(.inline)
         .navigationDestination(isPresented: $nextBtnPressed) {
-            VaultSetupView()
+            if (isICloudEnabled) {
+                if !vaults.isEmpty {
+                    VaultSetupView()
+                } else {
+                    PasswordSetupView(vaultName: "My Vault")
+                }
+            } else {
+                PasswordSetupView(vaultName: "My Offline Vault")
+            }
         }
     }
 }

@@ -9,7 +9,9 @@ struct StorageSetupView: View {
     @State private var iCloudBtnPressed: Bool = false
     @State private var showICloudOverwriteConfirmation: Bool = false
     @State private var showNoBackupWarning: Bool = false
+    @State private var showIcloudVaultDeletionWarning: Bool = false
     @State private var nextBtnPressed: Bool = false
+    @State private var restoreBtnPressed: Bool = false
     @State private var showICloudUnavailableDialog: Bool = false
 
     @ObservedObject var syncMonitor = SyncMonitor.shared
@@ -75,17 +77,35 @@ struct StorageSetupView: View {
                 .padding(.top, 64)
                 .buttonStyle(.borderedProminent)
                 .confirmationDialog("Vault Exists", isPresented: $showICloudOverwriteConfirmation, titleVisibility: .visible) {
-                    Button("Continue", role: .destructive, action: {
-                        isICloudEnabled = true
-                        nextBtnPressed = true
+                    Button("Restore", action: {
+                        restoreBtnPressed = true
+                    })
+
+                    Button("Delete & Continue", role: .destructive, action: {
+                        showIcloudVaultDeletionWarning = true
                     })
 
                     Button("Cancel", role: .cancel, action: {
                         self.showICloudOverwriteConfirmation = false
                     })
                 } message: {
-                    Text("A vault already exists in iCloud. Are you sure you want to create a new one?")
+                    Text("A vault already exists in iCloud. Would you like to restore your previous vault or delete your existing vault(s)?")
                         .foregroundStyle(.white)
+                }
+                .confirmationDialog("Are you sure?", isPresented: $showIcloudVaultDeletionWarning, titleVisibility: .visible) {
+                    Button("Delete & Continue", role: .destructive, action: {
+                        Task {
+                            swiftDataService.permentalyDeleteAllIcloudData()
+                            isICloudEnabled = true
+                            nextBtnPressed = true
+                        }
+                    })
+
+                    Button("Cancel", role: .cancel, action: {
+                        self.showIcloudVaultDeletionWarning = false
+                    })
+                } message: {
+                    Text("All existing data in iCloud will be delete. Are you sure you want to delete all data?")
                 }
             }
 
@@ -126,6 +146,9 @@ struct StorageSetupView: View {
             } else {
                 PasswordSetupView(vaultName: "My Offline Vault")
             }
+        }
+        .navigationDestination(isPresented: $restoreBtnPressed) {
+            RestoreBackupView()
         }
     }
 }

@@ -74,4 +74,13 @@ extension SwiftDataService {
         getLocalModelContainer().deleteAllData()
         resetModelContainers()
     }
+
+    func permentalyDeleteAllIcloudData() {
+        let container = getCloudModelContainer()
+        let context = ModelContext(container)
+        let vaults = try! context.fetch(FetchDescriptor<Vault>())
+        for vault in vaults {
+            context.delete(vault)
+        }
+    }
 }

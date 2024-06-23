@@ -138,11 +138,7 @@ struct StorageSetupView: View {
         .navigationBarTitleDisplayMode(.inline)
         .navigationDestination(isPresented: $nextBtnPressed) {
             if isICloudEnabled {
-                if !vaults.isEmpty {
-                    VaultSetupView()
-                } else {
-                    PasswordSetupView(vaultName: "My Vault")
-                }
+                PasswordSetupView(vaultName: "My Vault")
             } else {
                 PasswordSetupView(vaultName: "My Offline Vault")
             }

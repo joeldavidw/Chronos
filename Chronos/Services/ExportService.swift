@@ -7,6 +7,7 @@ public class ExportService {
     private let logger = Logger(label: "ExportService")
     private let swiftDataService = Container.shared.swiftDataService()
     private let cryptoService = Container.shared.cryptoService()
+    private let vaultService = Container.shared.vaultService()
 
     private let verbatimStyle = Date.VerbatimFormatStyle(
         format: "\(day: .twoDigits)-\(month: .twoDigits)-\(year: .defaultDigits)",
@@ -16,31 +17,21 @@ public class ExportService {
 
     func exportToUnencryptedJson() -> URL? {
         let context = ModelContext(swiftDataService.getModelContainer())
-        let encryptedTokenArr = try! context.fetch(FetchDescriptor<EncryptedToken>())
+        let vault = vaultService.getVault(context: context)
 
         let exportVault = ExportVault()
 
         var tokens: [Token] = []
-        var errors: [String] = []
 
-        var numOfTokenFailedToDecode = 0
-
-        for encToken in encryptedTokenArr {
+        for encToken in vault!.encryptedTokens! {
             guard let token = cryptoService.decryptToken(encryptedToken: encToken) else {
                 logger.error("Unable to decode token")
-                numOfTokenFailedToDecode += 1
                 continue
             }
             tokens.append(token)
         }
 
-        if numOfTokenFailedToDecode != 0 {
-            logger.error("\(numOfTokenFailedToDecode) out of \(encryptedTokenArr.count) tokens failed to be export")
-            errors.append("\(numOfTokenFailedToDecode) out of \(encryptedTokenArr.count) tokens failed to be export")
-        }
-
         exportVault.tokens = tokens
-        exportVault.errors = errors
 
         let url = FileManager.default.temporaryDirectory
             .appendingPathComponent("Chronos_" + Date().formatted(verbatimStyle))

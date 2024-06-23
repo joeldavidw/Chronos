@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		6B12B0A02C19DB7800E9ED2D /* ExportService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B12B09F2C19DB7800E9ED2D /* ExportService.swift */; };
 		6B12B0A22C19F1E600E9ED2D /* ExportVault.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B12B0A12C19F1E600E9ED2D /* ExportVault.swift */; };
+		6B193C8A2C27F03300E759B7 /* CloudKitSyncMonitor in Frameworks */ = {isa = PBXBuildFile; productRef = 6B193C892C27F03300E759B7 /* CloudKitSyncMonitor */; };
 		6B19CA722B7A70B800690390 /* WelcomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B19CA712B7A70B800690390 /* WelcomeView.swift */; };
 		6B19CA742B7A769900690390 /* PasswordSetupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B19CA732B7A769900690390 /* PasswordSetupView.swift */; };
 		6B2583AF2B96048700938F3A /* SettingsTab.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B2583AE2B96048700938F3A /* SettingsTab.swift */; };
@@ -112,6 +113,7 @@
 				6B66D5ED2B526648006DB79D /* CodeScanner in Frameworks */,
 				6B7383E02B9C3962008E8867 /* Factory in Frameworks */,
 				6B3C7A3D2BE9E0600043FEBD /* Logging in Frameworks */,
+				6B193C8A2C27F03300E759B7 /* CloudKitSyncMonitor in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -343,6 +345,7 @@
 				6B8ABEEB2B8F6A4F00F5B514 /* CryptoSwift */,
 				6B7383DF2B9C3962008E8867 /* Factory */,
 				6B3C7A3C2BE9E0600043FEBD /* Logging */,
+				6B193C892C27F03300E759B7 /* CloudKitSyncMonitor */,
 			);
 			productName = Chronos;
 			productReference = 6B3BB0AD2B4EA87C00DCEF0B /* Chronos.app */;
@@ -380,6 +383,7 @@
 				6B8ABEEA2B8F6A4F00F5B514 /* XCRemoteSwiftPackageReference "CryptoSwift" */,
 				6B7383DE2B9C3962008E8867 /* XCRemoteSwiftPackageReference "Factory" */,
 				6B3C7A3B2BE9E0600043FEBD /* XCRemoteSwiftPackageReference "swift-log" */,
+				6B193C882C27F03300E759B7 /* XCRemoteSwiftPackageReference "CloudKitSyncMonitor" */,
 			);
 			productRefGroup = 6B3BB0AE2B4EA87C00DCEF0B /* Products */;
 			projectDirPath = "";
@@ -707,6 +711,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		6B193C882C27F03300E759B7 /* XCRemoteSwiftPackageReference "CloudKitSyncMonitor" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/ggruen/CloudKitSyncMonitor";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.3.1;
+			};
+		};
 		6B35A4C72B557EE50004D4C5 /* XCRemoteSwiftPackageReference "AlertKit" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/sparrowcode/AlertKit";
@@ -766,6 +778,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		6B193C892C27F03300E759B7 /* CloudKitSyncMonitor */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 6B193C882C27F03300E759B7 /* XCRemoteSwiftPackageReference "CloudKitSyncMonitor" */;
+			productName = CloudKitSyncMonitor;
+		};
 		6B35A4C82B557EE50004D4C5 /* AlertKit */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 6B35A4C72B557EE50004D4C5 /* XCRemoteSwiftPackageReference "AlertKit" */;

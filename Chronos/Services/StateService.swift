@@ -9,6 +9,7 @@ enum StateEnum: String {
     case ONBOARDING_COMPLETED
 
     case LAST_BIOMETRICS_AUTH_ATTEMPT
+    case LAST_ICLOUD_SYNC
 }
 
 public class StateService {
@@ -36,6 +37,7 @@ public class StateService {
         defaults.setValue(false, forKey: StateEnum.ONBOARDING_COMPLETED.rawValue)
 
         defaults.setValue(Date().timeIntervalSince1970, forKey: StateEnum.LAST_BIOMETRICS_AUTH_ATTEMPT.rawValue)
+        defaults.setValue(Date().timeIntervalSince1970, forKey: StateEnum.LAST_ICLOUD_SYNC.rawValue)
 
         masterKey.clear()
     }

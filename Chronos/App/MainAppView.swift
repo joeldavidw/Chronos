@@ -11,6 +11,8 @@ struct MainAppView: View {
     @Environment(\.scenePhase) private var scenePhase
     @EnvironmentObject var loginStatus: LoginStatus
 
+    @AppStorage(StateEnum.LAST_ICLOUD_SYNC.rawValue) var lastIcloudSync: TimeInterval = 0
+
     private let stateService = Container.shared.stateService()
 
     private var filteredVault: [Vault] {

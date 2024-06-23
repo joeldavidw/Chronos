@@ -99,6 +99,7 @@ struct WelcomeView: View {
             if syncMonitor.syncStateSummary == .succeeded {
                 syncTimer = Timer.scheduledTimer(withTimeInterval: 2, repeats: false) { _ in
                     hasSynced = true
+                    iCloudSyncLastAttempt = Date().timeIntervalSince1970
                 }
             }
         })

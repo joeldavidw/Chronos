@@ -56,10 +56,6 @@ struct WelcomeView: View {
                     } else {
                         if hasSynced {
                             Button(action: {
-                                if vaults.count == 1 {
-                                    stateService.setVaultId(vaultId: vaults.first!.vaultId!)
-                                }
-
                                 restorePressed = true
                             }) {
                                 Text("Restore from iCloud")

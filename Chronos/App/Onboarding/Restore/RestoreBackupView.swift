@@ -1,4 +1,5 @@
 import Factory
+import SwiftData
 import SwiftUI
 
 struct RestoreBackupView: View {
@@ -7,6 +8,8 @@ struct RestoreBackupView: View {
     @State private var passwordVerified: Bool = false
     @State private var passwordInvalid: Bool = false
     @State private var backupExists: Bool = false
+
+    @Query var vaults: [Vault]
 
     @AppStorage(StateEnum.ICLOUD_BACKUP_ENABLED.rawValue) var isICloudEnabled: Bool = false
 
@@ -53,6 +56,12 @@ struct RestoreBackupView: View {
             Spacer()
 
             Button {
+                // Defaults to the first vault if the user is not coming from VaultSelectionView.
+                // Users will only come from VaultSelectionView if there are multiple vaults.
+                if vaults.count == 1 {
+                    stateService.setVaultId(vaultId: vaults.first!.vaultId!)
+                }
+
                 restoreBtnPressed = true
 
                 Task {

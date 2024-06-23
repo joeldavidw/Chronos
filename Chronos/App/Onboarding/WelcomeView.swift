@@ -1,3 +1,4 @@
+import CloudKitSyncMonitor
 import Factory
 import SwiftData
 import SwiftUI
@@ -7,11 +8,18 @@ struct WelcomeView: View {
 
     @Query var vaults: [Vault]
 
+    @ObservedObject var syncMonitor = SyncMonitor.shared
+
     @State private var getStartedPressed: Bool = false
     @State private var restorePressed: Bool = false
 
+    @State private var hasSynced: Bool = false
+    @State private var syncTimer: Timer?
+    @State private var showICloudUnavailableDialog: Bool = false
+
     @AppStorage(StateEnum.BIOMETRICS_AUTH_ENABLED.rawValue) var stateBiometricsAuth: Bool = false
     @AppStorage(StateEnum.ONBOARDING_COMPLETED.rawValue) var stateOnboardingCompleted: Bool = false
+    @AppStorage(StateEnum.ICLOUD_SYNC_LAST_ATTEMPT.rawValue) var iCloudSyncLastAttempt: TimeInterval = 0
 
     var body: some View {
         NavigationStack {
@@ -31,17 +39,37 @@ struct WelcomeView: View {
                 }
                 .buttonStyle(.bordered)
 
-                Button {
-                    restorePressed = true
-                } label: {
-                    Text("Restore from iCloud")
-                        .bold()
-                        .frame(minWidth: 0, maxWidth: .infinity)
-                        .frame(height: 32)
+                Group {
+                    if syncMonitor.syncStateSummary.isBroken || syncMonitor.syncStateSummary == .accountNotAvailable || syncMonitor.syncStateSummary == .noNetwork {
+                        Button(action: {
+                            showICloudUnavailableDialog = true
+                        }) {
+                            Text("iCloud Unavailable")
+                                .bold()
+                        }
+                        .buttonStyle(.borderless)
+                        .opacity(0.4)
+                        .confirmationDialog("iCloud Unavailable", isPresented: $showICloudUnavailableDialog, titleVisibility: .visible) {} message: {
+                            Text("Unable to access iCloud due to the following error: \(syncMonitor.syncStateSummary.description)")
+                        }
+                    } else {
+                        if hasSynced {
+                            Button(action: {
+                                restorePressed = true
+                            }) {
+                                Text("Restore from iCloud")
+                                    .bold()
+                            }
+                            .disabled(vaults.isEmpty)
+                            .buttonStyle(.borderless)
+                        } else {
+                            ProgressView()
+                        }
+                    }
                 }
+                .frame(minWidth: 0, maxWidth: .infinity)
+                .frame(height: 32)
                 .padding(.top, 4)
-                .disabled(vaults.isEmpty)
-                .buttonStyle(.borderless)
                 .padding(.bottom, 32)
             }
             .padding([.horizontal], 24)
@@ -61,10 +89,17 @@ struct WelcomeView: View {
         }
         .onAppear(perform: {
             swiftDataService.resetModelContainers()
+            iCloudSyncLastAttempt = 0
         })
-    }
-}
+        .onChange(of: syncMonitor.syncStateSummary) { _, newValue in
+            syncTimer?.invalidate()
 
-#Preview {
-    WelcomeView()
+            if newValue == .succeeded {
+                syncTimer = Timer.scheduledTimer(withTimeInterval: 0.8, repeats: false) { _ in
+                    hasSynced = true
+                    iCloudSyncLastAttempt = Date().timeIntervalSince1970
+                }
+            }
+        }
+    }
 }

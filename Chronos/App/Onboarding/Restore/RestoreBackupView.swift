@@ -40,6 +40,10 @@ struct RestoreBackupView: View {
                     .multilineTextAlignment(.center)
                     .background(Color.clear)
                     .focused($focusedField, equals: .password)
+                    .submitLabel(.done)
+                    .onSubmit {
+                        doSubmit()
+                    }
             }
             .frame(height: 48)
             .background(Color(.systemGray6))
@@ -56,25 +60,7 @@ struct RestoreBackupView: View {
             Spacer()
 
             Button {
-                // Defaults to the first vault if the user is not coming from VaultSelectionView.
-                // Users will only come from VaultSelectionView if there are multiple vaults.
-                if vaults.count == 1 {
-                    stateService.setVaultId(vaultId: vaults.first!.vaultId!)
-                }
-
-                restoreBtnPressed = true
-
-                Task {
-                    passwordVerified = await cryptoService.unwrapMasterKeyWithUserPassword(password: Array(password.utf8), isRestore: true)
-                    restoreBtnPressed = false
-
-                    if passwordVerified {
-                        isICloudEnabled = true
-                    } else {
-                        passwordInvalid = true
-                        UINotificationFeedbackGenerator().notificationOccurred(.error)
-                    }
-                }
+                doSubmit()
             } label: {
                 if !restoreBtnPressed {
                     Text("Next")
@@ -101,6 +87,29 @@ struct RestoreBackupView: View {
         .background(Color(red: 0.04, green: 0, blue: 0.11).ignoresSafeArea())
         .onAppear {
             focusedField = .password
+        }
+    }
+
+    func doSubmit() {
+        // Defaults to the first vault if the user is not coming from VaultSelectionView.
+        // Users will only come from VaultSelectionView if there are multiple vaults.
+        if vaults.count == 1 {
+            stateService.setVaultId(vaultId: vaults.first!.vaultId!)
+        }
+
+        restoreBtnPressed = true
+
+        Task {
+            passwordVerified = await cryptoService.unwrapMasterKeyWithUserPassword(password: Array(password.utf8), isRestore: true)
+            restoreBtnPressed = false
+
+            if passwordVerified {
+                isICloudEnabled = true
+                await UINotificationFeedbackGenerator().notificationOccurred(.success)
+            } else {
+                passwordInvalid = true
+                await UINotificationFeedbackGenerator().notificationOccurred(.error)
+            }
         }
     }
 }

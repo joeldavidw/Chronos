@@ -10,6 +10,8 @@ struct PasswordSetupView: View {
     @State private var verifyPassword: String = ""
     @State private var nextBtnPressed: Bool = false
     @State private var isEncrypting: Bool = false
+    @State private var passwordInvalidMsg: String = ""
+    @State private var isPasswordValid: Bool = false
 
     @FocusState private var focusedField: FocusedField?
 
@@ -38,6 +40,13 @@ struct PasswordSetupView: View {
                         .multilineTextAlignment(.center)
                         .background(Color.clear)
                         .focused($focusedField, equals: .password)
+                        .submitLabel(.next)
+                        .onSubmit {
+                            focusedField = .verifyPassword
+                        }
+                        .onChange(of: password) { _, _ in
+                            validatePasswords()
+                        }
                 }
                 .frame(height: 48)
                 .background(Color(.systemGray6))
@@ -50,19 +59,30 @@ struct PasswordSetupView: View {
                         .multilineTextAlignment(.center)
                         .background(Color.clear)
                         .focused($focusedField, equals: .verifyPassword)
+                        .submitLabel(.done)
+                        .onSubmit {
+                            doSubmit()
+                        }
+                        .onChange(of: verifyPassword) { _, _ in
+                            validatePasswords()
+                        }
                 }
                 .frame(height: 48)
                 .background(Color(.systemGray6))
                 .cornerRadius(8)
 
+                if !isPasswordValid {
+                    Text(passwordInvalidMsg)
+                        .multilineTextAlignment(.center)
+                        .foregroundStyle(.red)
+                        .font(.subheadline)
+                        .padding(.top, 4)
+                }
+
                 Spacer()
 
                 Button {
-                    isEncrypting = true
-
-                    Task {
-                        await generateAndEncryptMasterKey()
-                    }
+                    doSubmit()
                 } label: {
                     if !isEncrypting {
                         Text("Next")
@@ -94,6 +114,18 @@ struct PasswordSetupView: View {
             focusedField = .password
         }
     }
+
+    func doSubmit() {
+        if !isPasswordValid {
+            UINotificationFeedbackGenerator().notificationOccurred(.error)
+            return
+        }
+
+        isEncrypting = true
+        Task {
+            await generateAndEncryptMasterKey()
+        }
+    }
 }
 
 extension PasswordSetupView {
@@ -102,22 +134,27 @@ extension PasswordSetupView {
 
         let chronosCrypto = await cryptoService.wrapMasterKeyWithUserPassword(password: Array(password.utf8))
 
-        nextBtnPressed = vaultService.createVaultCrypto(vaultName: vaultName, chronosCrypto: chronosCrypto)
+        let success = vaultService.createVaultCrypto(vaultName: vaultName, chronosCrypto: chronosCrypto)
+
+        if success {
+            await UINotificationFeedbackGenerator().notificationOccurred(.success)
+        }
+
+        nextBtnPressed = success
     }
 }
 
 extension PasswordSetupView {
-    var isPasswordValid: Bool {
-        var valid = true
-
-        if password != verifyPassword {
-            valid = false
-        }
-
+    private func validatePasswords() {
         if password.count < 10 {
-            valid = false
+            isPasswordValid = false
+            passwordInvalidMsg = "Passwords must be at least 10 characters long"
+        } else if password != verifyPassword {
+            isPasswordValid = false
+            passwordInvalidMsg = "Passwords do not match"
+        } else {
+            isPasswordValid = true
+            passwordInvalidMsg = ""
         }
-
-        return valid
     }
 }

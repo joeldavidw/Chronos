@@ -33,6 +33,10 @@ struct PasswordLoginView: View {
                         .background(Color.clear)
                         .focused($focusedField, equals: .password)
                         .disabled(loginPressed)
+                        .submitLabel(.done)
+                        .onSubmit {
+                            doSubmit()
+                        }
 
                     if stateBiometricsAuth {
                         Button {
@@ -59,26 +63,7 @@ struct PasswordLoginView: View {
             }
 
             Button {
-                loginPressed = true
-                focusedField = nil
-
-                Task {
-                    let passwordVerified = await cryptoService.unwrapMasterKeyWithUserPassword(password: Array(password.utf8))
-
-                    if passwordVerified {
-                        loginStatus.loggedIn = true
-                    } else {
-                        loginPressed = false
-                        passwordInvalid = true
-
-                        DispatchQueue.main.asyncAfter(deadline: .now()) {
-                            focusedField = .password
-                        }
-
-                        let notificationGenerator = UINotificationFeedbackGenerator()
-                        notificationGenerator.notificationOccurred(.error)
-                    }
-                }
+                doSubmit()
             } label: {
                 if !loginPressed {
                     Text("Login")
@@ -113,6 +98,30 @@ struct PasswordLoginView: View {
 }
 
 extension PasswordLoginView {
+    func doSubmit() {
+        loginPressed = true
+        focusedField = nil
+
+        Task {
+            let passwordVerified = await cryptoService.unwrapMasterKeyWithUserPassword(password: Array(password.utf8))
+
+            if passwordVerified {
+                loginStatus.loggedIn = true
+
+                UINotificationFeedbackGenerator().notificationOccurred(.success)
+            } else {
+                loginPressed = false
+                passwordInvalid = true
+
+                DispatchQueue.main.asyncAfter(deadline: .now()) {
+                    focusedField = .password
+                }
+
+                UINotificationFeedbackGenerator().notificationOccurred(.error)
+            }
+        }
+    }
+
     func biometricsAuthLogin() {
         stateLastBiometricsAuthAttempt = Date().timeIntervalSince1970
 

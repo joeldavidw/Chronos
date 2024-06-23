@@ -53,7 +53,7 @@ public class VaultService {
 }
 
 extension VaultService {
-    private func getVault(context: ModelContext) -> Vault? {
+    func getVault(context: ModelContext) -> Vault? {
         guard let vaultId: UUID = stateService.getVaultId() else {
             logger.error("vaultId not found in AppStorage")
             return nil

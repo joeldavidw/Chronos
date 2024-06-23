@@ -14,7 +14,7 @@ struct MainAppView: View {
 
     @ObservedObject var syncMonitor = SyncMonitor.shared
 
-    @AppStorage(StateEnum.ICLOUD_SYNC_LAST_ATTEMPT.rawValue) var iCloudSyncLastAttempt: TimeInterval = Date().timeIntervalSince1970
+    @AppStorage(StateEnum.ICLOUD_SYNC_LAST_ATTEMPT.rawValue) var iCloudSyncLastAttempt: TimeInterval = 0
 
     private let stateService = Container.shared.stateService()
 

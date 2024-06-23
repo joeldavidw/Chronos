@@ -1,3 +1,4 @@
+import CloudKitSyncMonitor
 import Factory
 import SwiftData
 import SwiftUI
@@ -9,10 +10,14 @@ struct StorageSetupView: View {
     @State private var showICloudOverwriteConfirmation: Bool = false
     @State private var showNoBackupWarning: Bool = false
     @State private var nextBtnPressed: Bool = false
+    @State private var showICloudUnavailableDialog: Bool = false
+
+    @ObservedObject var syncMonitor = SyncMonitor.shared
 
     @FocusState private var focusedField: FocusedField?
 
     @AppStorage(StateEnum.ICLOUD_BACKUP_ENABLED.rawValue) var isICloudEnabled: Bool = false
+    @AppStorage(StateEnum.ICLOUD_SYNC_LAST_ATTEMPT.rawValue) var iCloudSyncLastAttempt: TimeInterval = 0
 
     let swiftDataService = Container.shared.swiftDataService()
 
@@ -27,34 +32,61 @@ struct StorageSetupView: View {
 
             Spacer()
 
-            Button {
-                if swiftDataService.doesICloudBackupExist() {
-                    showICloudOverwriteConfirmation = true
-                } else {
-                    isICloudEnabled = true
-                    nextBtnPressed = true
+            if syncMonitor.syncStateSummary.isBroken || syncMonitor.syncStateSummary == .accountNotAvailable || syncMonitor.syncStateSummary == .noNetwork {
+                Button(action: {
+                    showICloudUnavailableDialog = true
+                }) {
+                    Text("iCloud Unavailable")
+                        .foregroundStyle(Color(red: 0.04, green: 0, blue: 0.11))
+                        .bold()
+                        .frame(minWidth: 0, maxWidth: .infinity)
+                        .frame(height: 32)
                 }
-            } label: {
-                Text("Enable iCloud")
-                    .foregroundStyle(Color(red: 0.04, green: 0, blue: 0.11))
-                    .bold()
-                    .frame(minWidth: 0, maxWidth: .infinity)
-                    .frame(height: 32)
-            }
-            .padding(.top, 64)
-            .buttonStyle(.borderedProminent)
-            .confirmationDialog("Vault Exists", isPresented: $showICloudOverwriteConfirmation, titleVisibility: .visible) {
-                Button("Continue", role: .destructive, action: {
-                    isICloudEnabled = true
-                    nextBtnPressed = true
-                })
+                .padding(.top, 64)
+                .buttonStyle(.borderedProminent)
+                .opacity(0.6)
+                .confirmationDialog("iCloud Unavailable", isPresented: $showICloudUnavailableDialog, titleVisibility: .visible) {} message: {
+                    Text("Unable to access iCloud due to the following error: \(syncMonitor.syncStateSummary.description)")
+                }
+            } else {
+                Button {
+                    if iCloudSyncLastAttempt != 0 {
+                        if swiftDataService.doesICloudBackupExist() {
+                            showICloudOverwriteConfirmation = true
+                        } else {
+                            isICloudEnabled = true
+                            nextBtnPressed = true
+                        }
+                    }
+                } label: {
+                    if iCloudSyncLastAttempt != 0 {
+                        Text("Enable iCloud")
+                            .foregroundStyle(Color(red: 0.04, green: 0, blue: 0.11))
+                            .bold()
+                            .frame(minWidth: 0, maxWidth: .infinity)
+                            .frame(height: 32)
+                    } else {
+                        ProgressView()
+                            .tint(Color(red: 0.04, green: 0, blue: 0.11))
+                            .frame(minWidth: 0, maxWidth: .infinity)
+                            .frame(height: 32)
+                    }
+                }
+                .padding(.top, 64)
+                .buttonStyle(.borderedProminent)
+                .confirmationDialog("Vault Exists", isPresented: $showICloudOverwriteConfirmation, titleVisibility: .visible) {
+                    Button("Continue", role: .destructive, action: {
+                        isICloudEnabled = true
+                        nextBtnPressed = true
+                    })
 
-                Button("Cancel", role: .cancel, action: {
-                    self.showICloudOverwriteConfirmation = false
-                })
-            } message: {
-                Text("A vault already exists in iCloud. Are you sure you want to create a new one?")
-                    .foregroundStyle(.white)
+                    Button("Cancel", role: .cancel, action: {
+                        self.showICloudOverwriteConfirmation = false
+                    })
+                } message: {
+                    Text("A vault already exists in iCloud. Are you sure you want to create a new one?")
+                        .foregroundStyle(.white)
+                }
             }
 
             Button {

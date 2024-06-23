@@ -74,49 +74,75 @@ struct TokensTab: View {
     }
 
     var body: some View {
-        ZStack {
-            NavigationStack {
-                ScrollViewReader { _ in
-                    List(tokenPairs) { tokenPair in
-                        TokenRowView(tokenPair: tokenPair)
-                    }
-                    .listStyle(.plain)
+        NavigationStack {
+            ScrollViewReader { _ in
+                List(tokenPairs) { tokenPair in
+                    TokenRowView(tokenPair: tokenPair)
                 }
-                .background(Color(red: 0.04, green: 0, blue: 0.11))
-                .navigationTitle("Tokens")
-                .navigationBarTitleDisplayMode(.inline)
-                .toolbar {
-                    Menu {
-                        ForEach(sortOptions, id: \.criteria) { option in
-                            Button {
-                                sortCriteria = option.criteria
-                            } label: {
-                                if sortCriteria == option.criteria {
-                                    Label(option.title, systemImage: "checkmark")
-                                } else {
-                                    Text(option.title)
-                                }
+                .listStyle(.plain)
+            }
+            .background(Color(red: 0.04, green: 0, blue: 0.11))
+            .navigationTitle("Tokens")
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                Menu {
+                    ForEach(sortOptions, id: \.criteria) { option in
+                        Button {
+                            sortCriteria = option.criteria
+                        } label: {
+                            if sortCriteria == option.criteria {
+                                Label(option.title, systemImage: "checkmark")
+                            } else {
+                                Text(option.title)
                             }
                         }
-                    } label: {
-                        Label("Sort Order", systemImage: "arrow.up.arrow.down")
                     }
-                    .menuOrder(.fixed)
+                } label: {
+                    Label("Sort Order", systemImage: "arrow.up.arrow.down")
+                }
+                .menuOrder(.fixed)
 
-                    Button {
-                        showTokenAddSheet.toggle()
-                    } label: {
-                        Image(systemName: "plus")
-                    }
-                    .sheet(isPresented: $showTokenAddSheet) {
-                        AddTokenView()
-                            .getSheetHeight()
-                            .onPreferenceChange(SheetHeightPreferenceKey.self) { height in
-                                self.detentHeight = height
+                Button {
+                    showTokenAddSheet.toggle()
+                } label: {
+                    Image(systemName: "plus")
+                }
+            }
+            .overlay(
+                Group {
+                    if tokenPairs.isEmpty {
+                        VStack {
+                            Image(systemName: "qrcode.viewfinder")
+                                .font(.system(size: 64))
+                                .foregroundColor(.gray)
+                                .opacity(0.8)
+
+                            Text("No tokens found. Add one by pressing the + icon at the top right corner or the button below.")
+                                .padding(.top, 4)
+                                .multilineTextAlignment(.center)
+                                .foregroundColor(.gray)
+                                .opacity(0.8)
+
+                            Button {
+                                showTokenAddSheet.toggle()
+                            } label: {
+                                Text("Add Token")
+                                    .padding(.horizontal, 4)
+                                    .bold()
                             }
-                            .presentationDetents([.height(self.detentHeight)])
+                            .padding(.top, 4)
+                        }
+                        .padding(.horizontal, 24)
                     }
                 }
+            )
+            .sheet(isPresented: $showTokenAddSheet) {
+                AddTokenView()
+                    .getSheetHeight()
+                    .onPreferenceChange(SheetHeightPreferenceKey.self) { height in
+                        self.detentHeight = height
+                    }
+                    .presentationDetents([.height(self.detentHeight)])
             }
         }
     }

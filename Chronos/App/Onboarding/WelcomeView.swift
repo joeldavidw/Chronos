@@ -90,6 +90,12 @@ struct WelcomeView: View {
         .onAppear(perform: {
             swiftDataService.resetModelContainers()
             iCloudSyncLastAttempt = 0
+
+            if syncMonitor.syncStateSummary == .succeeded {
+                syncTimer = Timer.scheduledTimer(withTimeInterval: 2, repeats: false) { _ in
+                    hasSynced = true
+                }
+            }
         })
         .onChange(of: syncMonitor.syncStateSummary) { _, newValue in
             syncTimer?.invalidate()

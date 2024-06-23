@@ -50,7 +50,7 @@ struct StorageSetupView: View {
                 }
             } else {
                 Button {
-                    if (iCloudSyncLastAttempt != 0) {
+                    if iCloudSyncLastAttempt != 0 {
                         if swiftDataService.doesICloudBackupExist() {
                             showICloudOverwriteConfirmation = true
                         } else {
@@ -59,7 +59,7 @@ struct StorageSetupView: View {
                         }
                     }
                 } label: {
-                    if (iCloudSyncLastAttempt != 0) {
+                    if iCloudSyncLastAttempt != 0 {
                         Text("Enable iCloud")
                             .foregroundStyle(Color(red: 0.04, green: 0, blue: 0.11))
                             .bold()

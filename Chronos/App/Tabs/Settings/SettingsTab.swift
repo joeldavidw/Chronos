@@ -1,3 +1,4 @@
+import CloudKitSyncMonitor
 import Factory
 import SwiftUI
 
@@ -7,7 +8,7 @@ struct SettingsTab: View {
 
     @AppStorage(StateEnum.BIOMETRICS_AUTH_ENABLED.rawValue) private var stateBiometricsAuth: Bool = false
     @AppStorage(StateEnum.ICLOUD_BACKUP_ENABLED.rawValue) private var isICloudEnabled: Bool = false
-    @AppStorage(StateEnum.LAST_ICLOUD_SYNC.rawValue) private var lastIcloudSync: TimeInterval = 0
+    @AppStorage(StateEnum.ICLOUD_SYNC_LAST_ATTEMPT.rawValue) private var iCloudSyncLastAttempt: TimeInterval = Date().timeIntervalSince1970
 
     private let secureEnclaveService = Container.shared.secureEnclaveService()
     private let swiftDataService = Container.shared.swiftDataService()
@@ -37,9 +38,13 @@ struct SettingsTab: View {
                         Text("Last Synced")
                     }
                     .onReceive(timer) { _ in
-                        lastSyncedText = formatter.localizedString(for: Date(timeIntervalSince1970: lastIcloudSync), relativeTo: Date.now)
+                        lastSyncedText = formatter.localizedString(for: Date(timeIntervalSince1970: iCloudSyncLastAttempt), relativeTo: Date.now)
                         if lastSyncedText.starts(with: "in") {
                             lastSyncedText = "Syncing..."
+                        }
+
+                        if iCloudSyncLastAttempt == Date().timeIntervalSince1970 {
+                            lastSyncedText = "Not Started"
                         }
                     }
                 }

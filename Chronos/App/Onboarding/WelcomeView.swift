@@ -14,7 +14,7 @@ struct WelcomeView: View {
     @State private var getStartedPressed: Bool = false
     @State private var restorePressed: Bool = false
 
-    @State private var hasSynced: Bool = false
+    @State private var showProgressView: Bool = true
     @State private var syncTimer: Timer?
     @State private var showICloudUnavailableDialog: Bool = false
 
@@ -41,20 +41,22 @@ struct WelcomeView: View {
                 .buttonStyle(.bordered)
 
                 Group {
-                    if syncMonitor.syncStateSummary.isBroken || syncMonitor.syncStateSummary == .accountNotAvailable || syncMonitor.syncStateSummary == .noNetwork {
-                        Button(action: {
-                            showICloudUnavailableDialog = true
-                        }) {
-                            Text("iCloud Unavailable")
-                                .bold()
-                        }
-                        .buttonStyle(.borderless)
-                        .opacity(0.4)
-                        .confirmationDialog("iCloud Unavailable", isPresented: $showICloudUnavailableDialog, titleVisibility: .visible) {} message: {
-                            Text("Unable to access iCloud due to the following error: \(syncMonitor.syncStateSummary.description)")
-                        }
+                    if showProgressView {
+                        ProgressView()
                     } else {
-                        if hasSynced {
+                        if syncMonitor.syncStateSummary.isBroken || syncMonitor.syncStateSummary == .accountNotAvailable || syncMonitor.syncStateSummary == .noNetwork {
+                            Button(action: {
+                                showICloudUnavailableDialog = true
+                            }) {
+                                Text("iCloud Unavailable")
+                                    .bold()
+                            }
+                            .buttonStyle(.borderless)
+                            .opacity(0.4)
+                            .confirmationDialog("iCloud Unavailable", isPresented: $showICloudUnavailableDialog, titleVisibility: .visible) {} message: {
+                                Text("Unable to access iCloud due to the following error: \(syncMonitor.syncStateSummary.description)")
+                            }
+                        } else {
                             Button(action: {
                                 restorePressed = true
                             }) {
@@ -63,8 +65,6 @@ struct WelcomeView: View {
                             }
                             .disabled(vaults.isEmpty)
                             .buttonStyle(.borderless)
-                        } else {
-                            ProgressView()
                         }
                     }
                 }
@@ -92,19 +92,16 @@ struct WelcomeView: View {
             swiftDataService.resetModelContainers()
             iCloudSyncLastAttempt = 0
 
-            if syncMonitor.syncStateSummary == .succeeded {
-                syncTimer = Timer.scheduledTimer(withTimeInterval: 2, repeats: false) { _ in
-                    hasSynced = true
-                    iCloudSyncLastAttempt = Date().timeIntervalSince1970
-                }
+            syncTimer = Timer.scheduledTimer(withTimeInterval: 2.5, repeats: false) { _ in
+                showProgressView = false
+                iCloudSyncLastAttempt = Date().timeIntervalSince1970
             }
         })
         .onChange(of: syncMonitor.syncStateSummary) { _, newValue in
-            syncTimer?.invalidate()
-
             if newValue == .succeeded {
+                syncTimer?.invalidate()
                 syncTimer = Timer.scheduledTimer(withTimeInterval: 0.8, repeats: false) { _ in
-                    hasSynced = true
+                    showProgressView = false
                     iCloudSyncLastAttempt = Date().timeIntervalSince1970
                 }
             }

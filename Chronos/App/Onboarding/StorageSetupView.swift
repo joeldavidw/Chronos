@@ -85,7 +85,7 @@ struct StorageSetupView: View {
         .navigationTitle("Storage")
         .navigationBarTitleDisplayMode(.inline)
         .navigationDestination(isPresented: $nextBtnPressed) {
-            if (isICloudEnabled) {
+            if isICloudEnabled {
                 if !vaults.isEmpty {
                     VaultSetupView()
                 } else {

@@ -1,3 +1,4 @@
+import CloudKitSyncMonitor
 import Factory
 import SwiftData
 import SwiftUI
@@ -10,6 +11,10 @@ struct MainAppView: View {
     @Environment(\.modelContext) private var modelContext
     @Environment(\.scenePhase) private var scenePhase
     @EnvironmentObject var loginStatus: LoginStatus
+
+    @ObservedObject var syncMonitor = SyncMonitor.shared
+
+    @AppStorage(StateEnum.ICLOUD_SYNC_LAST_ATTEMPT.rawValue) var iCloudSyncLastAttempt: TimeInterval = Date().timeIntervalSince1970
 
     private let stateService = Container.shared.stateService()
 
@@ -49,6 +54,11 @@ struct MainAppView: View {
             if newValue.isEmpty {
                 stateService.resetAllStates()
                 loginStatus.loggedIn = false
+            }
+        }
+        .onChange(of: syncMonitor.syncStateSummary) { _, newValue in
+            if newValue == .succeeded {
+                iCloudSyncLastAttempt = Date().timeIntervalSince1970
             }
         }
     }

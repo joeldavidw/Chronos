@@ -19,12 +19,21 @@ public class SwiftDataService {
     }
 
     private func setupModelContainer(storeName: String, cloudKitDatabase: ModelConfiguration.CloudKitDatabase) -> ModelContainer {
-        let storeURL = URL.documentsDirectory.appendingPathComponent(storeName)
+        var storeURL = URL.documentsDirectory.appendingPathComponent(storeName)
         let modelConfig = ModelConfiguration(url: storeURL, cloudKitDatabase: cloudKitDatabase)
 
         do {
             let container = try ModelContainer(for: schema, configurations: modelConfig)
             logger.info("Initialized container for \(storeName)")
+
+            do {
+                var values = URLResourceValues()
+                values.isExcludedFromBackup = true
+                try storeURL.setResourceValues(values)
+            } catch {
+                logger.error("Unable to set isExcludedFromBackup \(storeURL))")
+            }
+
             return container
         } catch {
             fatalError("Cannot set up modelContainer for \(storeName): \(error.localizedDescription)")

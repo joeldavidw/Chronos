@@ -33,7 +33,11 @@ struct SettingsTab: View {
                     }).disabled(true)
 
                     LabeledContent {
-                        Text(lastSyncedText)
+                        if isICloudEnabled {
+                            Text(lastSyncedText)
+                        } else {
+                            Text("Offline")
+                        }
                     } label: {
                         Text("Last Synced")
                     }

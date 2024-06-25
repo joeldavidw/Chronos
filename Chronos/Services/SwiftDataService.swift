@@ -13,13 +13,35 @@ public class SwiftDataService {
 
     private let schema = Schema([Vault.self, ChronosCrypto.self, EncryptedToken.self])
 
+    private var storeDir = URL.applicationSupportDirectory.appendingPathComponent("ChronosStore", isDirectory: true)
+
     init() {
+        initChronosStoreDir()
+        // Remove this in subsequent version
+        moveFileIfNecessary()
+
         _ = localModelContainer
         _ = cloudModelContainer
     }
 
+    public func getModelContainer(isRestore: Bool = false) -> ModelContainer {
+        if isRestore {
+            return cloudModelContainer
+        }
+
+        let isICloudEnabled = defaults.bool(forKey: StateEnum.ICLOUD_BACKUP_ENABLED.rawValue)
+
+        if isICloudEnabled {
+            logger.info("Returned CloudContainer")
+            return cloudModelContainer
+        }
+
+        logger.info("Returned LocalContainer")
+        return localModelContainer
+    }
+
     private func setupModelContainer(storeName: String, cloudKitDatabase: ModelConfiguration.CloudKitDatabase) -> ModelContainer {
-        var storeURL = URL.documentsDirectory.appendingPathComponent(storeName)
+        var storeURL = storeDir.appendingPathComponent(storeName)
         let modelConfig = ModelConfiguration(url: storeURL, cloudKitDatabase: cloudKitDatabase)
 
         do {
@@ -40,20 +62,25 @@ public class SwiftDataService {
         }
     }
 
-    public func getModelContainer(isRestore: Bool = false) -> ModelContainer {
-        if isRestore {
-            return cloudModelContainer
+    private func initChronosStoreDir() {
+        let fileManager = FileManager.default
+
+        if !fileManager.fileExists(atPath: storeDir.path) {
+            do {
+                try fileManager.createDirectory(at: storeDir, withIntermediateDirectories: true, attributes: nil)
+            } catch {
+                logger.error("initChronosStoreDir - unable to create dir: \(error)")
+            }
         }
 
-        let isICloudEnabled = defaults.bool(forKey: StateEnum.ICLOUD_BACKUP_ENABLED.rawValue)
-
-        if isICloudEnabled {
-            logger.info("Returned CloudContainer")
-            return cloudModelContainer
+        do {
+            var values = URLResourceValues()
+            values.isExcludedFromBackup = true
+            try storeDir.setResourceValues(values)
+            logger.info("initChronosStoreDir - Successfully set isExcludedFromBackup")
+        } catch {
+            logger.error("initChronosStoreDir - Unable to set isExcludedFromBackup: \(error)")
         }
-
-        logger.info("Returned LocalContainer")
-        return localModelContainer
     }
 
     public func resetModelContainers() {
@@ -67,6 +94,31 @@ public class SwiftDataService {
 
     public func getLocalModelContainer() -> ModelContainer {
         return localModelContainer
+    }
+}
+
+extension SwiftDataService {
+    private func moveFileIfNecessary() {
+        for fileName in ["localChronos.sqlite", "localChronos.sqlite-wal", "localChronos.sqlite-shm", "onlineChronos.sqlite", "onlineChronos.sqlite-shm", "onlineChronos.sqlite-wal", ".onlineChronos_SUPPORT", "onlineChronos_ckAssets"] {
+            let oldStoreURL = URL.documentsDirectory.appendingPathComponent(fileName)
+            let newStoreURL = storeDir.appendingPathComponent(fileName)
+
+            if FileManager.default.fileExists(atPath: newStoreURL.path) {
+                logger.info("New store location already found. Stopping migration of old store.")
+                return
+            }
+
+            if FileManager.default.fileExists(atPath: oldStoreURL.path) {
+                do {
+                    try FileManager.default.moveItem(at: oldStoreURL, to: newStoreURL)
+                    logger.info("File moved successfully to \(newStoreURL)")
+                } catch {
+                    logger.error("Error moving file: \(error)")
+                }
+            } else {
+                logger.info("File does not exist at \(oldStoreURL)")
+            }
+        }
     }
 }
 

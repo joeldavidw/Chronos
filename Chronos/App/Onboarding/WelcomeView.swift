@@ -39,6 +39,7 @@ struct WelcomeView: View {
                         .frame(height: 32)
                 }
                 .buttonStyle(.bordered)
+                .accessibility(identifier: "GetStartedBtn")
 
                 Group {
                     if showProgressView {
@@ -65,6 +66,7 @@ struct WelcomeView: View {
                             }
                             .disabled(vaults.isEmpty)
                             .buttonStyle(.borderless)
+                            .accessibility(identifier: "RestoreBtn")
                         }
                     }
                 }

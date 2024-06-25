@@ -40,6 +40,7 @@ struct BiometricsSetupView: View {
             }
             .padding(.top, 64)
             .buttonStyle(.borderedProminent)
+            .accessibility(identifier: "EnableBiometricsBtn")
 
             Button {
                 stateBiometricsAuth = false
@@ -52,6 +53,7 @@ struct BiometricsSetupView: View {
                     .frame(height: 32)
             }
             .buttonStyle(.bordered)
+            .accessibility(identifier: "NoBiometricsBtn")
         }
         .padding(.vertical, 32)
         .padding(.horizontal, 24)

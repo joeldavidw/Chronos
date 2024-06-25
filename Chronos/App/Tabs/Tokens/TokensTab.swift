@@ -107,6 +107,7 @@ struct TokensTab: View {
                 } label: {
                     Image(systemName: "plus")
                 }
+                .accessibility(identifier: "AddTokenBtn")
             }
             .overlay(
                 Group {

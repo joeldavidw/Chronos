@@ -119,12 +119,14 @@ struct StorageSetupView: View {
                     .frame(minWidth: 0, maxWidth: .infinity)
                     .frame(height: 32)
             }
+            .accessibility(identifier: "LocalVaultBtn")
             .buttonStyle(.bordered)
             .confirmationDialog("Are you sure?", isPresented: $showNoBackupWarning, titleVisibility: .visible) {
                 Button("Continue without backups", role: .destructive, action: {
                     isICloudEnabled = false
                     nextBtnPressed = true
                 })
+                .accessibility(identifier: "LocalVaultConfirmationBtn")
 
                 Button("Cancel", role: .cancel, action: {
                     self.showNoBackupWarning = false

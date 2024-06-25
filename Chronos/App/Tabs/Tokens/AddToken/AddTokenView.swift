@@ -63,6 +63,7 @@ struct AddTokenView: View {
                         .frame(minWidth: 0, maxWidth: .infinity)
                         .frame(height: 32)
                 }
+                .accessibility(identifier: "ManualAddTokenBtn")
                 .buttonStyle(.bordered)
                 .padding(.vertical, 8)
                 .sheet(isPresented: $showTokenManualAddSheet) {

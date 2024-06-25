@@ -47,6 +47,7 @@ struct PasswordSetupView: View {
                         .onChange(of: password) { _, _ in
                             validatePasswords()
                         }
+                        .accessibility(identifier: "PasswordSecureField")
                 }
                 .frame(height: 48)
                 .background(Color(.systemGray6))
@@ -66,6 +67,7 @@ struct PasswordSetupView: View {
                         .onChange(of: verifyPassword) { _, _ in
                             validatePasswords()
                         }
+                        .accessibility(identifier: "VerifyPasswordSecureField")
                 }
                 .frame(height: 48)
                 .background(Color(.systemGray6))

@@ -38,12 +38,14 @@ struct AddManualTokenView: View {
             Section(header: Text("Information")) {
                 LabeledContent {
                     TextField("Issuer", text: $issuer)
+                        .accessibility(identifier: "AddTokenForm_Issuer")
                         .disableAutocorrection(true)
                 } label: {
                     Text("Issuer")
                 }
                 LabeledContent("Account") {
                     TextField("Account", text: $account)
+                        .accessibility(identifier: "AddTokenForm_Account")
                         .disableAutocorrection(true)
                         .autocapitalization(/*@START_MENU_TOKEN@*/ .none/*@END_MENU_TOKEN@*/)
                 }
@@ -55,6 +57,7 @@ struct AddManualTokenView: View {
                                 .autocapitalization(/*@START_MENU_TOKEN@*/ .none/*@END_MENU_TOKEN@*/)
                         } else {
                             SecureField("Secret", text: $secret)
+                                .accessibility(identifier: "AddTokenForm_Secret")
                         }
                     }
                     .disableAutocorrection(true)

@@ -33,6 +33,7 @@
 		6B3C7A3D2BE9E0600043FEBD /* Logging in Frameworks */ = {isa = PBXBuildFile; productRef = 6B3C7A3C2BE9E0600043FEBD /* Logging */; };
 		6B3F92A92C1B45AA004125A8 /* Vault.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B3F92A82C1B45AA004125A8 /* Vault.swift */; };
 		6B3F92AB2C1C7987004125A8 /* VaultService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B3F92AA2C1C7987004125A8 /* VaultService.swift */; };
+		6B47BA012C2A9A240053FFFF /* LocalVaultTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B47BA002C2A9A240053FFFF /* LocalVaultTests.swift */; };
 		6B4B48F32BD7BB3C007D357D /* Token.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B4B48F22BD7BB3C007D357D /* Token.swift */; };
 		6B5E41CE2BD790F80045DBC6 /* EncryptedToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B5E41CD2BD790F80045DBC6 /* EncryptedToken.swift */; };
 		6B65F8082C21C17200AC8606 /* VaultSelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B65F8072C21C17200AC8606 /* VaultSelectionView.swift */; };
@@ -55,6 +56,16 @@
 		6BD90AA52B8E34BB00FABD91 /* PasswordLoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BD90AA42B8E34BB00FABD91 /* PasswordLoginView.swift */; };
 		6BE122922BD6413D008636D2 /* ChronosCrypto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BE122912BD6413D008636D2 /* ChronosCrypto.swift */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		6BCD01AD2C2A991B0078AEF4 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 6B3BB0A52B4EA87C00DCEF0B /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 6B3BB0AC2B4EA87C00DCEF0B;
+			remoteInfo = Chronos;
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		6B12B09F2C19DB7800E9ED2D /* ExportService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExportService.swift; sourceTree = "<group>"; };
@@ -80,6 +91,7 @@
 		6B3C7A372BE764E70043FEBD /* StorageSetupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageSetupView.swift; sourceTree = "<group>"; };
 		6B3F92A82C1B45AA004125A8 /* Vault.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Vault.swift; sourceTree = "<group>"; };
 		6B3F92AA2C1C7987004125A8 /* VaultService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VaultService.swift; sourceTree = "<group>"; };
+		6B47BA002C2A9A240053FFFF /* LocalVaultTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalVaultTests.swift; sourceTree = "<group>"; };
 		6B4B48F22BD7BB3C007D357D /* Token.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Token.swift; sourceTree = "<group>"; };
 		6B5E41CD2BD790F80045DBC6 /* EncryptedToken.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EncryptedToken.swift; sourceTree = "<group>"; };
 		6B65F8072C21C17200AC8606 /* VaultSelectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VaultSelectionView.swift; sourceTree = "<group>"; };
@@ -96,6 +108,7 @@
 		6B9D74672C1553A1008E6582 /* SecureBytes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecureBytes.swift; sourceTree = "<group>"; };
 		6BA5DA5B2B9E94F8009908E5 /* SecureEnclaveService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecureEnclaveService.swift; sourceTree = "<group>"; };
 		6BC3C3B42BA6B91E00B181B9 /* BiometricsSetupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BiometricsSetupView.swift; sourceTree = "<group>"; };
+		6BCD01A72C2A991B0078AEF4 /* ChronosUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ChronosUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		6BD6D2002C11FEB4004512BF /* OTPService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OTPService.swift; sourceTree = "<group>"; };
 		6BD90AA42B8E34BB00FABD91 /* PasswordLoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordLoginView.swift; sourceTree = "<group>"; };
 		6BE122912BD6413D008636D2 /* ChronosCrypto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChronosCrypto.swift; sourceTree = "<group>"; };
@@ -114,6 +127,13 @@
 				6B7383E02B9C3962008E8867 /* Factory in Frameworks */,
 				6B3C7A3D2BE9E0600043FEBD /* Logging in Frameworks */,
 				6B193C8A2C27F03300E759B7 /* CloudKitSyncMonitor in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		6BCD01A42C2A991B0078AEF4 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -145,6 +165,7 @@
 			isa = PBXGroup;
 			children = (
 				6B3BB0AF2B4EA87C00DCEF0B /* Chronos */,
+				6BCD01A82C2A991B0078AEF4 /* ChronosUITests */,
 				6B3BB0AE2B4EA87C00DCEF0B /* Products */,
 				6B3BB0EC2B4EEEBD00DCEF0B /* Frameworks */,
 			);
@@ -154,6 +175,7 @@
 			isa = PBXGroup;
 			children = (
 				6B3BB0AD2B4EA87C00DCEF0B /* Chronos.app */,
+				6BCD01A72C2A991B0078AEF4 /* ChronosUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -235,6 +257,14 @@
 			path = Database;
 			sourceTree = "<group>";
 		};
+		6B47B9FF2C2A9A160053FFFF /* Onboarding */ = {
+			isa = PBXGroup;
+			children = (
+				6B47BA002C2A9A240053FFFF /* LocalVaultTests.swift */,
+			);
+			path = Onboarding;
+			sourceTree = "<group>";
+		};
 		6B65F8062C21C15E00AC8606 /* Restore */ = {
 			isa = PBXGroup;
 			children = (
@@ -291,6 +321,14 @@
 				6B9D74672C1553A1008E6582 /* SecureBytes.swift */,
 			);
 			path = Crypto;
+			sourceTree = "<group>";
+		};
+		6BCD01A82C2A991B0078AEF4 /* ChronosUITests */ = {
+			isa = PBXGroup;
+			children = (
+				6B47B9FF2C2A9A160053FFFF /* Onboarding */,
+			);
+			path = ChronosUITests;
 			sourceTree = "<group>";
 		};
 		6BD0562A2BDF64D80099616B /* Row */ = {
@@ -351,6 +389,24 @@
 			productReference = 6B3BB0AD2B4EA87C00DCEF0B /* Chronos.app */;
 			productType = "com.apple.product-type.application";
 		};
+		6BCD01A62C2A991B0078AEF4 /* ChronosUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 6BCD01AF2C2A991B0078AEF4 /* Build configuration list for PBXNativeTarget "ChronosUITests" */;
+			buildPhases = (
+				6BCD01A32C2A991B0078AEF4 /* Sources */,
+				6BCD01A42C2A991B0078AEF4 /* Frameworks */,
+				6BCD01A52C2A991B0078AEF4 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				6BCD01AE2C2A991B0078AEF4 /* PBXTargetDependency */,
+			);
+			name = ChronosUITests;
+			productName = ChronosUITests;
+			productReference = 6BCD01A72C2A991B0078AEF4 /* ChronosUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -358,11 +414,15 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
-				LastSwiftUpdateCheck = 1520;
+				LastSwiftUpdateCheck = 1540;
 				LastUpgradeCheck = 1520;
 				TargetAttributes = {
 					6B3BB0AC2B4EA87C00DCEF0B = {
 						CreatedOnToolsVersion = 15.2;
+					};
+					6BCD01A62C2A991B0078AEF4 = {
+						CreatedOnToolsVersion = 15.4;
+						TestTargetID = 6B3BB0AC2B4EA87C00DCEF0B;
 					};
 				};
 			};
@@ -390,6 +450,7 @@
 			projectRoot = "";
 			targets = (
 				6B3BB0AC2B4EA87C00DCEF0B /* Chronos */,
+				6BCD01A62C2A991B0078AEF4 /* ChronosUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -402,6 +463,13 @@
 				6B3BB0B82B4EA87D00DCEF0B /* Preview Assets.xcassets in Resources */,
 				6B3962A42C002E60000410B0 /* Launch Screen.storyboard in Resources */,
 				6B3BB0B52B4EA87D00DCEF0B /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		6BCD01A52C2A991B0078AEF4 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -471,7 +539,23 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		6BCD01A32C2A991B0078AEF4 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6B47BA012C2A9A240053FFFF /* LocalVaultTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		6BCD01AE2C2A991B0078AEF4 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 6B3BB0AC2B4EA87C00DCEF0B /* Chronos */;
+			targetProxy = 6BCD01AD2C2A991B0078AEF4 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		6B3BB0CF2B4EA87D00DCEF0B /* Debug */ = {
@@ -687,6 +771,42 @@
 			};
 			name = Release;
 		};
+		6BCD01B02C2A991B0078AEF4 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = MKJ7X96SHQ;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.5;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.joeldavidw.ChronosUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = Chronos;
+			};
+			name = Debug;
+		};
+		6BCD01B12C2A991B0078AEF4 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = MKJ7X96SHQ;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.5;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.joeldavidw.ChronosUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = Chronos;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -704,6 +824,15 @@
 			buildConfigurations = (
 				6B3BB0D22B4EA87D00DCEF0B /* Debug */,
 				6B3BB0D32B4EA87D00DCEF0B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		6BCD01AF2C2A991B0078AEF4 /* Build configuration list for PBXNativeTarget "ChronosUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				6BCD01B02C2A991B0078AEF4 /* Debug */,
+				6BCD01B12C2A991B0078AEF4 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

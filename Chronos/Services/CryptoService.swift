@@ -17,7 +17,11 @@ public class CryptoService {
     private let swiftDataService = Container.shared.swiftDataService()
 
     // scrypt paramaters - n: 2^17, r: 8, p: 1
-    private let kdfParams = KdfParams(type: 0, n: 1 << 17, r: 8, p: 1)
+    #if DEBUG
+        private let kdfParams = KdfParams(type: 0, n: 1 << 2, r: 8, p: 1)
+    #else
+        private let kdfParams = KdfParams(type: 0, n: 1 << 17, r: 8, p: 1)
+    #endif
 
     func wrapMasterKeyWithUserPassword(password: [UInt8]) async -> ChronosCrypto {
         let passwordSalt = try! generateRandomSaltHexString()

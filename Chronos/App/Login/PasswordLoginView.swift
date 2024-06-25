@@ -19,6 +19,7 @@ struct PasswordLoginView: View {
 
     let cryptoService = Container.shared.cryptoService()
     let stateService = Container.shared.stateService()
+    let vaultService = Container.shared.vaultService()
     let secureEnclaveService = Container.shared.secureEnclaveService()
 
     var body: some View {
@@ -105,7 +106,9 @@ extension PasswordLoginView {
         focusedField = nil
 
         Task {
-            let passwordVerified = await cryptoService.unwrapMasterKeyWithUserPassword(password: Array(password.utf8))
+            let vault = vaultService.getVaultWithoutContext(isRestore: false)
+
+            let passwordVerified = await cryptoService.unwrapMasterKeyWithUserPassword(vault: vault, password: Array(password.utf8))
 
             if passwordVerified {
                 loginStatus.loggedIn = true

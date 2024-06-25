@@ -100,7 +100,9 @@ struct RestoreBackupView: View {
         restoreBtnPressed = true
 
         Task {
-            passwordVerified = await cryptoService.unwrapMasterKeyWithUserPassword(password: Array(password.utf8), isRestore: true)
+            let vault = vaultService.getVaultWithoutContext(isRestore: true)
+
+            passwordVerified = await cryptoService.unwrapMasterKeyWithUserPassword(vault: vault, password: Array(password.utf8), isRestore: true)
             restoreBtnPressed = false
 
             if passwordVerified {

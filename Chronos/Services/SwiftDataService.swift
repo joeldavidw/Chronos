@@ -48,13 +48,7 @@ public class SwiftDataService {
             let container = try ModelContainer(for: schema, configurations: modelConfig)
             logger.info("Initialized container for \(storeName)")
 
-            do {
-                var values = URLResourceValues()
-                values.isExcludedFromBackup = true
-                try storeURL.setResourceValues(values)
-            } catch {
-                logger.error("Unable to set isExcludedFromBackup \(storeURL))")
-            }
+            setStoreDirExcludedFromBackup()
 
             return container
         } catch {
@@ -73,13 +67,36 @@ public class SwiftDataService {
             }
         }
 
+        setStoreDirExcludedFromBackup()
+    }
+
+    private func setStoreDirExcludedFromBackup() {
         do {
             var values = URLResourceValues()
             values.isExcludedFromBackup = true
             try storeDir.setResourceValues(values)
-            logger.info("initChronosStoreDir - Successfully set isExcludedFromBackup")
+            logger.info("Successfully set isExcludedFromBackup for directory: \(storeDir)")
+
         } catch {
-            logger.error("initChronosStoreDir - Unable to set isExcludedFromBackup: \(error)")
+            logger.error("Unable to set isExcludedFromBackup for directory \(storeDir): \(error)")
+        }
+
+        do {
+            let items = try FileManager.default.contentsOfDirectory(atPath: storeDir.path)
+
+            for item in items {
+                var itemURL = storeDir.appendingPathComponent(item)
+                do {
+                    var values = URLResourceValues()
+                    values.isExcludedFromBackup = true
+                    try itemURL.setResourceValues(values)
+                    logger.info("Successfully set isExcludedFromBackup for file \(itemURL)")
+                } catch {
+                    logger.error("Unable to set isExcludedFromBackup for file \(itemURL): \(error)")
+                }
+            }
+        } catch {
+            logger.error("Failed to read directory at \(storeDir.path): \(error)")
         }
     }
 
@@ -119,6 +136,7 @@ extension SwiftDataService {
                 logger.info("File does not exist at \(oldStoreURL)")
             }
         }
+        setStoreDirExcludedFromBackup()
     }
 }
 

@@ -90,8 +90,10 @@ struct PasswordLoginView: View {
             focusedField = .password
         }
         .onChange(of: scenePhase) { oldValue, newValue in
-            if oldValue == .inactive && newValue == .active && Date().timeIntervalSince1970 - stateLastBiometricsAuthAttempt > 10 {
-                biometricsAuthLogin()
+            if stateBiometricsAuth {
+                if oldValue == .inactive && newValue == .active && Date().timeIntervalSince1970 - stateLastBiometricsAuthAttempt > 10 {
+                    biometricsAuthLogin()
+                }
             }
         }
     }
@@ -125,7 +127,7 @@ extension PasswordLoginView {
     func biometricsAuthLogin() {
         stateLastBiometricsAuthAttempt = Date().timeIntervalSince1970
 
-        guard var masterKey = secureEnclaveService.getMasterKey()
+        guard let securedMasterKey = secureEnclaveService.getMasterKey()
         else {
             AlertKitAPI.present(
                 title: "Unable to retrieve master key",
@@ -137,8 +139,7 @@ extension PasswordLoginView {
             return
         }
 
-        stateService.masterKey = SecureBytes(bytes: masterKey)
-        masterKey.removeAll()
+        stateService.masterKey = securedMasterKey
         loginStatus.loggedIn = true
     }
 }

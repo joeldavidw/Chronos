@@ -26,8 +26,12 @@ public class SecureEnclaveService {
         }
     }
 
-    func getMasterKey() -> [UInt8]? {
-        return try? Array(chronosSecureValet.object(forKey: KeyChainEnum.BIOMETRICS_MASTERKEY.rawValue, withPrompt: "Unlock Chronos"))
+    func getMasterKey() -> SecureBytes? {
+        do {
+            return try SecureBytes(bytes: Array(chronosSecureValet.object(forKey: KeyChainEnum.BIOMETRICS_MASTERKEY.rawValue, withPrompt: "Unlock Chronos")))
+        } catch {
+            return nil
+        }
     }
 
     func deleteMasterKey() {

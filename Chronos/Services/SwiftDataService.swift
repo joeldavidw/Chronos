@@ -41,7 +41,7 @@ public class SwiftDataService {
     }
 
     private func setupModelContainer(storeName: String, cloudKitDatabase: ModelConfiguration.CloudKitDatabase) -> ModelContainer {
-        var storeURL = storeDir.appendingPathComponent(storeName)
+        let storeURL = storeDir.appendingPathComponent(storeName)
         let modelConfig = ModelConfiguration(url: storeURL, cloudKitDatabase: cloudKitDatabase)
 
         do {

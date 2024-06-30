@@ -13,10 +13,8 @@ struct SettingsTab: View {
     private let secureEnclaveService = Container.shared.secureEnclaveService()
     private let swiftDataService = Container.shared.swiftDataService()
     private let stateService = Container.shared.stateService()
-    private let exportService = Container.shared.exportService()
 
     @State private var showExportJsonConfirmation: Bool = false
-    @State private var showExportJsonSheet: Bool = false
 
     @State private var showLogoutConfirmation = false
     @State private var lastSyncedText = "Syncing..."
@@ -61,38 +59,12 @@ struct SettingsTab: View {
                             .foregroundStyle(.blue)
                             .frame(maxWidth: .infinity)
                     }
-                    .confirmationDialog("Confirm Export", isPresented: $showExportJsonConfirmation, titleVisibility: .visible) {
-                        Button("Confirm", role: .destructive, action: {
-                            self.showExportJsonConfirmation = false
-                            self.showExportJsonSheet = true
-                        })
-
-                        Button("Cancel", role: .cancel, action: {
-                            self.showExportJsonConfirmation = false
-                            self.showExportJsonSheet = false
-                        })
-                    } message: {
-                        Text("This export contains your token data in an unencrypted format. This file should not be stored or sent over unsecured channels.")
-                    }
-                    .sheet(isPresented: $showExportJsonSheet) {
-                        if let fileurl = exportService.exportToUnencryptedJson() {
-                            ActivityView(fileUrl: fileurl)
-                                .presentationDetents([.medium, .large])
-                                .presentationDragIndicator(Visibility.hidden)
-                        } else {
-                            VStack {
-                                Image(systemName: "xmark.circle")
-                                    .fontWeight(.light)
-                                    .font(.system(size: 64))
-                                    .padding(.bottom, 8)
-                                Text("An error occurred while during the export process")
-                            }
-                        }
-                    }
+                    .sheet(isPresented: $showExportJsonConfirmation, content: {
+                        ExportSelectionView()
+                    })
                     .onChange(of: scenePhase) { _, newValue in
                         if newValue != .active {
                             self.showExportJsonConfirmation = false
-                            self.showExportJsonSheet = false
                         }
                     }
                 }
@@ -159,14 +131,4 @@ struct SettingsTab: View {
             }
         }
     }
-}
-
-struct ActivityView: UIViewControllerRepresentable {
-    let fileUrl: URL
-
-    func makeUIViewController(context _: Context) -> UIActivityViewController {
-        UIActivityViewController(activityItems: [fileUrl], applicationActivities: nil)
-    }
-
-    func updateUIViewController(_: UIActivityViewController, context _: Context) {}
 }

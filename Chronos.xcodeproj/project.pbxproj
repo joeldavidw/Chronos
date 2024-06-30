@@ -54,6 +54,9 @@
 		6BD6D2012C11FEB4004512BF /* OTPService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BD6D2002C11FEB4004512BF /* OTPService.swift */; };
 		6BD90AA52B8E34BB00FABD91 /* PasswordLoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BD90AA42B8E34BB00FABD91 /* PasswordLoginView.swift */; };
 		6BE122922BD6413D008636D2 /* ChronosCrypto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BE122912BD6413D008636D2 /* ChronosCrypto.swift */; };
+		6BF53E4F2C317AA400356461 /* ZipArchive in Frameworks */ = {isa = PBXBuildFile; productRef = 6BF53E4E2C317AA400356461 /* ZipArchive */; };
+		6BF53E522C317F1C00356461 /* ExportSelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BF53E512C317F1C00356461 /* ExportSelectionView.swift */; };
+		6BF53E542C31856A00356461 /* EncryptedExportView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BF53E532C31856A00356461 /* EncryptedExportView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -99,6 +102,8 @@
 		6BD6D2002C11FEB4004512BF /* OTPService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OTPService.swift; sourceTree = "<group>"; };
 		6BD90AA42B8E34BB00FABD91 /* PasswordLoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordLoginView.swift; sourceTree = "<group>"; };
 		6BE122912BD6413D008636D2 /* ChronosCrypto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChronosCrypto.swift; sourceTree = "<group>"; };
+		6BF53E512C317F1C00356461 /* ExportSelectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExportSelectionView.swift; sourceTree = "<group>"; };
+		6BF53E532C31856A00356461 /* EncryptedExportView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EncryptedExportView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -114,6 +119,7 @@
 				6B7383E02B9C3962008E8867 /* Factory in Frameworks */,
 				6B3C7A3D2BE9E0600043FEBD /* Logging in Frameworks */,
 				6B193C8A2C27F03300E759B7 /* CloudKitSyncMonitor in Frameworks */,
+				6BF53E4F2C317AA400356461 /* ZipArchive in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -136,6 +142,7 @@
 		6B2583AD2B96047700938F3A /* Settings */ = {
 			isa = PBXGroup;
 			children = (
+				6BF53E502C317EFF00356461 /* Export */,
 				6B2583AE2B96048700938F3A /* SettingsTab.swift */,
 			);
 			path = Settings;
@@ -320,6 +327,15 @@
 			path = Login;
 			sourceTree = "<group>";
 		};
+		6BF53E502C317EFF00356461 /* Export */ = {
+			isa = PBXGroup;
+			children = (
+				6BF53E512C317F1C00356461 /* ExportSelectionView.swift */,
+				6BF53E532C31856A00356461 /* EncryptedExportView.swift */,
+			);
+			path = Export;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -346,6 +362,7 @@
 				6B7383DF2B9C3962008E8867 /* Factory */,
 				6B3C7A3C2BE9E0600043FEBD /* Logging */,
 				6B193C892C27F03300E759B7 /* CloudKitSyncMonitor */,
+				6BF53E4E2C317AA400356461 /* ZipArchive */,
 			);
 			productName = Chronos;
 			productReference = 6B3BB0AD2B4EA87C00DCEF0B /* Chronos.app */;
@@ -384,6 +401,7 @@
 				6B7383DE2B9C3962008E8867 /* XCRemoteSwiftPackageReference "Factory" */,
 				6B3C7A3B2BE9E0600043FEBD /* XCRemoteSwiftPackageReference "swift-log" */,
 				6B193C882C27F03300E759B7 /* XCRemoteSwiftPackageReference "CloudKitSyncMonitor" */,
+				6BF53E4B2C31793100356461 /* XCRemoteSwiftPackageReference "ZipArchive" */,
 			);
 			productRefGroup = 6B3BB0AE2B4EA87C00DCEF0B /* Products */;
 			projectDirPath = "";
@@ -453,6 +471,7 @@
 				6BD90AA52B8E34BB00FABD91 /* PasswordLoginView.swift in Sources */,
 				6B9D74682C1553A1008E6582 /* SecureBytes.swift in Sources */,
 				6B3BB0E22B4ED19300DCEF0B /* TokensTab.swift in Sources */,
+				6BF53E542C31856A00356461 /* EncryptedExportView.swift in Sources */,
 				6B12B0A02C19DB7800E9ED2D /* ExportService.swift in Sources */,
 				6B3BB0E02B4ECE6F00DCEF0B /* TOTPRowView.swift in Sources */,
 				6B65F80B2C21C2EA00AC8606 /* VaultSetupView.swift in Sources */,
@@ -464,6 +483,7 @@
 				6B39629E2BF63F27000410B0 /* SwiftDataService.swift in Sources */,
 				6BD6D2012C11FEB4004512BF /* OTPService.swift in Sources */,
 				6B39629A2BF5E935000410B0 /* MainAppView.swift in Sources */,
+				6BF53E522C317F1C00356461 /* ExportSelectionView.swift in Sources */,
 				6B65F8082C21C17200AC8606 /* VaultSelectionView.swift in Sources */,
 				6B3962A02BF6423B000410B0 /* CryptoService.swift in Sources */,
 				6B27317A2B53E23800F30621 /* UpdateTokenView.swift in Sources */,
@@ -880,6 +900,14 @@
 				minimumVersion = 1.8.2;
 			};
 		};
+		6BF53E4B2C31793100356461 /* XCRemoteSwiftPackageReference "ZipArchive" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/ZipArchive/ZipArchive";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.5.5;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -922,6 +950,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 6B8ABEEA2B8F6A4F00F5B514 /* XCRemoteSwiftPackageReference "CryptoSwift" */;
 			productName = CryptoSwift;
+		};
+		6BF53E4E2C317AA400356461 /* ZipArchive */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 6BF53E4B2C31793100356461 /* XCRemoteSwiftPackageReference "ZipArchive" */;
+			productName = ZipArchive;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

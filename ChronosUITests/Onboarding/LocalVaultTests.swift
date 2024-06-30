@@ -41,9 +41,7 @@ final class LocalVaultTests: XCTestCase {
         let noBiometricsBtn = app.buttons["NoBiometricsBtn"]
         noBiometricsBtn.tap()
         
-        XCTAssertTrue(app.staticTexts["Tokens"].waitForExistence(timeout: 2))
-//        app.tabBars.element.buttons["Settings"].tap()
-        
+        XCTAssertTrue(app.staticTexts["Tokens"].waitForExistence(timeout: 2))        
         
         // Create Token
         app.buttons["AddTokenBtn"].tap()

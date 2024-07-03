@@ -2,6 +2,10 @@ import CloudKitSyncMonitor
 import Factory
 import SwiftUI
 
+final class ExportNavigation: ObservableObject {
+    @Published var showSheet = false
+}
+
 struct SettingsTab: View {
     @EnvironmentObject private var loginStatus: LoginStatus
     @Environment(\.scenePhase) private var scenePhase
@@ -10,13 +14,13 @@ struct SettingsTab: View {
     @AppStorage(StateEnum.ICLOUD_BACKUP_ENABLED.rawValue) private var isICloudEnabled: Bool = false
     @AppStorage(StateEnum.ICLOUD_SYNC_LAST_ATTEMPT.rawValue) private var iCloudSyncLastAttempt: TimeInterval = 0
 
+    @StateObject private var exportNav = ExportNavigation()
+
     private let secureEnclaveService = Container.shared.secureEnclaveService()
     private let swiftDataService = Container.shared.swiftDataService()
     private let stateService = Container.shared.stateService()
-    private let exportService = Container.shared.exportService()
 
     @State private var showExportJsonConfirmation: Bool = false
-    @State private var showExportJsonSheet: Bool = false
 
     @State private var showLogoutConfirmation = false
     @State private var lastSyncedText = "Syncing..."
@@ -55,44 +59,19 @@ struct SettingsTab: View {
 
                 Section {
                     Button {
-                        showExportJsonConfirmation = true
+                        exportNav.showSheet = true
                     } label: {
                         Text("Export")
                             .foregroundStyle(.blue)
                             .frame(maxWidth: .infinity)
                     }
-                    .confirmationDialog("Confirm Export", isPresented: $showExportJsonConfirmation, titleVisibility: .visible) {
-                        Button("Confirm", role: .destructive, action: {
-                            self.showExportJsonConfirmation = false
-                            self.showExportJsonSheet = true
-                        })
-
-                        Button("Cancel", role: .cancel, action: {
-                            self.showExportJsonConfirmation = false
-                            self.showExportJsonSheet = false
-                        })
-                    } message: {
-                        Text("This export contains your token data in an unencrypted format. This file should not be stored or sent over unsecured channels.")
-                    }
-                    .sheet(isPresented: $showExportJsonSheet) {
-                        if let fileurl = exportService.exportToUnencryptedJson() {
-                            ActivityView(fileUrl: fileurl)
-                                .presentationDetents([.medium, .large])
-                                .presentationDragIndicator(Visibility.hidden)
-                        } else {
-                            VStack {
-                                Image(systemName: "xmark.circle")
-                                    .fontWeight(.light)
-                                    .font(.system(size: 64))
-                                    .padding(.bottom, 8)
-                                Text("An error occurred while during the export process")
-                            }
-                        }
-                    }
+                    .sheet(isPresented: $exportNav.showSheet, content: {
+                        ExportSelectionView()
+                            .environmentObject(exportNav)
+                    })
                     .onChange(of: scenePhase) { _, newValue in
                         if newValue != .active {
-                            self.showExportJsonConfirmation = false
-                            self.showExportJsonSheet = false
+                            exportNav.showSheet = false
                         }
                     }
                 }
@@ -159,14 +138,4 @@ struct SettingsTab: View {
             }
         }
     }
-}
-
-struct ActivityView: UIViewControllerRepresentable {
-    let fileUrl: URL
-
-    func makeUIViewController(context _: Context) -> UIActivityViewController {
-        UIActivityViewController(activityItems: [fileUrl], applicationActivities: nil)
-    }
-
-    func updateUIViewController(_: UIActivityViewController, context _: Context) {}
 }

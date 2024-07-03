@@ -2,6 +2,10 @@ import CloudKitSyncMonitor
 import Factory
 import SwiftUI
 
+final class ExportNavigation: ObservableObject {
+    @Published var showSheet = false
+}
+
 struct SettingsTab: View {
     @EnvironmentObject private var loginStatus: LoginStatus
     @Environment(\.scenePhase) private var scenePhase
@@ -9,6 +13,8 @@ struct SettingsTab: View {
     @AppStorage(StateEnum.BIOMETRICS_AUTH_ENABLED.rawValue) private var stateBiometricsAuth: Bool = false
     @AppStorage(StateEnum.ICLOUD_BACKUP_ENABLED.rawValue) private var isICloudEnabled: Bool = false
     @AppStorage(StateEnum.ICLOUD_SYNC_LAST_ATTEMPT.rawValue) private var iCloudSyncLastAttempt: TimeInterval = 0
+
+    @StateObject private var exportNav = ExportNavigation()
 
     private let secureEnclaveService = Container.shared.secureEnclaveService()
     private let swiftDataService = Container.shared.swiftDataService()
@@ -53,18 +59,19 @@ struct SettingsTab: View {
 
                 Section {
                     Button {
-                        showExportJsonConfirmation = true
+                        exportNav.showSheet = true
                     } label: {
                         Text("Export")
                             .foregroundStyle(.blue)
                             .frame(maxWidth: .infinity)
                     }
-                    .sheet(isPresented: $showExportJsonConfirmation, content: {
+                    .sheet(isPresented: $exportNav.showSheet, content: {
                         ExportSelectionView()
+                            .environmentObject(exportNav)
                     })
                     .onChange(of: scenePhase) { _, newValue in
                         if newValue != .active {
-                            self.showExportJsonConfirmation = false
+                            exportNav.showSheet = false
                         }
                     }
                 }

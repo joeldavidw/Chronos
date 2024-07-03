@@ -15,6 +15,10 @@ struct ExportSelectionView: View {
                     .font(.system(size: 44))
                     .padding(.bottom, 16)
 
+                Text("A backup contains all your token data for this vault. Back up your vault regularly and keep it in a secure location to prevent any data loss.")
+                    .fixedSize(horizontal: false, vertical: true)
+                    .multilineTextAlignment(.center)
+
                 Spacer()
 
                 Button {
@@ -27,7 +31,7 @@ struct ExportSelectionView: View {
                 }
                 .buttonStyle(.bordered)
                 .navigationDestination(isPresented: $encryptedBackupBtnPressed) {
-                    EncryptedExportView()
+                    EncryptedExportPasswordView()
                 }
 
                 Button {
@@ -39,6 +43,7 @@ struct ExportSelectionView: View {
                         .frame(height: 32)
                 }
                 .buttonStyle(.borderless)
+                .padding(.top, 4)
                 .confirmationDialog("Confirm Export", isPresented: $showPlainTextExportConfirmation, titleVisibility: .visible) {
                     Button("Confirm", role: .destructive, action: {
                         showPlainTextExportConfirmation = false
@@ -56,7 +61,6 @@ struct ExportSelectionView: View {
                     if let fileurl = exportService.exportToUnencryptedJson() {
                         ActivityView(fileUrl: fileurl)
                             .presentationDetents([.medium, .large])
-                            .presentationDragIndicator(Visibility.hidden)
                     } else {
                         VStack {
                             Image(systemName: "xmark.circle")
@@ -68,21 +72,11 @@ struct ExportSelectionView: View {
                     }
                 }
             }
-            .navigationTitle("Export")
+            .navigationTitle("Export Selection")
             .padding([.horizontal], 24)
-            .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity)
+            .padding([.bottom], 32)
             .background(Color(red: 0.04, green: 0, blue: 0.11))
             .navigationBarTitleDisplayMode(.inline)
         }
     }
-}
-
-struct ActivityView: UIViewControllerRepresentable {
-    let fileUrl: URL
-
-    func makeUIViewController(context _: Context) -> UIActivityViewController {
-        UIActivityViewController(activityItems: [fileUrl], applicationActivities: nil)
-    }
-
-    func updateUIViewController(_: UIActivityViewController, context _: Context) {}
 }

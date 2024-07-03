@@ -70,14 +70,14 @@ public class ExportService {
         }
 
         exportVault.tokens = tokens
-        
+
         let randomDir = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString, isDirectory: true)
-        
+
         try? FileManager.default.createDirectory(at: randomDir, withIntermediateDirectories: true)
-        
+
         let jsonUrl = randomDir.appendingPathComponent("Chronos_" + Date().formatted(verbatimStyle))
             .appendingPathExtension("json")
-        
+
         guard let jsonData = try? JSONEncoder().encode(exportVault) else {
             logger.error("Unable to encode exportVault")
             return nil
@@ -94,8 +94,19 @@ public class ExportService {
             .appendingPathComponent("Chronos_Encrypted_" + Date().formatted(verbatimStyle))
             .appendingPathExtension("zip")
 
-        SSZipArchive.createZipFile(atPath: zipUrl.path(), withContentsOfDirectory: randomDir.path(), withPassword: password)
+        let success = SSZipArchive.createZipFile(
+            atPath: zipUrl.path(),
+            withContentsOfDirectory: randomDir.path(),
+            keepParentDirectory: false,
+            compressionLevel: 0,
+            password: password,
+            aes: true
+        )
 
-        return zipUrl
+        if success {
+            return zipUrl
+        }
+
+        return nil
     }
 }

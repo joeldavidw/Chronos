@@ -69,6 +69,7 @@ struct EncryptedExportConfirmPasswordView: View {
                         .presentationDragIndicator(Visibility.hidden)
                         .onDisappear {
                             exportNav.showSheet = false
+                            exportService.cleanupTemporaryDirectory()
                         }
                 } else {
                     VStack {

@@ -61,6 +61,9 @@ struct ExportSelectionView: View {
                     if let fileurl = exportService.exportToUnencryptedJson() {
                         ActivityView(fileUrl: fileurl)
                             .presentationDetents([.medium, .large])
+                            .onDisappear {
+                                exportService.cleanupTemporaryDirectory()
+                            }
                     } else {
                         VStack {
                             Image(systemName: "xmark.circle")

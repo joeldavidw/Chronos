@@ -24,7 +24,7 @@ Chronos is an open-source two-factor authentication (2FA) app for iOS, developed
 - Automatic backup & sync to Apple iCloud (optional)
 - Export
     - Plain text
-    - Encrypted (Coming soon)
+    - Encrypted
     - HTML with QR codes for easy scanning (Coming soon)
 - Built natively with Swift
 

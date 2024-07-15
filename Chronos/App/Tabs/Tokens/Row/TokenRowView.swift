@@ -28,10 +28,12 @@ struct TokenRowView: View {
             HStack(spacing: 4) {
                 Text(!token.issuer.isEmpty ? token.issuer : token.account)
                     .fontWeight(.semibold)
+                    .lineLimit(1)
 
                 if !token.issuer.isEmpty && !token.account.isEmpty {
                     Text("- \(token.account)")
                         .foregroundStyle(.gray)
+                        .lineLimit(1)
                 }
             }
 

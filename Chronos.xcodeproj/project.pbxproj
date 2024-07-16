@@ -52,6 +52,7 @@
 		6BA5DA5C2B9E94F8009908E5 /* SecureEnclaveService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BA5DA5B2B9E94F8009908E5 /* SecureEnclaveService.swift */; };
 		6BB37D7A2C456B32008DA122 /* ImportSelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BB37D792C456B32008DA122 /* ImportSelectionView.swift */; };
 		6BB37D7C2C457059008DA122 /* SourceSelectedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BB37D7B2C457059008DA122 /* SourceSelectedView.swift */; };
+		6BB37D7E2C466B60008DA122 /* ImportService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BB37D7D2C466B60008DA122 /* ImportService.swift */; };
 		6BC3C3B52BA6B91E00B181B9 /* BiometricsSetupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BC3C3B42BA6B91E00B181B9 /* BiometricsSetupView.swift */; };
 		6BD6D2012C11FEB4004512BF /* OTPService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BD6D2002C11FEB4004512BF /* OTPService.swift */; };
 		6BD90AA52B8E34BB00FABD91 /* PasswordLoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BD90AA42B8E34BB00FABD91 /* PasswordLoginView.swift */; };
@@ -104,6 +105,7 @@
 		6BA5DA5B2B9E94F8009908E5 /* SecureEnclaveService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecureEnclaveService.swift; sourceTree = "<group>"; };
 		6BB37D792C456B32008DA122 /* ImportSelectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImportSelectionView.swift; sourceTree = "<group>"; };
 		6BB37D7B2C457059008DA122 /* SourceSelectedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SourceSelectedView.swift; sourceTree = "<group>"; };
+		6BB37D7D2C466B60008DA122 /* ImportService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImportService.swift; sourceTree = "<group>"; };
 		6BC3C3B42BA6B91E00B181B9 /* BiometricsSetupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BiometricsSetupView.swift; sourceTree = "<group>"; };
 		6BD6D2002C11FEB4004512BF /* OTPService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OTPService.swift; sourceTree = "<group>"; };
 		6BD90AA42B8E34BB00FABD91 /* PasswordLoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordLoginView.swift; sourceTree = "<group>"; };
@@ -280,6 +282,7 @@
 				6B9D74642C14ADDC008E6582 /* StateService.swift */,
 				6B12B09F2C19DB7800E9ED2D /* ExportService.swift */,
 				6B3F92AA2C1C7987004125A8 /* VaultService.swift */,
+				6BB37D7D2C466B60008DA122 /* ImportService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -515,6 +518,7 @@
 				6BD6D2012C11FEB4004512BF /* OTPService.swift in Sources */,
 				6B39629A2BF5E935000410B0 /* MainAppView.swift in Sources */,
 				6BF53E522C317F1C00356461 /* ExportSelectionView.swift in Sources */,
+				6BB37D7E2C466B60008DA122 /* ImportService.swift in Sources */,
 				6B65F8082C21C17200AC8606 /* VaultSelectionView.swift in Sources */,
 				6BB37D7A2C456B32008DA122 /* ImportSelectionView.swift in Sources */,
 				6B3962A02BF6423B000410B0 /* CryptoService.swift in Sources */,

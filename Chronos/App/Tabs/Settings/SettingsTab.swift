@@ -57,7 +57,7 @@ struct SettingsTab: View {
                         }
                     }
                 }
-                
+
                 Section {
                     Button {
                         importNav.showSheet = true
@@ -71,7 +71,7 @@ struct SettingsTab: View {
                     })
                 }
                 .listSectionSpacing(8)
-                
+
                 Section {
                     Button {
                         exportNav.showSheet = true

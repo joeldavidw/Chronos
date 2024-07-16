@@ -1,5 +1,5 @@
 {
-  "originHash" : "ed1e2fc95c7a990960fc46b8dee48e34a0f4db11839fa75806a805184dd720a0",
+  "originHash" : "83b69a06fc95c43243855fb2ff571a8bf2cf54943f4ffc4a10a2c75a6d98f73b",
   "pins" : [
     {
       "identity" : "alertkit",
@@ -47,15 +47,6 @@
       }
     },
     {
-      "identity" : "popupview",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/exyte/PopupView",
-      "state" : {
-        "revision" : "21119b8dbb413e03b6036b788601e96806c83ed3",
-        "version" : "3.0.4"
-      }
-    },
-    {
       "identity" : "swift-crypto",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/apple/swift-crypto.git",
@@ -80,15 +71,6 @@
       "state" : {
         "revision" : "9660551ea3df153c3cbacfa34ac3abbec73a8b84",
         "version" : "3.0.2"
-      }
-    },
-    {
-      "identity" : "swiftui-introspect",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/siteline/swiftui-introspect",
-      "state" : {
-        "revision" : "668a65735751432b640260c56dfa621cec568368",
-        "version" : "1.2.0"
       }
     },
     {

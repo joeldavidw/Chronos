@@ -30,4 +30,8 @@ extension Container {
     var exportService: Factory<ExportService> {
         Factory(self) { ExportService() }
     }
+
+    var importService: Factory<ImportService> {
+        Factory(self) { ImportService() }
+    }
 }

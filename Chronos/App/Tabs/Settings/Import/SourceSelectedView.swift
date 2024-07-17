@@ -11,23 +11,9 @@ struct SourceSelectedView: View {
 
     var body: some View {
         VStack {
-            HStack {
-                Image("Chronos")
-                    .resizable()
-                    .frame(width: 64, height: 64)
-                    .cornerRadius(64 * 0.225)
-
-                Image(systemName: "arrowshape.right.fill")
-                    .font(.system(size: 24))
-                    .padding(.horizontal, 8)
-
-                Image("Chronos")
-                    .resizable()
-                    .frame(width: 64, height: 64)
-                    .cornerRadius(64 * 0.225)
-            }
-            .padding(.top, 16)
-            .padding(.bottom, 32)
+            Image(systemName: "square.and.arrow.down")
+                .font(.system(size: 44))
+                .padding(.bottom, 16)
 
             Text(importSource.desc)
                 .multilineTextAlignment(.center)

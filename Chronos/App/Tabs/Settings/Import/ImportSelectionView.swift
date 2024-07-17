@@ -11,6 +11,8 @@ struct ImportSelectionView: View {
         ImportSource(id: "chronos", name: "Chronos", desc: "Export your tokens from Chronos to an unencrypted JSON file, then select the file below."),
 //        ImportSource(id: "raivo", name: "Raivo", desc: "Export your tokens from Raivo using \"Export OTPs to ZIP archive\" option. Extract the JSON file from the archive, then select the file below."),
     ]
+    
+    @EnvironmentObject var importNav: ExportNavigation
 
     var body: some View {
         NavigationStack {
@@ -32,6 +34,9 @@ struct ImportSelectionView: View {
             .padding([.horizontal], 4)
             .padding([.bottom], 32)
             .navigationBarTitleDisplayMode(.inline)
+            .navigationBarItems(leading: Button("Cancel", action: {
+                importNav.showSheet = false
+            }))
         }
     }
 }

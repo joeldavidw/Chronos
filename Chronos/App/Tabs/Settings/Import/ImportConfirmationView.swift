@@ -43,7 +43,16 @@ struct ImportConfirmationView: View {
                         .frame(height: 32)
                 }
                 .buttonStyle(.bordered)
-
+                
+                Button {
+                    importNav.showSheet = false
+                } label: {
+                    Text("Cancel")
+                        .bold()
+                        .frame(minWidth: 0, maxWidth: .infinity)
+                        .frame(height: 32)
+                }
+                .buttonStyle(.borderless)
             } else {
                 Text("Error")
                     .multilineTextAlignment(.center)

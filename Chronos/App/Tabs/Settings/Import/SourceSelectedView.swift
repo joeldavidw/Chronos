@@ -6,6 +6,8 @@ struct SourceSelectedView: View {
     @State var showFileImporter: Bool = false
     @State var showImportConfirmation: Bool = false
     @State var tokens: [Token]?
+    
+    @EnvironmentObject var importNav: ExportNavigation
 
     let importService = Container.shared.importService()
 
@@ -39,6 +41,16 @@ struct SourceSelectedView: View {
                     print(error)
                 }
             })
+            
+            Button {
+                importNav.showSheet = false
+            } label: {
+                Text("Cancel")
+                    .bold()
+                    .frame(minWidth: 0, maxWidth: .infinity)
+                    .frame(height: 32)
+            }
+            .buttonStyle(.borderless)
         }
         .padding([.horizontal], 24)
         .padding([.bottom], 32)

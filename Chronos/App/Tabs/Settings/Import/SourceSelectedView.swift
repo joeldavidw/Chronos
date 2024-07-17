@@ -4,6 +4,8 @@ import SwiftUI
 struct SourceSelectedView: View {
     @State var importSource: ImportSource
     @State var showFileImporter: Bool = false
+    @State var showImportConfirmation: Bool = false
+    @State var tokens: [Token]?
 
     let importService = Container.shared.importService()
 
@@ -45,16 +47,20 @@ struct SourceSelectedView: View {
                 switch results {
                 case let .success(fileurls):
                     let fileUrl = fileurls.first
-                    importService.importFromChronos(url: fileUrl!)
-
+                    tokens = importService.importFromChronos(url: fileUrl!)
+                    showImportConfirmation = true
                 case let .failure(error):
                     print(error)
                 }
-
             })
         }
         .padding([.horizontal], 24)
         .padding([.bottom], 32)
         .navigationTitle("Import from \(importSource.name)")
+        .sheet(isPresented: $showImportConfirmation, content: {
+            NavigationStack {
+                ImportConfirmationView(tokens: tokens)
+            }
+        })
     }
 }

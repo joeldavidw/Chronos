@@ -68,6 +68,7 @@ struct SettingsTab: View {
                     }
                     .sheet(isPresented: $importNav.showSheet, content: {
                         ImportSelectionView()
+                            .environmentObject(importNav)
                     })
                 }
                 .listSectionSpacing(8)

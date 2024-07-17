@@ -53,6 +53,8 @@
 		6BB37D7A2C456B32008DA122 /* ImportSelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BB37D792C456B32008DA122 /* ImportSelectionView.swift */; };
 		6BB37D7C2C457059008DA122 /* SourceSelectedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BB37D7B2C457059008DA122 /* SourceSelectedView.swift */; };
 		6BB37D7E2C466B60008DA122 /* ImportService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BB37D7D2C466B60008DA122 /* ImportService.swift */; };
+		6BB37D812C46C751008DA122 /* SwiftyJSON in Frameworks */ = {isa = PBXBuildFile; productRef = 6BB37D802C46C751008DA122 /* SwiftyJSON */; };
+		6BB37D832C480B07008DA122 /* ImportConfirmationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BB37D822C480B07008DA122 /* ImportConfirmationView.swift */; };
 		6BC3C3B52BA6B91E00B181B9 /* BiometricsSetupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BC3C3B42BA6B91E00B181B9 /* BiometricsSetupView.swift */; };
 		6BD6D2012C11FEB4004512BF /* OTPService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BD6D2002C11FEB4004512BF /* OTPService.swift */; };
 		6BD90AA52B8E34BB00FABD91 /* PasswordLoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BD90AA42B8E34BB00FABD91 /* PasswordLoginView.swift */; };
@@ -106,6 +108,7 @@
 		6BB37D792C456B32008DA122 /* ImportSelectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImportSelectionView.swift; sourceTree = "<group>"; };
 		6BB37D7B2C457059008DA122 /* SourceSelectedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SourceSelectedView.swift; sourceTree = "<group>"; };
 		6BB37D7D2C466B60008DA122 /* ImportService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImportService.swift; sourceTree = "<group>"; };
+		6BB37D822C480B07008DA122 /* ImportConfirmationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImportConfirmationView.swift; sourceTree = "<group>"; };
 		6BC3C3B42BA6B91E00B181B9 /* BiometricsSetupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BiometricsSetupView.swift; sourceTree = "<group>"; };
 		6BD6D2002C11FEB4004512BF /* OTPService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OTPService.swift; sourceTree = "<group>"; };
 		6BD90AA42B8E34BB00FABD91 /* PasswordLoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordLoginView.swift; sourceTree = "<group>"; };
@@ -129,6 +132,7 @@
 				6B7383E02B9C3962008E8867 /* Factory in Frameworks */,
 				6B3C7A3D2BE9E0600043FEBD /* Logging in Frameworks */,
 				6B193C8A2C27F03300E759B7 /* CloudKitSyncMonitor in Frameworks */,
+				6BB37D812C46C751008DA122 /* SwiftyJSON in Frameworks */,
 				6BF53E4F2C317AA400356461 /* ZipArchive in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -317,6 +321,7 @@
 			children = (
 				6BB37D792C456B32008DA122 /* ImportSelectionView.swift */,
 				6BB37D7B2C457059008DA122 /* SourceSelectedView.swift */,
+				6BB37D822C480B07008DA122 /* ImportConfirmationView.swift */,
 			);
 			path = Import;
 			sourceTree = "<group>";
@@ -394,6 +399,7 @@
 				6B3C7A3C2BE9E0600043FEBD /* Logging */,
 				6B193C892C27F03300E759B7 /* CloudKitSyncMonitor */,
 				6BF53E4E2C317AA400356461 /* ZipArchive */,
+				6BB37D802C46C751008DA122 /* SwiftyJSON */,
 			);
 			productName = Chronos;
 			productReference = 6B3BB0AD2B4EA87C00DCEF0B /* Chronos.app */;
@@ -433,6 +439,7 @@
 				6B3C7A3B2BE9E0600043FEBD /* XCRemoteSwiftPackageReference "swift-log" */,
 				6B193C882C27F03300E759B7 /* XCRemoteSwiftPackageReference "CloudKitSyncMonitor" */,
 				6BF53E4B2C31793100356461 /* XCRemoteSwiftPackageReference "ZipArchive" */,
+				6BB37D7F2C46C751008DA122 /* XCRemoteSwiftPackageReference "SwiftyJSON" */,
 			);
 			productRefGroup = 6B3BB0AE2B4EA87C00DCEF0B /* Products */;
 			projectDirPath = "";
@@ -503,6 +510,7 @@
 				6BD90AA52B8E34BB00FABD91 /* PasswordLoginView.swift in Sources */,
 				6B9D74682C1553A1008E6582 /* SecureBytes.swift in Sources */,
 				6B3BB0E22B4ED19300DCEF0B /* TokensTab.swift in Sources */,
+				6BB37D832C480B07008DA122 /* ImportConfirmationView.swift in Sources */,
 				6BF53E542C31856A00356461 /* EncryptedExportPasswordView.swift in Sources */,
 				6B12B0A02C19DB7800E9ED2D /* ExportService.swift in Sources */,
 				6B3BB0E02B4ECE6F00DCEF0B /* TOTPRowView.swift in Sources */,
@@ -936,6 +944,14 @@
 				minimumVersion = 1.8.2;
 			};
 		};
+		6BB37D7F2C46C751008DA122 /* XCRemoteSwiftPackageReference "SwiftyJSON" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SwiftyJSON/SwiftyJSON.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.0.2;
+			};
+		};
 		6BF53E4B2C31793100356461 /* XCRemoteSwiftPackageReference "ZipArchive" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/ZipArchive/ZipArchive";
@@ -986,6 +1002,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 6B8ABEEA2B8F6A4F00F5B514 /* XCRemoteSwiftPackageReference "CryptoSwift" */;
 			productName = CryptoSwift;
+		};
+		6BB37D802C46C751008DA122 /* SwiftyJSON */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 6BB37D7F2C46C751008DA122 /* XCRemoteSwiftPackageReference "SwiftyJSON" */;
+			productName = SwiftyJSON;
 		};
 		6BF53E4E2C317AA400356461 /* ZipArchive */ = {
 			isa = XCSwiftPackageProductDependency;

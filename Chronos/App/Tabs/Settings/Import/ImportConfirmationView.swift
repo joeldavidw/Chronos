@@ -43,7 +43,7 @@ struct ImportConfirmationView: View {
                         .frame(height: 32)
                 }
                 .buttonStyle(.bordered)
-                
+
                 Button {
                     importNav.showSheet = false
                 } label: {

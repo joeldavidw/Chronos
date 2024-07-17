@@ -57,7 +57,11 @@ struct SourceSelectedView: View {
         .navigationTitle("Import from \(importSource.name)")
         .sheet(isPresented: $showImportConfirmation, content: {
             NavigationStack {
-                ImportConfirmationView(tokens: tokens)
+                if let tokens = tokens {
+                    ImportConfirmationView(tokens: tokens)
+                } else {
+                    ImportFailureView()
+                }
             }
         })
     }

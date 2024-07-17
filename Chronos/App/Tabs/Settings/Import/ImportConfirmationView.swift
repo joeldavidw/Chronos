@@ -12,11 +12,11 @@ struct ImportConfirmationView: View {
 
     var body: some View {
         VStack {
-            Image(systemName: "square.and.arrow.down")
-                .font(.system(size: 44))
-                .padding(.bottom, 16)
-
             if let tokens = tokens {
+                Image(systemName: "square.and.arrow.down")
+                    .font(.system(size: 44))
+                    .padding(.bottom, 16)
+
                 Text("\(tokens.count) tokens are ready to be imported. Would you like to proceed with the import?")
                     .multilineTextAlignment(.center)
 
@@ -54,8 +54,24 @@ struct ImportConfirmationView: View {
                 }
                 .buttonStyle(.borderless)
             } else {
-                Text("Error")
+                Image(systemName: "exclamationmark.square")
+                    .font(.system(size: 44))
+                    .padding(.bottom, 16)
+
+                Text("The file cannot be imported. It might be corrupted or there was an error while trying to parse it.")
                     .multilineTextAlignment(.center)
+
+                Spacer()
+
+                Button {
+                    importNav.showSheet = false
+                } label: {
+                    Text("Close")
+                        .bold()
+                        .frame(minWidth: 0, maxWidth: .infinity)
+                        .frame(height: 32)
+                }
+                .buttonStyle(.bordered)
             }
         }
         .navigationTitle("Confirm Import")

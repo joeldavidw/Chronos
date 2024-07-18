@@ -15,6 +15,7 @@ struct SettingsTab: View {
     @AppStorage(StateEnum.ICLOUD_SYNC_LAST_ATTEMPT.rawValue) private var iCloudSyncLastAttempt: TimeInterval = 0
 
     @StateObject private var exportNav = ExportNavigation()
+    @StateObject private var importNav = ExportNavigation()
 
     private let secureEnclaveService = Container.shared.secureEnclaveService()
     private let swiftDataService = Container.shared.swiftDataService()
@@ -56,6 +57,21 @@ struct SettingsTab: View {
                         }
                     }
                 }
+
+                Section {
+                    Button {
+                        importNav.showSheet = true
+                    } label: {
+                        Text("Import")
+                            .foregroundStyle(.blue)
+                            .frame(maxWidth: .infinity)
+                    }
+                    .sheet(isPresented: $importNav.showSheet, content: {
+                        ImportSelectionView()
+                            .environmentObject(importNav)
+                    })
+                }
+                .listSectionSpacing(8)
 
                 Section {
                     Button {

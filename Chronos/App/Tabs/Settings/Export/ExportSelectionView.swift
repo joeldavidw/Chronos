@@ -11,7 +11,7 @@ struct ExportSelectionView: View {
     var body: some View {
         NavigationStack {
             VStack {
-                Image(systemName: "square.and.arrow.down")
+                Image(systemName: "square.and.arrow.up")
                     .font(.system(size: 44))
                     .padding(.bottom, 16)
 

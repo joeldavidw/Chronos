@@ -44,6 +44,7 @@
 		6B7383E02B9C3962008E8867 /* Factory in Frameworks */ = {isa = PBXBuildFile; productRef = 6B7383DF2B9C3962008E8867 /* Factory */; };
 		6B7383E52B9C4230008E8867 /* Container.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B7383E42B9C4230008E8867 /* Container.swift */; };
 		6B7A54742B94B7A30057DCF9 /* PrivacyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B7A54732B94B7A30057DCF9 /* PrivacyView.swift */; };
+		6B8132F22C4975DA00DB367E /* Raivo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B8132F12C4975DA00DB367E /* Raivo.swift */; };
 		6B842DD52BE33E2E00056F0F /* RestoreBackupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B842DD42BE33E2E00056F0F /* RestoreBackupView.swift */; };
 		6B8ABEEC2B8F6A4F00F5B514 /* CryptoSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 6B8ABEEB2B8F6A4F00F5B514 /* CryptoSwift */; };
 		6B9581E22B62AFF80029EF3C /* ViewModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B9581E12B62AFF80029EF3C /* ViewModifier.swift */; };
@@ -113,6 +114,7 @@
 		6B7383E42B9C4230008E8867 /* Container.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Container.swift; sourceTree = "<group>"; };
 		6B7A546F2B94584E0057DCF9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		6B7A54732B94B7A30057DCF9 /* PrivacyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyView.swift; sourceTree = "<group>"; };
+		6B8132F12C4975DA00DB367E /* Raivo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Raivo.swift; sourceTree = "<group>"; };
 		6B842DD42BE33E2E00056F0F /* RestoreBackupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestoreBackupView.swift; sourceTree = "<group>"; };
 		6B9581E12B62AFF80029EF3C /* ViewModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModifier.swift; sourceTree = "<group>"; };
 		6B9581E32B633A880029EF3C /* AddManualTokenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddManualTokenView.swift; sourceTree = "<group>"; };
@@ -293,6 +295,7 @@
 			isa = PBXGroup;
 			children = (
 				6B4CBF2E2C490FB700983D44 /* Chronos.swift */,
+				6B8132F12C4975DA00DB367E /* Raivo.swift */,
 			);
 			path = Import;
 			sourceTree = "<group>";
@@ -612,6 +615,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				6B4CBF2F2C490FB700983D44 /* Chronos.swift in Sources */,
+				6B8132F22C4975DA00DB367E /* Raivo.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

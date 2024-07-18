@@ -1,7 +1,7 @@
 import Factory
 import SwiftUI
 
-struct ImportDetailView: View {
+struct ImportSourceDetailView: View {
     @State var importSource: ImportSource
 
     @State private var showFileImporter = false

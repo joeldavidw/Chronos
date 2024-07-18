@@ -23,7 +23,7 @@ struct ImportSourceListView: View {
 
                 List(importSources) { importSource in
                     NavigationLink {
-                        SourceSelectedView(importSource: importSource)
+                        ImportSourceDetailView(importSource: importSource)
                     } label: {
                         Text(importSource.name)
                             .fontWeight(.semibold)

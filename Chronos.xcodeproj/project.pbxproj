@@ -34,6 +34,7 @@
 		6B3F92A92C1B45AA004125A8 /* Vault.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B3F92A82C1B45AA004125A8 /* Vault.swift */; };
 		6B3F92AB2C1C7987004125A8 /* VaultService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B3F92AA2C1C7987004125A8 /* VaultService.swift */; };
 		6B4B48F32BD7BB3C007D357D /* Token.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B4B48F22BD7BB3C007D357D /* Token.swift */; };
+		6B4CBF2F2C490FB700983D44 /* Chronos.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B4CBF2E2C490FB700983D44 /* Chronos.swift */; };
 		6B5E41CE2BD790F80045DBC6 /* EncryptedToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B5E41CD2BD790F80045DBC6 /* EncryptedToken.swift */; };
 		6B65F8082C21C17200AC8606 /* VaultSelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B65F8072C21C17200AC8606 /* VaultSelectionView.swift */; };
 		6B65F80B2C21C2EA00AC8606 /* VaultSetupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B65F80A2C21C2EA00AC8606 /* VaultSetupView.swift */; };
@@ -67,6 +68,16 @@
 		6BF53E5B2C33FD8F00356461 /* ActivityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BF53E5A2C33FD8F00356461 /* ActivityView.swift */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		6B4CBF302C490FB700983D44 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 6B3BB0A52B4EA87C00DCEF0B /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 6B3BB0AC2B4EA87C00DCEF0B;
+			remoteInfo = Chronos;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
 		6B12B09F2C19DB7800E9ED2D /* ExportService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExportService.swift; sourceTree = "<group>"; };
 		6B12B0A12C19F1E600E9ED2D /* ExportVault.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExportVault.swift; sourceTree = "<group>"; };
@@ -92,6 +103,8 @@
 		6B3F92A82C1B45AA004125A8 /* Vault.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Vault.swift; sourceTree = "<group>"; };
 		6B3F92AA2C1C7987004125A8 /* VaultService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VaultService.swift; sourceTree = "<group>"; };
 		6B4B48F22BD7BB3C007D357D /* Token.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Token.swift; sourceTree = "<group>"; };
+		6B4CBF2C2C490FB700983D44 /* ChronosTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ChronosTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		6B4CBF2E2C490FB700983D44 /* Chronos.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Chronos.swift; sourceTree = "<group>"; };
 		6B5E41CD2BD790F80045DBC6 /* EncryptedToken.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EncryptedToken.swift; sourceTree = "<group>"; };
 		6B65F8072C21C17200AC8606 /* VaultSelectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VaultSelectionView.swift; sourceTree = "<group>"; };
 		6B65F80A2C21C2EA00AC8606 /* VaultSetupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VaultSetupView.swift; sourceTree = "<group>"; };
@@ -139,6 +152,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		6B4CBF292C490FB700983D44 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -169,6 +189,7 @@
 			isa = PBXGroup;
 			children = (
 				6B3BB0AF2B4EA87C00DCEF0B /* Chronos */,
+				6B4CBF2D2C490FB700983D44 /* ChronosTests */,
 				6B3BB0AE2B4EA87C00DCEF0B /* Products */,
 				6B3BB0EC2B4EEEBD00DCEF0B /* Frameworks */,
 			);
@@ -178,6 +199,7 @@
 			isa = PBXGroup;
 			children = (
 				6B3BB0AD2B4EA87C00DCEF0B /* Chronos.app */,
+				6B4CBF2C2C490FB700983D44 /* ChronosTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -257,6 +279,22 @@
 				6B3F92A82C1B45AA004125A8 /* Vault.swift */,
 			);
 			path = Database;
+			sourceTree = "<group>";
+		};
+		6B4CBF2D2C490FB700983D44 /* ChronosTests */ = {
+			isa = PBXGroup;
+			children = (
+				6B4CBF362C4910B400983D44 /* Import */,
+			);
+			path = ChronosTests;
+			sourceTree = "<group>";
+		};
+		6B4CBF362C4910B400983D44 /* Import */ = {
+			isa = PBXGroup;
+			children = (
+				6B4CBF2E2C490FB700983D44 /* Chronos.swift */,
+			);
+			path = Import;
 			sourceTree = "<group>";
 		};
 		6B65F8062C21C15E00AC8606 /* Restore */ = {
@@ -408,6 +446,24 @@
 			productReference = 6B3BB0AD2B4EA87C00DCEF0B /* Chronos.app */;
 			productType = "com.apple.product-type.application";
 		};
+		6B4CBF2B2C490FB700983D44 /* ChronosTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 6B4CBF352C490FB700983D44 /* Build configuration list for PBXNativeTarget "ChronosTests" */;
+			buildPhases = (
+				6B4CBF282C490FB700983D44 /* Sources */,
+				6B4CBF292C490FB700983D44 /* Frameworks */,
+				6B4CBF2A2C490FB700983D44 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				6B4CBF312C490FB700983D44 /* PBXTargetDependency */,
+			);
+			name = ChronosTests;
+			productName = ChronosTests;
+			productReference = 6B4CBF2C2C490FB700983D44 /* ChronosTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -415,11 +471,15 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
-				LastSwiftUpdateCheck = 1520;
+				LastSwiftUpdateCheck = 1540;
 				LastUpgradeCheck = 1520;
 				TargetAttributes = {
 					6B3BB0AC2B4EA87C00DCEF0B = {
 						CreatedOnToolsVersion = 15.2;
+					};
+					6B4CBF2B2C490FB700983D44 = {
+						CreatedOnToolsVersion = 15.4;
+						TestTargetID = 6B3BB0AC2B4EA87C00DCEF0B;
 					};
 				};
 			};
@@ -449,6 +509,7 @@
 			projectRoot = "";
 			targets = (
 				6B3BB0AC2B4EA87C00DCEF0B /* Chronos */,
+				6B4CBF2B2C490FB700983D44 /* ChronosTests */,
 			);
 		};
 /* End PBXProject section */
@@ -461,6 +522,13 @@
 				6B3BB0B82B4EA87D00DCEF0B /* Preview Assets.xcassets in Resources */,
 				6B3962A42C002E60000410B0 /* Launch Screen.storyboard in Resources */,
 				6B3BB0B52B4EA87D00DCEF0B /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		6B4CBF2A2C490FB700983D44 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -539,7 +607,23 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		6B4CBF282C490FB700983D44 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6B4CBF2F2C490FB700983D44 /* Chronos.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		6B4CBF312C490FB700983D44 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 6B3BB0AC2B4EA87C00DCEF0B /* Chronos */;
+			targetProxy = 6B4CBF302C490FB700983D44 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		6B3BB0CF2B4EA87D00DCEF0B /* Dev Debug */ = {
@@ -721,6 +805,7 @@
 				DEVELOPMENT_ASSET_PATHS = "\"Chronos/Preview Content\"";
 				DEVELOPMENT_TEAM = MKJ7X96SHQ;
 				ENABLE_PREVIEWS = YES;
+				ENABLE_TESTABILITY = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Chronos/Info.plist;
@@ -754,6 +839,229 @@
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = "Dev Release";
+		};
+		6B4CBF322C490FB700983D44 /* Dev Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_STYLE = Automatic;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = MKJ7X96SHQ;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.5;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MARKETING_VERSION = 1.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = com.joeldavidw.ChronosTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Chronos.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Chronos";
+			};
+			name = "Dev Debug";
+		};
+		6B4CBF332C490FB700983D44 /* Dev Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_STYLE = Automatic;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = MKJ7X96SHQ;
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.5;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MARKETING_VERSION = 1.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = com.joeldavidw.ChronosTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Chronos.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Chronos";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = "Dev Release";
+		};
+		6B4CBF342C490FB700983D44 /* Prod Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_STYLE = Automatic;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = MKJ7X96SHQ;
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.5;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MARKETING_VERSION = 1.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = com.joeldavidw.ChronosTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Chronos.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Chronos";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = "Prod Release";
 		};
 		6BF53E462C315F5200356461 /* Prod Release */ = {
 			isa = XCBuildConfiguration;
@@ -877,6 +1185,16 @@
 				6B3BB0D22B4EA87D00DCEF0B /* Dev Debug */,
 				6B3BB0D32B4EA87D00DCEF0B /* Dev Release */,
 				6BF53E472C315F5200356461 /* Prod Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = "Dev Release";
+		};
+		6B4CBF352C490FB700983D44 /* Build configuration list for PBXNativeTarget "ChronosTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				6B4CBF322C490FB700983D44 /* Dev Debug */,
+				6B4CBF332C490FB700983D44 /* Dev Release */,
+				6B4CBF342C490FB700983D44 /* Prod Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = "Dev Release";

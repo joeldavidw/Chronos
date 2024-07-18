@@ -35,7 +35,7 @@ struct SourceSelectedView: View {
                 switch results {
                 case let .success(fileurls):
                     let fileUrl = fileurls.first
-                    tokens = importService.importFromChronos(url: fileUrl!)
+                    tokens = importService.importTokens(importSource: importSource, url: fileUrl!)
                     showImportConfirmation = true
                 case let .failure(error):
                     print(error)

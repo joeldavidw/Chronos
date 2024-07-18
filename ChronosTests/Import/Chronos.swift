@@ -40,9 +40,9 @@ final class ChronosTests: XCTestCase {
 
         let importService = ImportService()
         let tokens = importService.importFromChronos(json: json)!
-        
+
         XCTAssertEqual(tokens.count, 2)
-        
+
         XCTAssertEqual(tokens[0].digits, 6)
         XCTAssertEqual(tokens[0].type, TokenTypeEnum.HOTP)
         XCTAssertEqual(tokens[0].counter, 11)
@@ -51,7 +51,7 @@ final class ChronosTests: XCTestCase {
         XCTAssertEqual(tokens[0].account, "Test HOTP")
         XCTAssertEqual(tokens[0].period, 30)
         XCTAssertEqual(tokens[0].secret, "ffff")
-        
+
         XCTAssertEqual(tokens[1].digits, 7)
         XCTAssertEqual(tokens[1].type, TokenTypeEnum.TOTP)
         XCTAssertEqual(tokens[1].counter, 0)
@@ -61,7 +61,7 @@ final class ChronosTests: XCTestCase {
         XCTAssertEqual(tokens[1].period, 30)
         XCTAssertEqual(tokens[1].secret, "ff")
     }
-    
+
     func testInvalidImport_MissingVariables() throws {
         let json: JSON = [
             "tokens": [
@@ -79,7 +79,7 @@ final class ChronosTests: XCTestCase {
 
         let importService = ImportService()
         let tokens = importService.importFromChronos(json: json)
-        
+
         XCTAssertNil(tokens)
     }
 }

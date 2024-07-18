@@ -16,6 +16,8 @@ public class ImportService {
         switch importSource.id {
         case "chronos":
             return importFromChronos(json: json)
+        case "raivo":
+            return importFromRaivo(json: json)
         default:
             logger.error("Unsupported import source: \(importSource.id)")
             return nil
@@ -50,5 +52,48 @@ extension ImportService {
             logger.error("Error decoding tokens from JSON: \(error.localizedDescription)")
             return nil
         }
+    }
+
+    func importFromRaivo(json: JSON) -> [Token]? {
+        var tokens: [Token] = []
+
+        for (key, subJson) in json {
+            guard
+                let issuer = subJson["issuer"].string,
+                let account = subJson["account"].string,
+                let secret = subJson["secret"].string,
+
+                let digitsString = subJson["digits"].string,
+                let digits = Int(digitsString),
+
+                let periodString = subJson["timer"].string,
+                let period = Int(periodString),
+
+                let counterString = subJson["counter"].string,
+                let counter = Int(counterString),
+
+                let kind = subJson["kind"].string,
+                let algorithm = subJson["algorithm"].string,
+                let tokenType = TokenTypeEnum(rawValue: kind),
+                let tokenAlgorithm = TokenAlgorithmEnum(rawValue: algorithm)
+            else {
+                logger.error("Error parsing token data for key: \(key)")
+                continue
+            }
+
+            let token = Token()
+            token.issuer = issuer
+            token.account = account
+            token.secret = secret
+            token.digits = digits
+            token.period = period
+            token.counter = counter
+            token.type = tokenType
+            token.algorithm = tokenAlgorithm
+
+            tokens.append(token)
+        }
+
+        return tokens
     }
 }

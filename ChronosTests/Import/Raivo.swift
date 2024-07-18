@@ -6,32 +6,32 @@ final class RaivoTests: XCTestCase {
     func testValidImport() throws {
         let json: JSON = [
             [
-              "secret": "ff",
-              "timer": "30",
-              "account": "Test HOTP",
-              "kind": "HOTP",
-              "algorithm": "SHA1",
-              "digits": "6",
-              "pinned": "false",
-              "iconValue": "",
-              "counter": "12",
-              "issuer": "Raivo",
-              "iconType": ""
+                "secret": "ff",
+                "timer": "30",
+                "account": "Test HOTP",
+                "kind": "HOTP",
+                "algorithm": "SHA1",
+                "digits": "6",
+                "pinned": "false",
+                "iconValue": "",
+                "counter": "12",
+                "issuer": "Raivo",
+                "iconType": "",
             ],
             [
-              "issuer": "Raivo",
-              "secret": "JBSWY3DPEHPK3PXP",
-              "iconType": "",
-              "iconValue": "",
-              "pinned": "false",
-              "algorithm": "SHA1",
-              "digits": "6",
-              "kind": "TOTP",
-              "timer": "30",
-              "counter": "0",
-              "account": "Test TOTP"
-            ]
-          ]
+                "issuer": "Raivo",
+                "secret": "JBSWY3DPEHPK3PXP",
+                "iconType": "",
+                "iconValue": "",
+                "pinned": "false",
+                "algorithm": "SHA1",
+                "digits": "6",
+                "kind": "TOTP",
+                "timer": "30",
+                "counter": "0",
+                "account": "Test TOTP",
+            ],
+        ]
 
         let importService = ImportService()
         let tokens = importService.importFromRaivo(json: json)!
@@ -60,18 +60,18 @@ final class RaivoTests: XCTestCase {
     func testInvalidImport_MissingVariables() throws {
         let json: JSON = [
             [
-              "issuer": "Raivo",
-              "iconType": "",
-              "iconValue": "",
-              "pinned": "false",
-              "algorithm": "SHA1",
-              "digits": "6",
-              "kind": "TOTP",
-              "timer": "30",
-              "counter": "0",
-              "account": "Test TOTP"
-            ]
-          ]
+                "issuer": "Raivo",
+                "iconType": "",
+                "iconValue": "",
+                "pinned": "false",
+                "algorithm": "SHA1",
+                "digits": "6",
+                "kind": "TOTP",
+                "timer": "30",
+                "counter": "0",
+                "account": "Test TOTP",
+            ],
+        ]
 
         let importService = ImportService()
         let tokens = importService.importFromChronos(json: json)

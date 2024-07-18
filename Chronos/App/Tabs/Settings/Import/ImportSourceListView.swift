@@ -6,7 +6,7 @@ struct ImportSource: Identifiable {
     var desc: String
 }
 
-struct ImportSelectionView: View {
+struct ImportSourceListView: View {
     let importSources: [ImportSource] = [
         ImportSource(id: "chronos", name: "Chronos", desc: "Export your tokens from Chronos to an unencrypted JSON file, then select the file below."),
         ImportSource(id: "raivo", name: "Raivo", desc: "Export your tokens from Raivo using \"Export OTPs to ZIP archive\" option. Extract the JSON file from the archive, then select the file below."),
@@ -23,7 +23,7 @@ struct ImportSelectionView: View {
 
                 List(importSources) { importSource in
                     NavigationLink {
-                        SourceSelectedView(importSource: importSource)
+                        ImportSourceDetailView(importSource: importSource)
                     } label: {
                         Text(importSource.name)
                             .fontWeight(.semibold)

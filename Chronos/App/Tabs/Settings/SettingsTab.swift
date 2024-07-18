@@ -67,7 +67,7 @@ struct SettingsTab: View {
                             .frame(maxWidth: .infinity)
                     }
                     .sheet(isPresented: $importNav.showSheet, content: {
-                        ImportSelectionView()
+                        ImportSourceListView()
                             .environmentObject(importNav)
                     })
                 }

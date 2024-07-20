@@ -29,11 +29,7 @@ struct TokensTab: View {
     @EnvironmentObject var loginStatus: LoginStatus
 
     @State private var showTokenAddSheet = false
-    @State private var showTokenUpdateSheet = false
-    @State private var showTokenDeleteSheet = false
 
-    @State private var selectedTokenForDeletion: Token? = nil
-    @State private var selectedTokenForUpdate: Token? = nil
     @State var detentHeight: CGFloat = 0
     @State var sortCriteria: TokenSortOrder = .ISSUER_ASC
 

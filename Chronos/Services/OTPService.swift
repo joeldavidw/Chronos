@@ -66,6 +66,36 @@ public class OTPService {
         return token
     }
 
+    func generateOtpAuthUrl(token: Token) -> URL? {
+        var components = URLComponents()
+        components.scheme = "otpauth"
+        components.host = token.type.rawValue
+        components.path = "/\(token.account)"
+
+        var queryItems = [
+            URLQueryItem(name: "secret", value: token.secret),
+            URLQueryItem(name: "issuer", value: token.issuer),
+            URLQueryItem(name: "algorithm", value: token.algorithm.rawValue),
+            URLQueryItem(name: "digits", value: "\(token.digits)"),
+        ]
+
+        if token.type == .TOTP {
+            queryItems.append(URLQueryItem(name: "period", value: "\(token.period)"))
+        }
+
+        if token.type == .HOTP {
+            queryItems.append(URLQueryItem(name: "counter", value: "\(token.counter)"))
+        }
+
+        components.queryItems = queryItems
+
+        guard let url = components.url else {
+            return nil
+        }
+
+        return url
+    }
+
     private func getTokenType(from host: String) throws -> TokenTypeEnum {
         switch host.lowercased() {
         case "totp":

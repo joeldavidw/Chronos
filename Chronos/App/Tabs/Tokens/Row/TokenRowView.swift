@@ -1,12 +1,13 @@
 import AlertKit
+import EFQRCode
 import Factory
 import SwiftUI
 
 struct TokenRowView: View {
     @Environment(\.modelContext) private var modelContext
 
-    @State private var showTokenUpdateSheet = false
     @State private var showTokenDeleteSheet = false
+    @State private var showTokenQRSheet = false
 
     @State private var selectedTokenForDeletion: Token?
     @State private var selectedTokenForUpdate: Token?
@@ -76,6 +77,9 @@ struct TokenRowView: View {
                     .interactiveDismissDisabled(true)
             }
         }
+        .sheet(isPresented: $showTokenQRSheet) {
+            TokenQRView(token: token)
+        }
         .confirmationDialog("Delete?", isPresented: $showTokenDeleteSheet, titleVisibility: .visible) {
             Button("Delete", role: .destructive, action: {
                 do {
@@ -116,7 +120,6 @@ struct TokenRowView: View {
         return Group {
             Button {
                 self.selectedTokenForUpdate = token
-                self.showTokenUpdateSheet.toggle()
             } label: {
                 VStack(alignment: .center) {
                     Image(systemName: "square.and.pencil")
@@ -124,6 +127,16 @@ struct TokenRowView: View {
                 }
             }
             .tint(.blue)
+
+            Button {
+                self.showTokenQRSheet = true
+            } label: {
+                VStack(alignment: .center) {
+                    Image(systemName: "qrcode")
+                    Text("QR")
+                }
+            }
+            .tint(.indigo)
         }
     }
 }

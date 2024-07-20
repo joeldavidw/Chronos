@@ -16,7 +16,7 @@ struct ImportConfirmationView: View {
                 .font(.system(size: 44))
                 .padding(.bottom, 16)
 
-            Text("\(tokens.count) tokens are ready to be imported. Would you like to proceed with the import?")
+            Text("**\(tokens.count) tokens** are ready to be imported.\nWould you like to proceed with the import?")
                 .multilineTextAlignment(.center)
 
             Spacer()

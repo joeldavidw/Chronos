@@ -11,7 +11,7 @@ struct ImportFailureView: View {
                 .font(.system(size: 44))
                 .padding(.bottom, 16)
 
-            Text("The file cannot be imported. It might be corrupted or there was an error while trying to parse it.")
+            Text("The file cannot be imported. It might be corrupted as there was an error while trying to parse it.")
                 .multilineTextAlignment(.center)
 
             Spacer()

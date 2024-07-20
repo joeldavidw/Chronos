@@ -33,6 +33,7 @@ public class ExportService {
         }
 
         let exportVault = ExportVault()
+        exportVault.schemaVersion = 1
         exportVault.tokens = tokens
         return exportVault
     }

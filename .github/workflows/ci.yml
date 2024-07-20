@@ -15,7 +15,7 @@ jobs:
     steps:
       - uses: swift-actions/setup-swift@3aed395c5397f62deb91d8fe7af1418a9ae4d16f # v2.1.0
         with:
-          swift-version: "5.4.3"
+          swift-version: "5.10.1"
       - uses: actions/checkout@a5ac7e51b41094c92402da3b24376905380afc29 # v4.1.6
       - name: Build
         run: swift build

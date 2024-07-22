@@ -17,6 +17,8 @@ struct SettingsTab: View {
     @AppStorage(StateEnum.PASSWORD_REMINDER_ENABLED.rawValue) private var statePasswordReminderEnabled: Bool = false
     @AppStorage(StateEnum.NEXT_PASSWORD_REMINDER_TIMESTAMP.rawValue) var nextPasswordReminderTimestamp: TimeInterval = 0
 
+    @AppStorage(StateEnum.TAP_TO_REVEAL_ENABLED.rawValue) private var stateTapToRevealEnabled: Bool = false
+
     @StateObject private var exportNav = ExportNavigation()
     @StateObject private var importNav = ExportNavigation()
 
@@ -117,6 +119,13 @@ struct SettingsTab: View {
                                 nextPasswordReminderTimestamp = Date().timeIntervalSince1970 + (2 * 7 * 24 * 60 * 60)
                             }
                         }
+                    }
+
+                    Toggle(isOn: $stateTapToRevealEnabled, label: {
+                        Text("Tap to reveal")
+                    })
+                    .onChange(of: stateTapToRevealEnabled) { _, enabled in
+                        stateTapToRevealEnabled = enabled
                     }
                 }
 

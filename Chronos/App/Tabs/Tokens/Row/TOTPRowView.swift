@@ -2,17 +2,18 @@ import Factory
 import SwiftUI
 
 struct TOTPRowView: View {
+    let token: Token
+
     @State private var otp = ""
     @State private var secsLeft = 0
     @State private var progress: Double = 1.0
 
-    let token: Token
     let timer = Timer.publish(every: 0.1, tolerance: 0.1, on: .main, in: .common).autoconnect()
 
     let otpService = Container.shared.otpService()
 
     var body: some View {
-        Text(formatOtp(otp: otp))
+        Text(!otp.isEmpty ? formatOtp(otp: otp) : otpService.generateTOTP(token: token))
             .font(.largeTitle)
             .fontWeight(.light)
             .lineLimit(1)
@@ -22,7 +23,9 @@ struct TOTPRowView: View {
             .onAppear {
                 otp = otpService.generateTOTP(token: token)
             }
+
         Spacer()
+
         ZStack(alignment: .leading) {
             Circle()
                 .stroke(

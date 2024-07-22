@@ -12,6 +12,9 @@ struct PasswordReminderView: View {
 
     @FocusState private var focusedField: FocusedField?
 
+    @AppStorage(StateEnum.PASSWORD_REMINDER_ENABLED.rawValue) private var statePasswordReminderEnabled: Bool = false
+    @AppStorage(StateEnum.NEXT_PASSWORD_REMINDER_TIMESTAMP.rawValue) var nextPasswordReminderTimestamp: TimeInterval = 0
+
     let cryptoService = Container.shared.cryptoService()
     let vaultService = Container.shared.vaultService()
     let swiftDataService = Container.shared.swiftDataService()
@@ -90,6 +93,8 @@ struct PasswordReminderView: View {
             .navigationBarTitleDisplayMode(.inline)
             .onAppear {
                 focusedField = .password
+
+                nextPasswordReminderTimestamp = Date().timeIntervalSince1970 + (2 * 7 * 24 * 60 * 60)
             }
         }
         .presentationDragIndicator(.visible)
@@ -106,8 +111,10 @@ struct PasswordReminderView: View {
 
             if passwordVerified {
                 dismiss()
+                await UINotificationFeedbackGenerator().notificationOccurred(.success)
             } else {
                 passwordInvalid = true
+                await UINotificationFeedbackGenerator().notificationOccurred(.error)
             }
 
             verifyPressed = false

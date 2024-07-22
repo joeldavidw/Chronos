@@ -11,6 +11,9 @@ enum StateEnum: String {
     case LAST_BIOMETRICS_AUTH_ATTEMPT
 
     case ICLOUD_SYNC_LAST_ATTEMPT
+
+    case PASSWORD_REMINDER_ENABLED
+    case NEXT_PASSWORD_REMINDER_TIMESTAMP
 }
 
 public class StateService {
@@ -40,6 +43,9 @@ public class StateService {
         defaults.setValue(Date().timeIntervalSince1970, forKey: StateEnum.LAST_BIOMETRICS_AUTH_ATTEMPT.rawValue)
 
         defaults.setValue(Date().timeIntervalSince1970, forKey: StateEnum.ICLOUD_SYNC_LAST_ATTEMPT.rawValue)
+
+        defaults.setValue(4_102_444_800, forKey: StateEnum.NEXT_PASSWORD_REMINDER_TIMESTAMP.rawValue)
+        defaults.setValue(true, forKey: StateEnum.PASSWORD_REMINDER_ENABLED.rawValue)
 
         masterKey.clear()
     }

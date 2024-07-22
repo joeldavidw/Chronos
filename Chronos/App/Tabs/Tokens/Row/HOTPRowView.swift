@@ -14,7 +14,7 @@ struct HOTPRowView: View {
     var encryptedToken: EncryptedToken
 
     var body: some View {
-        Text(formatOtp(otp: otp))
+        Text(!otp.isEmpty ? formatOtp(otp: otp) : otpService.generateHOTP(token: token))
             .font(.largeTitle)
             .fontWeight(.light)
             .lineLimit(1)

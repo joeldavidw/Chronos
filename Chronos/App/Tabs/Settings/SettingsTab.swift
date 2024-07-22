@@ -14,6 +14,9 @@ struct SettingsTab: View {
     @AppStorage(StateEnum.ICLOUD_BACKUP_ENABLED.rawValue) private var isICloudEnabled: Bool = false
     @AppStorage(StateEnum.ICLOUD_SYNC_LAST_ATTEMPT.rawValue) private var iCloudSyncLastAttempt: TimeInterval = 0
 
+    @AppStorage(StateEnum.PASSWORD_REMINDER_ENABLED.rawValue) private var statePasswordReminderEnabled: Bool = false
+    @AppStorage(StateEnum.NEXT_PASSWORD_REMINDER_TIMESTAMP.rawValue) var nextPasswordReminderTimestamp: TimeInterval = 0
+
     @StateObject private var exportNav = ExportNavigation()
     @StateObject private var importNav = ExportNavigation()
 
@@ -102,6 +105,17 @@ struct SettingsTab: View {
                             secureEnclaveService.saveMasterKey()
                         } else {
                             secureEnclaveService.deleteMasterKey()
+                        }
+                    }
+
+                    if stateBiometricsAuth {
+                        Toggle(isOn: $statePasswordReminderEnabled, label: {
+                            Text("Password Reminder (2 Weeks)")
+                        })
+                        .onChange(of: statePasswordReminderEnabled) { _, enabled in
+                            if enabled {
+                                nextPasswordReminderTimestamp = Date().timeIntervalSince1970 + (2 * 7 * 24 * 60 * 60)
+                            }
                         }
                     }
                 }

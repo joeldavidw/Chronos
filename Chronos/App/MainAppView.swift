@@ -7,6 +7,7 @@ struct MainAppView: View {
     @Query private var vaults: [Vault]
 
     @State private var currentTab: String = "Tokens"
+    @State private var showPasswordReminder = false
 
     @Environment(\.modelContext) private var modelContext
     @Environment(\.scenePhase) private var scenePhase
@@ -15,6 +16,9 @@ struct MainAppView: View {
     @ObservedObject var syncMonitor = SyncMonitor.shared
 
     @AppStorage(StateEnum.ICLOUD_SYNC_LAST_ATTEMPT.rawValue) var iCloudSyncLastAttempt: TimeInterval = 0
+    @AppStorage(StateEnum.NEXT_PASSWORD_REMINDER_TIMESTAMP.rawValue) var nextPasswordReminderTimestamp: TimeInterval = 0
+    @AppStorage(StateEnum.BIOMETRICS_AUTH_ENABLED.rawValue) var biometricsEnabled: Bool = false
+    @AppStorage(StateEnum.PASSWORD_REMINDER_ENABLED.rawValue) private var statePasswordReminderEnabled: Bool = false
 
     private let stateService = Container.shared.stateService()
 
@@ -49,6 +53,13 @@ struct MainAppView: View {
                 stateService.resetAllStates()
                 loginStatus.loggedIn = false
             }
+
+            if biometricsEnabled && statePasswordReminderEnabled {
+                print("Fuck \(nextPasswordReminderTimestamp)")
+                if Date().timeIntervalSince1970 >= nextPasswordReminderTimestamp {
+                    showPasswordReminder = true
+                }
+            }
         }
         .onChange(of: filteredVault) { _, newValue in
             if newValue.isEmpty {
@@ -61,5 +72,8 @@ struct MainAppView: View {
                 iCloudSyncLastAttempt = Date().timeIntervalSince1970
             }
         }
+        .sheet(isPresented: $showPasswordReminder, content: {
+            PasswordReminderView()
+        })
     }
 }

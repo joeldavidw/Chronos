@@ -29,8 +29,8 @@ struct TokenQRView: View {
                 }
                 .padding(.bottom, 8)
 
-                if let otpAuthUrl = otpService.generateOtpAuthUrl(token: token),
-                   let image = EFQRCode.generate(for: otpAuthUrl.absoluteString)
+                if let otpAuthUrl = otpService.tokenToOtpAuthUrl(token: token),
+                   let image = EFQRCode.generate(for: otpAuthUrl)
                 {
                     Image(uiImage: UIImage(cgImage: image))
                         .resizable()

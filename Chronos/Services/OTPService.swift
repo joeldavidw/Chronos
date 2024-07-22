@@ -53,32 +53,22 @@ public class OTPService {
         var path = components.path
 
         let tokenType = try getTokenType(from: host)
-        var token = Token()
+        let token = Token()
         token.type = tokenType
 
         if !path.isEmpty {
             path.remove(at: path.startIndex)
-            token.account = path
+
+            if !path.contains(":") {
+                token.account = path
+            } else {
+                let label = path.split(separator: ":", maxSplits: 1).map { String($0) }
+                token.issuer = label[0]
+                token.account = label[1]
+            }
         }
 
-        try updateToken(&token, with: components.queryItems)
-
-        return token
-    }
-
-    private func getTokenType(from host: String) throws -> TokenTypeEnum {
-        switch host.lowercased() {
-        case "totp":
-            return .TOTP
-        case "hotp":
-            return .HOTP
-        default:
-            throw OTPError.unsupportedTokenType
-        }
-    }
-
-    private func updateToken(_ token: inout Token, with queryItems: [URLQueryItem]?) throws {
-        guard let queryItems = queryItems else { throw OTPError.invalidQueryItem }
+        guard let queryItems = components.queryItems else { throw OTPError.invalidQueryItem }
 
         for item in queryItems {
             switch item.name.lowercased() {
@@ -100,6 +90,48 @@ public class OTPService {
             default:
                 break
             }
+        }
+
+        return token
+    }
+
+    func tokenToOtpAuthUrl(token: Token) -> String? {
+        var components = URLComponents()
+        components.scheme = "otpauth"
+        components.host = token.type.rawValue.lowercased()
+
+        components.path = !token.issuer.isEmpty ? "/\(token.issuer):\(token.account)" : "/\(token.account)"
+
+        var queryItems: [URLQueryItem] = [
+            URLQueryItem(name: "secret", value: token.secret),
+            URLQueryItem(name: "algorithm", value: token.algorithm.rawValue),
+            URLQueryItem(name: "digits", value: "\(token.digits)"),
+        ]
+
+        if !token.issuer.isEmpty {
+            queryItems.append(URLQueryItem(name: "issuer", value: token.issuer))
+        }
+
+        switch token.type {
+        case .TOTP:
+            queryItems.append(URLQueryItem(name: "period", value: "\(token.period)"))
+        case .HOTP:
+            queryItems.append(URLQueryItem(name: "counter", value: "\(token.counter)"))
+        }
+
+        components.queryItems = queryItems
+
+        return components.string
+    }
+
+    private func getTokenType(from host: String) throws -> TokenTypeEnum {
+        switch host.lowercased() {
+        case "totp":
+            return .TOTP
+        case "hotp":
+            return .HOTP
+        default:
+            throw OTPError.unsupportedTokenType
         }
     }
 }

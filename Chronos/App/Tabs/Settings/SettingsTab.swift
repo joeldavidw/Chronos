@@ -16,6 +16,7 @@ struct SettingsTab: View {
 
     @StateObject private var exportNav = ExportNavigation()
     @StateObject private var importNav = ExportNavigation()
+    @State private var testShow = false
 
     private let secureEnclaveService = Container.shared.secureEnclaveService()
     private let swiftDataService = Container.shared.swiftDataService()

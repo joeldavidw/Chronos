@@ -12,6 +12,10 @@ struct TokenRowView: View {
     @State private var selectedTokenForDeletion: Token?
     @State private var selectedTokenForUpdate: Token?
 
+    @AppStorage(StateEnum.TAP_TO_REVEAL_ENABLED.rawValue) private var stateTapToRevealEnabled: Bool = false
+
+    @State private var tokenRevealed = false
+
     let tokenPair: TokenPair
 
     var token: Token {
@@ -38,12 +42,23 @@ struct TokenRowView: View {
                 }
             }
 
-            HStack {
-                switch token.type {
-                case TokenTypeEnum.TOTP:
-                    TOTPRowView(token: token)
-                case TokenTypeEnum.HOTP:
-                    HOTPRowView(token: token, encryptedToken: encryptedToken)
+            if stateTapToRevealEnabled && !tokenRevealed {
+                HStack {
+                    Text(formatOtp(otp: Array(repeating: "•", count: token.digits).joined(separator: "")))
+                        .font(.largeTitle)
+                        .fontWeight(.black)
+                        .lineLimit(1)
+
+                    Spacer()
+                }
+            } else {
+                HStack {
+                    switch token.type {
+                    case TokenTypeEnum.TOTP:
+                        TOTPRowView(token: token)
+                    case TokenTypeEnum.HOTP:
+                        HOTPRowView(token: token, encryptedToken: encryptedToken)
+                    }
                 }
             }
         }
@@ -51,19 +66,23 @@ struct TokenRowView: View {
         .padding(CGFloat(4))
         .listRowBackground(Color(red: 0.04, green: 0, blue: 0.11))
         .onTapGesture {
-            switch token.type {
-            case TokenTypeEnum.TOTP:
-                UIPasteboard.general.string = otpService.generateTOTP(token: token)
-            case TokenTypeEnum.HOTP:
-                UIPasteboard.general.string = otpService.generateHOTP(token: token)
-            }
+            if !stateTapToRevealEnabled {
+                switch token.type {
+                case TokenTypeEnum.TOTP:
+                    UIPasteboard.general.string = otpService.generateTOTP(token: token)
+                case TokenTypeEnum.HOTP:
+                    UIPasteboard.general.string = otpService.generateHOTP(token: token)
+                }
 
-            AlertKitAPI.present(
-                title: "Copied",
-                icon: .done,
-                style: .iOS17AppleMusic,
-                haptic: .success
-            )
+                AlertKitAPI.present(
+                    title: "Copied",
+                    icon: .done,
+                    style: .iOS17AppleMusic,
+                    haptic: .success
+                )
+            } else {
+                tokenRevealed.toggle()
+            }
         }
         .swipeActions(edge: .leading) {
             TokenRowLeftToRightSwipeView()
@@ -138,5 +157,18 @@ struct TokenRowView: View {
             }
             .tint(.indigo)
         }
+    }
+
+    func formatOtp(otp: String) -> String {
+        if otp.count < 6 {
+            return otp
+        }
+
+        let index = (otp.count == 7 || otp.count == 8) ? 4 : 3
+        var formattedOtp = otp
+        let insertIndex = otp.index(otp.startIndex, offsetBy: index)
+
+        formattedOtp.insert(" ", at: insertIndex)
+        return formattedOtp
     }
 }

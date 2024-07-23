@@ -216,7 +216,7 @@ extension ExportService {
                     .div(attributes: [.class("header-container")],
                          .h2("Chronos Export")),
                     .div(attributes: [.class("header-container")],
-                         .h4(attributes: [.style(safe: "flex-grow: 1;")], "\(Date().formatted(date: .abbreviated, time: .shortened))"),
+                         .h4(attributes: [.style(safe: "flex-grow: 1;")], "\(Date().formatted(date: .abbreviated, time: .omitted))"),
                          .h4(attributes: [.style(safe: "text-align: right;")], "No. of Tokens: \(exportVault.tokens?.count.description ?? "Error")")),
                     .hr(),
                     .div(attributes: [.class("token-container")],

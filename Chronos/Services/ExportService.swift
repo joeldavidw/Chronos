@@ -164,13 +164,13 @@ extension ExportService {
                     .style(safe: """
                         body {
                             font-family: sans-serif;
-                            max-width: 1000px;
+                            max-width: 1100px;
                             margin: 0 auto;
                             padding: 20px;
                         }
                         .token-container {
                             display: grid;
-                            grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+                            grid-template-columns: repeat(auto-fill, minmax(460px, 1fr));
                             gap: 20px;
                             padding-top: 12px;
                         }

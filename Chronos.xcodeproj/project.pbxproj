@@ -807,7 +807,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Chronos/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "Chronos Dev Debug";
-				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
 				INFOPLIST_KEY_NSCameraUsageDescription = "Access to camera is need to scan QR codes";
 				INFOPLIST_KEY_NSFaceIDUsageDescription = "To unlock the app";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -823,7 +823,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 6.0;
+				MARKETING_VERSION = 7.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.joeldavidw.ChronosDevDebug;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -854,7 +854,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Chronos/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "Chronos Dev Release";
-				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
 				INFOPLIST_KEY_NSCameraUsageDescription = "Access to camera is need to scan QR codes";
 				INFOPLIST_KEY_NSFaceIDUsageDescription = "To unlock the app";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -870,7 +870,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 6.0;
+				MARKETING_VERSION = 7.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.joeldavidw.ChronosDevRelease;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1180,7 +1180,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Chronos/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Chronos;
-				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
 				INFOPLIST_KEY_NSCameraUsageDescription = "Access to camera is need to scan QR codes";
 				INFOPLIST_KEY_NSFaceIDUsageDescription = "To unlock the app";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -1196,7 +1196,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 6.0;
+				MARKETING_VERSION = 7.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.joeldavidw.Chronos;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";

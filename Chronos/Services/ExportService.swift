@@ -164,13 +164,13 @@ extension ExportService {
                     .style(safe: """
                         body {
                             font-family: sans-serif;
-                            max-width: 1100px;
+                            max-width: 800px;
                             margin: 0 auto;
                             padding: 20px;
                         }
                         .token-container {
                             display: grid;
-                            grid-template-columns: repeat(auto-fill, minmax(460px, 1fr));
+                            grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
                             gap: 20px;
                             padding-top: 12px;
                         }
@@ -205,14 +205,19 @@ extension ExportService {
                             justify-content: space-between;
                             align-items: center;
                         }
+                        @media print {
+                          .token-card {
+                            break-inside: avoid;
+                          }
+                        }
                     """)
                 ),
                 .body(
                     .div(attributes: [.class("header-container")],
-                         .h1(attributes: [.style(safe: "font-weight: 700;")], "Chronos Export")),
+                         .h2("Chronos Export")),
                     .div(attributes: [.class("header-container")],
-                         .h2(attributes: [.style(safe: "font-weight: 500; flex-grow: 1;")], "\(Date().formatted(verbatimStyle))"),
-                         .h2(attributes: [.style(safe: "font-weight: 500; text-align: right;")], "No. of Tokens: \(exportVault.tokens?.count.description ?? "Error")")),
+                         .h4(attributes: [.style(safe: "flex-grow: 1;")], "\(Date().formatted(date: .abbreviated, time: .shortened))"),
+                         .h4(attributes: [.style(safe: "text-align: right;")], "No. of Tokens: \(exportVault.tokens?.count.description ?? "Error")")),
                     .hr(),
                     .div(attributes: [.class("token-container")],
                          .fragment(tokensHtml))
@@ -237,8 +242,8 @@ extension ExportService {
             attributes: [.class("token-card")],
             .div(attributes: [.class("token-details")],
                  .div(attributes: [.class("token-info")],
-                      .h3(attributes: [.style(safe: "margin: 0 0 10px; font-size: 1.5em;")], .text(token.issuer)),
-                      .h4(attributes: [.style(safe: "margin: 0 0 10px; font-size: 1.2em; color: #555;")], .text(token.account)),
+                      .h3(attributes: [.style(safe: "margin: 0 0 10px;")], .text(token.issuer)),
+                      .h4(attributes: [.style(safe: "margin: 0 0 10px; color: #555;")], .text(token.account)),
                       .div(.text("Secret: "), .code("\(token.secret)")),
                       .div(.text("Type: "), .code("\(token.type.rawValue)")),
                       .div(.text("Algorithm: "), .code("\(token.algorithm.rawValue)")),
@@ -246,7 +251,7 @@ extension ExportService {
                       periodNode,
                       counterNode),
                  .div(attributes: [.style(safe: "flex: 0 0 auto;")],
-                      .img(base64: base64Img, type: .image(.png), alt: "", attributes: [.width(150), .height(150)])))
+                      .img(base64: base64Img, type: .image(.png), alt: "", attributes: [.width(160), .height(160)])))
         )
     }
 }

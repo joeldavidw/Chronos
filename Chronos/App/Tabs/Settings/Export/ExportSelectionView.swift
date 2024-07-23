@@ -55,7 +55,7 @@ struct ExportSelectionView: View {
                         showPlainTextExportSheet = false
                     })
                 } message: {
-                    Text("This export contains your token data in an unencrypted format. This file should not be stored or sent over unsecured channels.")
+                    Text("This export contains your token data in an unencrypted zip archive. This zip file and its contents should not be stored or transmitted over unsecured channels.")
                 }
                 .sheet(isPresented: $showPlainTextExportSheet) {
                     if let fileurl = exportService.exportToZip() {

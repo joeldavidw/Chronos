@@ -1,0 +1,26 @@
+name: Unit Tests
+
+on:
+  pull_request:
+    branches:
+      - main
+  push:
+    branches:
+      - main
+
+jobs:
+  run_tests:
+    runs-on: macos-14
+    environment: ${{ github.event_name == 'push' && 'default' || 'ci-macos' }}
+    strategy:
+      matrix:
+        include:
+          - xcode: "15.4"
+            ios: "17.5"
+    name: iOS (${{ matrix.ios }})
+    steps:
+      - uses: actions/checkout@a5ac7e51b41094c92402da3b24376905380afc29 # v4.1.6
+      - name: Select Xcode
+        run: sudo xcode-select -switch /Applications/Xcode_${{ matrix.xcode }}.app && /usr/bin/xcodebuild -version
+      - name: Run unit tests
+        run: xcodebuild test -scheme 'Chronos Dev Release' -project Chronos.xcodeproj -destination 'platform=iOS Simulator,name=iPhone 15 Pro Max,OS=${{ matrix.ios }}' | xcpretty && exit ${PIPESTATUS[0]}

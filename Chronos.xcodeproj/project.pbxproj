@@ -64,6 +64,7 @@
 		6BB37D832C480B07008DA122 /* ImportConfirmationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BB37D822C480B07008DA122 /* ImportConfirmationView.swift */; };
 		6BB37D852C483066008DA122 /* ImportFailureView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BB37D842C483066008DA122 /* ImportFailureView.swift */; };
 		6BC3C3B52BA6B91E00B181B9 /* BiometricsSetupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BC3C3B42BA6B91E00B181B9 /* BiometricsSetupView.swift */; };
+		6BC5F0482C4F8B1B00BA106F /* Html in Frameworks */ = {isa = PBXBuildFile; productRef = 6BC5F0472C4F8B1B00BA106F /* Html */; };
 		6BD6D2012C11FEB4004512BF /* OTPService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BD6D2002C11FEB4004512BF /* OTPService.swift */; };
 		6BD90AA52B8E34BB00FABD91 /* PasswordLoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BD90AA42B8E34BB00FABD91 /* PasswordLoginView.swift */; };
 		6BE122922BD6413D008636D2 /* ChronosCrypto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BE122912BD6413D008636D2 /* ChronosCrypto.swift */; };
@@ -155,6 +156,7 @@
 				6B8ABEEC2B8F6A4F00F5B514 /* CryptoSwift in Frameworks */,
 				6B3BB0EE2B4EEEBD00DCEF0B /* Valet in Frameworks */,
 				6B35A4C92B557EE50004D4C5 /* AlertKit in Frameworks */,
+				6BC5F0482C4F8B1B00BA106F /* Html in Frameworks */,
 				6B66D5ED2B526648006DB79D /* CodeScanner in Frameworks */,
 				6B7383E02B9C3962008E8867 /* Factory in Frameworks */,
 				6B3C7A3D2BE9E0600043FEBD /* Logging in Frameworks */,
@@ -475,6 +477,7 @@
 				6BF53E4E2C317AA400356461 /* ZipArchive */,
 				6BB37D802C46C751008DA122 /* SwiftyJSON */,
 				6B8132F62C4BB2B200DB367E /* EFQRCode */,
+				6BC5F0472C4F8B1B00BA106F /* Html */,
 			);
 			productName = Chronos;
 			productReference = 6B3BB0AD2B4EA87C00DCEF0B /* Chronos.app */;
@@ -538,6 +541,7 @@
 				6BF53E4B2C31793100356461 /* XCRemoteSwiftPackageReference "ZipArchive" */,
 				6BB37D7F2C46C751008DA122 /* XCRemoteSwiftPackageReference "SwiftyJSON" */,
 				6B8132F52C4BB2B200DB367E /* XCRemoteSwiftPackageReference "EFQRCode" */,
+				6BC5F0462C4F8B1B00BA106F /* XCRemoteSwiftPackageReference "swift-html" */,
 			);
 			productRefGroup = 6B3BB0AE2B4EA87C00DCEF0B /* Products */;
 			projectDirPath = "";
@@ -1322,6 +1326,14 @@
 				minimumVersion = 5.0.2;
 			};
 		};
+		6BC5F0462C4F8B1B00BA106F /* XCRemoteSwiftPackageReference "swift-html" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/pointfreeco/swift-html";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.4.1;
+			};
+		};
 		6BF53E4B2C31793100356461 /* XCRemoteSwiftPackageReference "ZipArchive" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/ZipArchive/ZipArchive";
@@ -1382,6 +1394,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 6BB37D7F2C46C751008DA122 /* XCRemoteSwiftPackageReference "SwiftyJSON" */;
 			productName = SwiftyJSON;
+		};
+		6BC5F0472C4F8B1B00BA106F /* Html */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 6BC5F0462C4F8B1B00BA106F /* XCRemoteSwiftPackageReference "swift-html" */;
+			productName = Html;
 		};
 		6BF53E4E2C317AA400356461 /* ZipArchive */ = {
 			isa = XCSwiftPackageProductDependency;

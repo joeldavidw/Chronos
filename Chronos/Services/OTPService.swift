@@ -62,7 +62,9 @@ public class OTPService {
             if !path.contains(":") {
                 token.account = path
             } else {
+
                 let label = path.split(separator: ":", maxSplits: 1).map { String($0) }
+
                 token.issuer = label[0]
                 token.account = label[1]
             }
@@ -100,8 +102,10 @@ public class OTPService {
         components.scheme = "otpauth"
         components.host = token.type.rawValue.lowercased()
 
-        components.path = !token.issuer.isEmpty ? "/\(token.issuer):\(token.account)" : "/\(token.account)"
-
+        components.path = !token.account.isEmpty
+            ? (!token.issuer.isEmpty ? "/\(token.issuer):\(token.account)" : "/\(token.account)")
+            : "/"
+        
         var queryItems: [URLQueryItem] = [
             URLQueryItem(name: "secret", value: token.secret),
             URLQueryItem(name: "algorithm", value: token.algorithm.rawValue),

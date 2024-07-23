@@ -28,7 +28,7 @@ final class TokenToOtpAuthUrlTests: XCTestCase {
         token2.algorithm = TokenAlgorithmEnum.SHA1
 
         url = otpService.tokenToOtpAuthUrl(token: token2)!
-        XCTAssertEqual(url, "otpauth://totp/Apple:?secret=JBSWY3DPEHPK3PXP&algorithm=SHA1&digits=6&issuer=Apple&period=30")
+        XCTAssertEqual(url, "otpauth://totp/?secret=JBSWY3DPEHPK3PXP&algorithm=SHA1&digits=6&issuer=Apple&period=30")
 
         // Test case 3: TOTP token with different period and algorithm
         let token3 = Token()
@@ -132,7 +132,7 @@ final class TokenToOtpAuthUrlTests: XCTestCase {
         token2.algorithm = TokenAlgorithmEnum.SHA1
 
         url = otpService.tokenToOtpAuthUrl(token: token2)!
-        XCTAssertEqual(url, "otpauth://hotp/GitHub:?secret=JBSWY3DPEHPK3PXP&algorithm=SHA1&digits=6&issuer=GitHub&counter=1")
+        XCTAssertEqual(url, "otpauth://hotp/?secret=JBSWY3DPEHPK3PXP&algorithm=SHA1&digits=6&issuer=GitHub&counter=1")
 
         // Test case 3: HOTP token with different counter and algorithm
         let token3 = Token()

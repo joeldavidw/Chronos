@@ -174,7 +174,7 @@ extension ExportService {
                             justify-content: space-around;
                         }
                         .token-card {
-                            flex: 1 0 45%;
+                            flex: 0 0 45%;
                             margin: 10px;
                             padding: 20px;
                             border: 1px solid #ccc;

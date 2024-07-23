@@ -161,21 +161,20 @@ extension ExportService {
         let document: Node = .document(
             .html(
                 .head(
-                    [.style(safe: """
+                    .style(safe: """
                         body {
                             font-family: sans-serif;
-                            max-width: 1000px;
+                            max-width: 1100px;
                             margin: 0 auto;
                             padding: 20px;
                         }
                         .token-container {
-                            display: flex;
-                            flex-wrap: wrap;
-                            justify-content: space-around;
+                            display: grid;
+                            grid-template-columns: repeat(auto-fill, minmax(460px, 1fr));
+                            gap: 20px;
+                            padding-top: 12px;
                         }
                         .token-card {
-                            flex: 0 0 45%;
-                            margin: 10px;
                             padding: 20px;
                             border: 1px solid #ccc;
                             border-radius: 6px;
@@ -206,17 +205,11 @@ extension ExportService {
                             justify-content: space-between;
                             align-items: center;
                         }
-                        @media (max-width: 800px) {
-                            .token-card {
-                                flex: 1 0 100%;
-                            }
-                        }
-                    """)]
+                    """)
                 ),
                 .body(
                     .div(attributes: [.class("header-container")],
-                         .h1(attributes: [.style(safe: "font-weight: 700;")], "Chronos Export"),
-                         .div()),
+                         .h1(attributes: [.style(safe: "font-weight: 700;")], "Chronos Export")),
                     .div(attributes: [.class("header-container")],
                          .h2(attributes: [.style(safe: "font-weight: 500; flex-grow: 1;")], "\(Date().formatted(verbatimStyle))"),
                          .h2(attributes: [.style(safe: "font-weight: 500; text-align: right;")], "No. of Tokens: \(exportVault.tokens?.count.description ?? "Error")")),
@@ -238,7 +231,6 @@ extension ExportService {
         } ?? ""
 
         let periodNode: Node = token.type.rawValue == "TOTP" ? .div(.text("Period: "), .code("\(token.period.description)")) : .text("")
-
         let counterNode: Node = token.type.rawValue == "HOTP" ? .div(.text("Counter: "), .code("\(token.counter.description)")) : .text("")
 
         return Node.div(

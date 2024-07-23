@@ -178,7 +178,7 @@ extension ExportService {
                             margin: 10px;
                             padding: 20px;
                             border: 1px solid #ccc;
-                            border-radius: 10px;
+                            border-radius: 6px;
                             box-sizing: border-box;
                         }
                         .token-details {
@@ -206,7 +206,7 @@ extension ExportService {
                             justify-content: space-between;
                             align-items: center;
                         }
-                        @media (max-width: 600px) {
+                        @media (max-width: 800px) {
                             .token-card {
                                 flex: 1 0 100%;
                             }
@@ -237,9 +237,9 @@ extension ExportService {
             }
         } ?? ""
 
-        let periodNode: Node = token.type.rawValue == "TOTP" ? .div(attributes: [.style(safe: "margin: 5px 0;")], .text("Period: "), .code(attributes: [.style(safe: "background-color: #f8f8f8; padding: 2px 4px; border-radius: 3px;")], "\(token.period.description)")) : .text("")
+        let periodNode: Node = token.type.rawValue == "TOTP" ? .div(.text("Period: "), .code("\(token.period.description)")) : .text("")
 
-        let counterNode: Node = token.type.rawValue == "HOTP" ? .div(attributes: [.style(safe: "margin: 5px 0;")], .text("Counter: "), .code(attributes: [.style(safe: "background-color: #f8f8f8; padding: 2px 4px; border-radius: 3px;")], "\(token.counter.description)")) : .text("")
+        let counterNode: Node = token.type.rawValue == "HOTP" ? .div(.text("Counter: "), .code("\(token.counter.description)")) : .text("")
 
         return Node.div(
             attributes: [.class("token-card")],
@@ -247,10 +247,10 @@ extension ExportService {
                  .div(attributes: [.class("token-info")],
                       .h3(attributes: [.style(safe: "margin: 0 0 10px; font-size: 1.5em;")], .text(token.issuer)),
                       .h4(attributes: [.style(safe: "margin: 0 0 10px; font-size: 1.2em; color: #555;")], .text(token.account)),
-                      .div(attributes: [.style(safe: "margin: 5px 0;")], .text("Secret: "), .code(attributes: [.style(safe: "background-color: #f8f8f8; padding: 2px 4px; border-radius: 3px;")], "\(token.secret)")),
-                      .div(attributes: [.style(safe: "margin: 5px 0;")], .text("Type: "), .code(attributes: [.style(safe: "background-color: #f8f8f8; padding: 2px 4px; border-radius: 3px;")], "\(token.type.rawValue)")),
-                      .div(attributes: [.style(safe: "margin: 5px 0;")], .text("Algorithm: "), .code(attributes: [.style(safe: "background-color: #f8f8f8; padding: 2px 4px; border-radius: 3px;")], "\(token.algorithm.rawValue)")),
-                      .div(attributes: [.style(safe: "margin: 5px 0;")], .text("Digits: "), .code(attributes: [.style(safe: "background-color: #f8f8f8; padding: 2px 4px; border-radius: 3px;")], "\(token.digits.description)")),
+                      .div(.text("Secret: "), .code("\(token.secret)")),
+                      .div(.text("Type: "), .code("\(token.type.rawValue)")),
+                      .div(.text("Algorithm: "), .code("\(token.algorithm.rawValue)")),
+                      .div(.text("Digits: "), .code("\(token.digits.description)")),
                       periodNode,
                       counterNode),
                  .div(attributes: [.style(safe: "flex: 0 0 auto;")],

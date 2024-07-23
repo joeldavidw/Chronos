@@ -37,7 +37,7 @@ struct AddManualTokenView: View {
         Form {
             Section(header: Text("Information")) {
                 LabeledContent {
-                    TextField("Issuer", text: $issuer)
+                    TextField("Issuer (Optional)", text: $issuer)
                         .disableAutocorrection(true)
                 } label: {
                     Text("Issuer")

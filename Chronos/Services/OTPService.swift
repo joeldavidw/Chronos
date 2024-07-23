@@ -62,11 +62,21 @@ public class OTPService {
             if !path.contains(":") {
                 token.account = path
             } else {
-
                 let label = path.split(separator: ":", maxSplits: 1).map { String($0) }
 
-                token.issuer = label[0]
-                token.account = label[1]
+                if label.count == 2 {
+                    token.issuer = label[0]
+                    token.account = label[1]
+                }
+
+                // Label is malformed e.g. :Account or Issuer:
+                if label.count == 1 {
+                    if path.hasPrefix(":") {
+                        token.account = label[0]
+                    } else if path.hasSuffix(":") {
+                        token.issuer = label[0]
+                    }
+                }
             }
         }
 
@@ -82,7 +92,7 @@ public class OTPService {
             case "issuer":
                 token.issuer = item.value ?? ""
             case "algorithm":
-                token.algorithm = TokenAlgorithmEnum(rawValue: item.value?.lowercased() ?? "") ?? .SHA1
+                token.algorithm = TokenAlgorithmEnum(rawValue: item.value?.uppercased() ?? "") ?? .SHA1
             case "digits":
                 token.digits = Int(item.value ?? "") ?? 6
             case "counter":
@@ -105,7 +115,7 @@ public class OTPService {
         components.path = !token.account.isEmpty
             ? (!token.issuer.isEmpty ? "/\(token.issuer):\(token.account)" : "/\(token.account)")
             : "/"
-        
+
         var queryItems: [URLQueryItem] = [
             URLQueryItem(name: "secret", value: token.secret),
             URLQueryItem(name: "algorithm", value: token.algorithm.rawValue),

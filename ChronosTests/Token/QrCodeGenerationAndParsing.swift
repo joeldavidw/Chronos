@@ -35,7 +35,7 @@ final class QrCodeGenerationAndParsingTests: XCTestCase {
         url = otpService.tokenToOtpAuthUrl(token: token2)!
         let qr2 = EFQRCode.generate(for: url)
         detectQRCode(in: UIImage(cgImage: qr2!)) { detectedUrl in
-            XCTAssertEqual(detectedUrl, "otpauth://totp/Apple:?secret=JBSWY3DPEHPK3PXP&algorithm=SHA1&digits=6&issuer=Apple&period=30")
+            XCTAssertEqual(detectedUrl, "otpauth://totp/?secret=JBSWY3DPEHPK3PXP&algorithm=SHA1&digits=6&issuer=Apple&period=30")
         }
 
         // Test case 3: TOTP token with different period and algorithm
@@ -163,7 +163,7 @@ final class QrCodeGenerationAndParsingTests: XCTestCase {
         url = otpService.tokenToOtpAuthUrl(token: token2)!
         let qr2 = EFQRCode.generate(for: url)
         detectQRCode(in: UIImage(cgImage: qr2!)) { detectedUrl in
-            XCTAssertEqual(detectedUrl, "otpauth://hotp/GitHub:?secret=JBSWY3DPEHPK3PXP&algorithm=SHA1&digits=6&issuer=GitHub&counter=1")
+            XCTAssertEqual(detectedUrl, "otpauth://hotp/?secret=JBSWY3DPEHPK3PXP&algorithm=SHA1&digits=6&issuer=GitHub&counter=1")
         }
 
         // Test case 3: HOTP token with different counter and algorithm

@@ -35,8 +35,8 @@ class Token: Codable, Identifiable {
 func validateToken(
     token: Token
 ) -> (isValid: Bool, errorMessage: String?) {
-    if token.issuer.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
-        return (false, "Invalid issuer")
+    if token.account.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+        return (false, "Invalid account")
     }
 
     if token.secret.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {

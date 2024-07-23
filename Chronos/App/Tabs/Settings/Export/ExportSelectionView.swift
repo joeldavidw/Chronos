@@ -37,7 +37,7 @@ struct ExportSelectionView: View {
                 Button {
                     showPlainTextExportConfirmation = true
                 } label: {
-                    Text("Plaintext")
+                    Text("Unencrypted Zip Archive")
                         .bold()
                         .frame(minWidth: 0, maxWidth: .infinity)
                         .frame(height: 32)
@@ -58,7 +58,7 @@ struct ExportSelectionView: View {
                     Text("This export contains your token data in an unencrypted format. This file should not be stored or sent over unsecured channels.")
                 }
                 .sheet(isPresented: $showPlainTextExportSheet) {
-                    if let fileurl = exportService.exportHtml() {
+                    if let fileurl = exportService.exportToZip() {
                         ActivityView(fileUrl: fileurl)
                             .presentationDetents([.medium, .large])
                             .onDisappear {
@@ -74,23 +74,6 @@ struct ExportSelectionView: View {
                         }
                     }
                 }
-
-                Button {
-                    if let fileurl = exportService.exportHtml() {
-                        ActivityView(fileUrl: fileurl)
-                            .presentationDetents([.medium, .large])
-                            .onDisappear {
-                                exportService.cleanupTemporaryDirectory()
-                            }
-                    }
-                } label: {
-                    Text("HTML")
-                        .bold()
-                        .frame(minWidth: 0, maxWidth: .infinity)
-                        .frame(height: 32)
-                }
-                .buttonStyle(.borderless)
-                .padding(.top, 4)
             }
             .navigationTitle("Export Selection")
             .padding([.horizontal], 24)

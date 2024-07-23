@@ -20,6 +20,76 @@ public class ExportService {
         calendar: Calendar(identifier: .gregorian)
     )
 
+    private func exportJSONAndHtml(uniqueDir: URL, exportVault: ExportVault) -> Bool {
+        var success = true
+
+        if !exportJSON(uniqueDir: uniqueDir, exportVault: exportVault) {
+            logger.error("Unable to export JSON file")
+            success = false
+        }
+
+        if !exportHtml(uniqueDir: uniqueDir, exportVault: exportVault) {
+            logger.error("Unable to export HTML file")
+            success = false
+        }
+
+        return success
+    }
+
+    func exportToZip(password: String? = nil) -> URL? {
+        guard let exportVault = getExportVault(), let uniqueDir = createUniqueDir() else {
+            return nil
+        }
+
+        guard exportJSONAndHtml(uniqueDir: uniqueDir, exportVault: exportVault) else {
+            return nil
+        }
+
+        let zipUrl = FileManager.default.temporaryDirectory
+            .appendingPathComponent("export", isDirectory: true)
+            .appendingPathComponent("Chronos_" + Date().formatted(verbatimStyle))
+            .appendingPathExtension("zip")
+
+        let success: Bool
+
+        if let password = password {
+            success = SSZipArchive.createZipFile(
+                atPath: zipUrl.path,
+                withContentsOfDirectory: uniqueDir.path,
+                keepParentDirectory: false,
+                compressionLevel: 0,
+                password: password,
+                aes: true
+            )
+        } else {
+            success = SSZipArchive.createZipFile(
+                atPath: zipUrl.path,
+                withContentsOfDirectory: uniqueDir.path,
+                keepParentDirectory: false
+            )
+        }
+
+        if success {
+            return zipUrl
+        }
+
+        logger.error("Failed to create zip file")
+        return nil
+    }
+
+    func cleanupTemporaryDirectory() {
+        let tempExportDirUrl = FileManager.default.temporaryDirectory
+            .appendingPathComponent("export", isDirectory: true)
+
+        do {
+            try FileManager.default.removeItem(at: tempExportDirUrl)
+        } catch {
+            logger.error("Unable to delete temporary directory: \(error.localizedDescription)")
+        }
+    }
+}
+
+extension ExportService {
     private func getExportVault() -> ExportVault? {
         let context = ModelContext(swiftDataService.getModelContainer())
         guard let vault = vaultService.getVault(context: context) else {
@@ -27,20 +97,17 @@ public class ExportService {
             return nil
         }
 
-        var tokens: [Token] = []
-        for encToken in vault.encryptedTokens ?? [] {
+        let tokens = (vault.encryptedTokens ?? []).compactMap { encToken -> Token? in
             guard let token = cryptoService.decryptToken(encryptedToken: encToken) else {
                 logger.error("Unable to decode token")
-                continue
+                return nil
             }
-            tokens.append(token)
+            return token
         }
 
         let exportVault = ExportVault()
         exportVault.schemaVersion = 1
-        exportVault.tokens = tokens.sorted(by: { token1, token2 in
-            token1.issuer.localizedCaseInsensitiveCompare(token2.issuer) == .orderedAscending
-        })
+        exportVault.tokens = tokens.sorted { $0.issuer.localizedCaseInsensitiveCompare($1.issuer) == .orderedAscending }
         return exportVault
     }
 
@@ -51,41 +118,45 @@ public class ExportService {
 
         do {
             try FileManager.default.createDirectory(at: uniqueDir, withIntermediateDirectories: true)
+            return uniqueDir
         } catch {
             logger.error("Unable to create temporary directory: \(error.localizedDescription)")
             return nil
         }
-        return uniqueDir
     }
+}
 
-    func exportToUnencryptedJson() -> URL? {
-        guard let exportVault = getExportVault(), let uniqueDir = createUniqueDir() else {
-            return nil
-        }
-
-        let url = uniqueDir.appendingPathComponent("Chronos_" + Date().formatted(verbatimStyle))
+extension ExportService {
+    private func exportJSON(uniqueDir: URL, exportVault: ExportVault) -> Bool {
+        let jsonUrl = uniqueDir.appendingPathComponent("Chronos_" + Date().formatted(verbatimStyle))
             .appendingPathExtension("json")
 
-        if writeJSON(to: url, from: exportVault) {
-            return url
+        do {
+            let jsonData = try JSONEncoder().encode(exportVault)
+            try jsonData.write(to: jsonUrl)
+            return true
+        } catch {
+            logger.error("Unable to write JSON file: \(error.localizedDescription)")
+            return false
         }
-
-        return nil
     }
 
-    func exportHtml() -> URL? {
-        guard let exportVault = getExportVault(), let uniqueDir = createUniqueDir() else {
-            return nil
+    private func writeHTML(to url: URL, from htmlString: String) -> Bool {
+        do {
+            let htmlData = Data(htmlString.utf8)
+            try htmlData.write(to: url)
+            return true
+        } catch {
+            logger.error("Unable to write HTML file: \(error.localizedDescription)")
+            return false
         }
+    }
 
-        var tokensHtml: [Node] = []
-
-        for token in exportVault.tokens! {
-            tokensHtml.append(tokenDetailsDiv(token: token))
-        }
-
+    private func exportHtml(uniqueDir: URL, exportVault: ExportVault) -> Bool {
         let htmlUrl = uniqueDir.appendingPathComponent("Chronos_" + Date().formatted(verbatimStyle))
             .appendingPathExtension("html")
+
+        let tokensHtml = exportVault.tokens?.map { tokenDetailsDiv(token: $0) } ?? []
 
         let document: Node = .document(
             .html(
@@ -148,7 +219,7 @@ public class ExportService {
                          .div()),
                     .div(attributes: [.class("header-container")],
                          .h2(attributes: [.style(safe: "font-weight: 500; flex-grow: 1;")], "\(Date().formatted(verbatimStyle))"),
-                         .h2(attributes: [.style(safe: "font-weight: 500; text-align: right;")], "No. of Tokens: \(exportVault.tokens!.count.description)")),
+                         .h2(attributes: [.style(safe: "font-weight: 500; text-align: right;")], "No. of Tokens: \(exportVault.tokens?.count.description ?? "Error")")),
                     .hr(),
                     .div(attributes: [.class("token-container")],
                          .fragment(tokensHtml))
@@ -156,118 +227,34 @@ public class ExportService {
             )
         )
 
-        if writeHTML(to: htmlUrl, from: render(document)) {
-            return htmlUrl
-        }
-
-        return nil
+        return writeHTML(to: htmlUrl, from: render(document))
     }
 
     func tokenDetailsDiv(token: Token) -> Node {
-        var base64Img = ""
-        if let otpAuthUrl = otpService.tokenToOtpAuthUrl(token: token),
-           let image = EFQRCode.generate(for: otpAuthUrl)
-        {
-            base64Img = UIImage(cgImage: image).pngData()?.base64EncodedString() ?? ""
-        }
+        let base64Img = otpService.tokenToOtpAuthUrl(token: token).flatMap { otpAuthUrl in
+            EFQRCode.generate(for: otpAuthUrl).flatMap { image in
+                UIImage(cgImage: image).pngData()?.base64EncodedString()
+            }
+        } ?? ""
 
-        var periodNode: Node = .text("")
-        if token.type.rawValue == "TOTP" {
-            periodNode = .div(attributes: [.style(safe: "margin: 5px 0;")], .text("Period: "), .code(attributes: [.style(safe: "background-color: #f8f8f8; padding: 2px 4px; border-radius: 3px;")], "\(token.period.description)"))
-        }
+        let periodNode: Node = token.type.rawValue == "TOTP" ? .div(attributes: [.style(safe: "margin: 5px 0;")], .text("Period: "), .code(attributes: [.style(safe: "background-color: #f8f8f8; padding: 2px 4px; border-radius: 3px;")], "\(token.period.description)")) : .text("")
 
-        var counterNode: Node = .text("")
-        if token.type.rawValue == "HOTP" {
-            counterNode = .div(attributes: [.style(safe: "margin: 5px 0;")], .text("Counter: "), .code(attributes: [.style(safe: "background-color: #f8f8f8; padding: 2px 4px; border-radius: 3px;")], "\(token.counter.description)"))
-        }
+        let counterNode: Node = token.type.rawValue == "HOTP" ? .div(attributes: [.style(safe: "margin: 5px 0;")], .text("Counter: "), .code(attributes: [.style(safe: "background-color: #f8f8f8; padding: 2px 4px; border-radius: 3px;")], "\(token.counter.description)")) : .text("")
 
-        let node = Node.div(attributes: [.class("token-card")],
-                            .div(attributes: [.class("token-details")],
-                                 .div(attributes: [.class("token-info")],
-                                      .h3(attributes: [.style(safe: "margin: 0 0 10px; font-size: 1.5em;")], .text(token.issuer)),
-                                      .h4(attributes: [.style(safe: "margin: 0 0 10px; font-size: 1.2em; color: #555;")], .text(token.account)),
-                                      .div(attributes: [.style(safe: "margin: 5px 0;")], .text("Secret: "), .code(attributes: [.style(safe: "background-color: #f8f8f8; padding: 2px 4px; border-radius: 3px;")], "\(token.secret)")),
-                                      .div(attributes: [.style(safe: "margin: 5px 0;")], .text("Type: "), .code(attributes: [.style(safe: "background-color: #f8f8f8; padding: 2px 4px; border-radius: 3px;")], "\(token.type.rawValue)")),
-                                      .div(attributes: [.style(safe: "margin: 5px 0;")], .text("Algorithm: "), .code(attributes: [.style(safe: "background-color: #f8f8f8; padding: 2px 4px; border-radius: 3px;")], "\(token.algorithm.rawValue)")),
-                                      .div(attributes: [.style(safe: "margin: 5px 0;")], .text("Digits: "), .code(attributes: [.style(safe: "background-color: #f8f8f8; padding: 2px 4px; border-radius: 3px;")], "\(token.digits.description)")),
-                                      periodNode,
-                                      counterNode),
-                                 .div(attributes: [.style(safe: "flex: 0 0 auto;")],
-                                      .img(base64: base64Img, type: .image(.png), alt: "", attributes: [.width(150), .height(150)]))))
-        return node
-    }
-
-    func exportToEncryptedZip(password: String) -> URL? {
-        guard let exportVault = getExportVault(), let uniqueDir = createUniqueDir() else {
-            return nil
-        }
-
-        let jsonUrl = uniqueDir.appendingPathComponent("Chronos_" + Date().formatted(verbatimStyle))
-            .appendingPathExtension("json")
-
-        if !writeJSON(to: jsonUrl, from: exportVault) {
-            return nil
-        }
-
-        let zipUrl = FileManager.default.temporaryDirectory
-            .appendingPathComponent("export", isDirectory: true)
-            .appendingPathComponent("Chronos_" + Date().formatted(verbatimStyle))
-            .appendingPathExtension("zip")
-
-        let success = SSZipArchive.createZipFile(
-            atPath: zipUrl.path,
-            withContentsOfDirectory: uniqueDir.path,
-            keepParentDirectory: false,
-            compressionLevel: 0,
-            password: password,
-            aes: true
+        return Node.div(
+            attributes: [.class("token-card")],
+            .div(attributes: [.class("token-details")],
+                 .div(attributes: [.class("token-info")],
+                      .h3(attributes: [.style(safe: "margin: 0 0 10px; font-size: 1.5em;")], .text(token.issuer)),
+                      .h4(attributes: [.style(safe: "margin: 0 0 10px; font-size: 1.2em; color: #555;")], .text(token.account)),
+                      .div(attributes: [.style(safe: "margin: 5px 0;")], .text("Secret: "), .code(attributes: [.style(safe: "background-color: #f8f8f8; padding: 2px 4px; border-radius: 3px;")], "\(token.secret)")),
+                      .div(attributes: [.style(safe: "margin: 5px 0;")], .text("Type: "), .code(attributes: [.style(safe: "background-color: #f8f8f8; padding: 2px 4px; border-radius: 3px;")], "\(token.type.rawValue)")),
+                      .div(attributes: [.style(safe: "margin: 5px 0;")], .text("Algorithm: "), .code(attributes: [.style(safe: "background-color: #f8f8f8; padding: 2px 4px; border-radius: 3px;")], "\(token.algorithm.rawValue)")),
+                      .div(attributes: [.style(safe: "margin: 5px 0;")], .text("Digits: "), .code(attributes: [.style(safe: "background-color: #f8f8f8; padding: 2px 4px; border-radius: 3px;")], "\(token.digits.description)")),
+                      periodNode,
+                      counterNode),
+                 .div(attributes: [.style(safe: "flex: 0 0 auto;")],
+                      .img(base64: base64Img, type: .image(.png), alt: "", attributes: [.width(150), .height(150)])))
         )
-
-        if success {
-            return zipUrl
-        }
-
-        logger.error("Failed to create zip file")
-        return nil
-    }
-
-    func cleanupTemporaryDirectory() {
-        do {
-            let tempExportDirUrl = FileManager.default.temporaryDirectory
-                .appendingPathComponent("export", isDirectory: true)
-
-            try FileManager.default.removeItem(at: tempExportDirUrl)
-        } catch {
-            logger.error("Unable to delete temporary directory: \(error.localizedDescription)")
-        }
-    }
-}
-
-extension ExportService {
-    private func writeJSON(to url: URL, from exportVault: ExportVault) -> Bool {
-        guard let jsonData = try? JSONEncoder().encode(exportVault) else {
-            logger.error("Unable to encode exportVault")
-            return false
-        }
-
-        do {
-            try jsonData.write(to: url)
-            return true
-        } catch {
-            logger.error("Unable to write json file: \(error.localizedDescription)")
-            return false
-        }
-    }
-
-    private func writeHTML(to url: URL, from htmlString: String) -> Bool {
-        let htmlData = Data(htmlString.utf8)
-
-        do {
-            try htmlData.write(to: url)
-            return true
-        } catch {
-            logger.error("Unable to write json file: \(error.localizedDescription)")
-            return false
-        }
     }
 }

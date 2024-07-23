@@ -116,7 +116,7 @@ class ConfirmPasswordViewModel: ObservableObject {
     let exportService = Container.shared.exportService()
 
     func exportToEncryptedZip(password: String) {
-        guard let fileUrl = exportService.exportToEncryptedZip(password: password) else {
+        guard let fileUrl = exportService.exportToZip(password: password) else {
             exportFileUrl = nil
             showEncryptedExportSheet = false
 

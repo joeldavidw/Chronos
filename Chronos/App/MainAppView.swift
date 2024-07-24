@@ -18,7 +18,7 @@ struct MainAppView: View {
     @AppStorage(StateEnum.ICLOUD_SYNC_LAST_ATTEMPT.rawValue) var iCloudSyncLastAttempt: TimeInterval = 0
     @AppStorage(StateEnum.NEXT_PASSWORD_REMINDER_TIMESTAMP.rawValue) var nextPasswordReminderTimestamp: TimeInterval = 0
     @AppStorage(StateEnum.BIOMETRICS_AUTH_ENABLED.rawValue) var biometricsEnabled: Bool = false
-    @AppStorage(StateEnum.PASSWORD_REMINDER_ENABLED.rawValue) private var statePasswordReminderEnabled: Bool = false
+    @AppStorage(StateEnum.PASSWORD_REMINDER_ENABLED.rawValue) private var statePasswordReminderEnabled: Bool = true
 
     private let stateService = Container.shared.stateService()
 

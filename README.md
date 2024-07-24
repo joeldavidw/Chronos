@@ -16,16 +16,21 @@ Chronos is an open-source two-factor authentication (2FA) app for iOS, developed
 
 ## Features
 
-- End-to-end encrypted (E2EE)
-    - Token data are encrypted using XChaCha20-Poly1305
-- Secure decryption methods:
-  - Password (derived with scrypt)
-  - Face ID (via Secure Enclave)
-- Automatic backup & sync to Apple iCloud (optional)
-- Export
-    - Plain text
-    - Encrypted
-    - HTML with QR codes for easy scanning (Coming soon)
+- **End-to-end encrypted**
+  - Only encrypted token data, using `XChaCha20-Poly1305`, is stored on the device and in iCloud
+- **Backup & Sync (optional)**
+  - Effortlessly backup and sync your data with iCloud
+- **Export**
+  - Easily export your tokens for backup or transfer
+  - Encrypted/unencrypted zip archive containing:
+    - JSON
+    - HTML with QR codes for scanning and printable for offline storage
+- **Import**
+  - Raivo
+  - WIP more will be added!
+- **Anonymous**
+  - No telemetry
+  - No app account required
 - Built natively with Swift
 
 ## Screenshots (Preview)

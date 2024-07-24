@@ -99,7 +99,7 @@ struct AddTokenView: View {
                 dismiss()
 
                 AlertKitAPI.present(
-                    title: "Successfully added token",
+                    title: "Successfully added \(!newToken.issuer.isEmpty ? newToken.issuer : newToken.account)",
                     icon: .done,
                     style: .iOS17AppleMusic,
                     haptic: .success

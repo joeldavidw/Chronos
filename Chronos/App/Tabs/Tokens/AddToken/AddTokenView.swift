@@ -26,7 +26,7 @@ struct AddTokenView: View {
                 if !unableToAccessCamera {
                     CodeScannerView(
                         codeTypes: [.qr],
-                        scanMode: .oncePerCode,
+                        scanMode: .once,
                         scanInterval: 0.1,
                         shouldVibrateOnSuccess: false,
                         isPaused: showTokenManualAddSheet,

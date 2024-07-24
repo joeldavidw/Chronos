@@ -12,7 +12,7 @@ struct PasswordReminderView: View {
 
     @FocusState private var focusedField: FocusedField?
 
-    @AppStorage(StateEnum.PASSWORD_REMINDER_ENABLED.rawValue) private var statePasswordReminderEnabled: Bool = false
+    @AppStorage(StateEnum.PASSWORD_REMINDER_ENABLED.rawValue) private var statePasswordReminderEnabled: Bool = true
     @AppStorage(StateEnum.NEXT_PASSWORD_REMINDER_TIMESTAMP.rawValue) var nextPasswordReminderTimestamp: TimeInterval = 0
 
     let cryptoService = Container.shared.cryptoService()

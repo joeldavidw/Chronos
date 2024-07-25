@@ -19,7 +19,7 @@ final class GoogleAuthenticatorTests: XCTestCase {
         XCTAssertEqual(tokens[0].account, "john@appleseed.com")
         XCTAssertEqual(tokens[0].period, 30)
         XCTAssertEqual(tokens[0].secret, "JBSWY3DPEHPK3PXP")
-        
+
         XCTAssertEqual(tokens[1].digits, 8)
         XCTAssertEqual(tokens[1].type, TokenTypeEnum.TOTP)
         XCTAssertEqual(tokens[1].counter, 0)
@@ -28,7 +28,7 @@ final class GoogleAuthenticatorTests: XCTestCase {
         XCTAssertEqual(tokens[1].account, "john2@appleseed.com")
         XCTAssertEqual(tokens[1].period, 30)
         XCTAssertEqual(tokens[1].secret, "JBSWY3DPEHPK3PXP")
-        
+
         XCTAssertEqual(tokens[2].digits, 6)
         XCTAssertEqual(tokens[2].type, TokenTypeEnum.HOTP)
         XCTAssertEqual(tokens[2].counter, 0)
@@ -37,7 +37,7 @@ final class GoogleAuthenticatorTests: XCTestCase {
         XCTAssertEqual(tokens[2].account, "john+hotp@appleseed.com")
         XCTAssertEqual(tokens[2].counter, 0)
         XCTAssertEqual(tokens[2].secret, "JBSWY3DPEHPK3PXP")
-        
+
         XCTAssertEqual(tokens[3].digits, 8)
         XCTAssertEqual(tokens[3].type, TokenTypeEnum.HOTP)
         XCTAssertEqual(tokens[3].counter, 0)

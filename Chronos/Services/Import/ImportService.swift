@@ -155,7 +155,7 @@ extension ImportService {
             default:
                 tokenAlgo = TokenAlgorithmEnum.SHA1
             }
-                        
+
             let token = Token()
             token.issuer = gaToken.issuer
             token.account = gaToken.name
@@ -163,15 +163,15 @@ extension ImportService {
             token.type = tokenType
             token.algorithm = tokenAlgo
             token.secret = gaToken.secret.base32EncodedString
-            
+
             if tokenType == .TOTP {
                 token.period = 30 // GA only allows 30 secs
             }
-            
+
             if tokenType == .HOTP {
                 token.counter = Int(gaToken.counter)
             }
-            
+
             tokens.append(token)
         }
 

@@ -151,8 +151,7 @@ extension ImportService {
             case .sha512:
                 tokenAlgo = TokenAlgorithmEnum.SHA512
             case .md5:
-                // Hardcode to SHA1 first
-                tokenAlgo = TokenAlgorithmEnum.SHA1
+                return nil
             default:
                 tokenAlgo = TokenAlgorithmEnum.SHA1
             }

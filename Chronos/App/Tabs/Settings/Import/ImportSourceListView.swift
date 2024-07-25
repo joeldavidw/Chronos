@@ -1,15 +1,28 @@
 import SwiftUI
 
+enum ImportSourceId {
+    case CHRONOS
+    case RAIVO
+    case GOOGLE_AUTHENTICATOR
+}
+
+enum ImportType {
+    case JSON
+    case IMAGE
+}
+
 struct ImportSource: Identifiable {
-    var id: String
+    var id: ImportSourceId
     var name: String
     var desc: String
+    var importType: ImportType
 }
 
 struct ImportSourceListView: View {
     let importSources: [ImportSource] = [
-        ImportSource(id: "chronos", name: "Chronos", desc: "Export your tokens from Chronos to an unencrypted JSON file, then select the file below."),
-        ImportSource(id: "raivo", name: "Raivo", desc: "Export your tokens from Raivo using \"Export OTPs to ZIP archive\" option. Extract the JSON file from the archive, then select the file below."),
+        ImportSource(id: .CHRONOS, name: "Chronos", desc: "Export your tokens from Chronos to an unencrypted JSON file, then select the file below.", importType: .JSON),
+        ImportSource(id: .RAIVO, name: "Raivo", desc: "Export your tokens from Raivo using \"Export OTPs to ZIP archive\" option. Extract the JSON file from the archive, then select the file below.", importType: .JSON),
+        ImportSource(id: .GOOGLE_AUTHENTICATOR, name: "Google Authenticator", desc: "Export your tokens from Google Authenticator using the \"Transfer accounts\" option. Scan the QR code.", importType: .IMAGE),
     ]
 
     @EnvironmentObject var importNav: ExportNavigation

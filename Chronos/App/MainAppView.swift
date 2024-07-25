@@ -55,7 +55,6 @@ struct MainAppView: View {
             }
 
             if biometricsEnabled && statePasswordReminderEnabled {
-                print("Fuck \(nextPasswordReminderTimestamp)")
                 if Date().timeIntervalSince1970 >= nextPasswordReminderTimestamp {
                     showPasswordReminder = true
                 }

@@ -62,7 +62,7 @@ extension ImportService {
         }
     }
 
-    private func importFromRaivo(json: JSON) -> [Token]? {
+    func importFromRaivo(json: JSON) -> [Token]? {
         var tokens: [Token] = []
 
         for (key, subJson) in json {
@@ -105,7 +105,7 @@ extension ImportService {
         return tokens
     }
 
-    private func importFromGoogleAuth(otpAuthMigration: String) -> [Token]? {
+    func importFromGoogleAuth(otpAuthMigration: String) -> [Token]? {
         guard let otpAuthMigrationUrl = URL(string: otpAuthMigration),
               let components = URLComponents(url: otpAuthMigrationUrl, resolvingAgainstBaseURL: false),
               let scheme = components.scheme, scheme == "otpauth-migration",
@@ -155,17 +155,23 @@ extension ImportService {
             default:
                 tokenAlgo = TokenAlgorithmEnum.SHA1
             }
-
+                        
             let token = Token()
             token.issuer = gaToken.issuer
             token.account = gaToken.name
             token.digits = tokenDigits
-            token.period = 30
-            token.counter = Int(gaToken.counter)
             token.type = tokenType
             token.algorithm = tokenAlgo
             token.secret = gaToken.secret.base32EncodedString
-
+            
+            if tokenType == .TOTP {
+                token.period = 30 // GA only allows 30 secs
+            }
+            
+            if tokenType == .HOTP {
+                token.counter = Int(gaToken.counter)
+            }
+            
             tokens.append(token)
         }
 

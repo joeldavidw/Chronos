@@ -1,5 +1,5 @@
 {
-  "originHash" : "09e518e56e0a1230a1440a6dcfd8410826fa57b24c1fab6d598545a78e72479e",
+  "originHash" : "19b35a59954c273e4fee0aed72f9d6d02d424ede42e3faace584d56d8e92d701",
   "pins" : [
     {
       "identity" : "alertkit",
@@ -105,8 +105,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/swiftlang/swift-syntax",
       "state" : {
-        "revision" : "4c6cc0a3b9e8f14b3ae2307c5ccae4de6167ac2c",
-        "version" : "600.0.0-prerelease-2024-06-12"
+        "revision" : "82a453c2dfa335c7e778695762438dfe72b328d2",
+        "version" : "600.0.0-prerelease-2024-07-24"
       }
     },
     {

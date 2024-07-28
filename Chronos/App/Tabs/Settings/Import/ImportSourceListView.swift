@@ -5,6 +5,7 @@ enum ImportSourceId {
     case AEGIS
     case RAIVO
     case GOOGLE_AUTHENTICATOR
+    case LASTPASS
 }
 
 enum ImportType {
@@ -25,6 +26,7 @@ struct ImportSourceListView: View {
         ImportSource(id: .AEGIS, name: "Aegis", desc: "Export your tokens from Aegis using \"Export\" option. Select \"JSON\" as the export format and unselect \"Encrypt the vault\", then select the file below.", importType: .JSON),
         ImportSource(id: .RAIVO, name: "Raivo", desc: "Export your tokens from Raivo using \"Export OTPs to ZIP archive\" option. Extract the JSON file from the archive, then select the file below.", importType: .JSON),
         ImportSource(id: .GOOGLE_AUTHENTICATOR, name: "Google Authenticator", desc: "Export your tokens from Google Authenticator using the \"Transfer accounts\" option. Scan the QR code.", importType: .IMAGE),
+        ImportSource(id: .LASTPASS, name: "LastPass Authenticator", desc: "Export your tokens from LastPass Authenticator using the \"Export accounts to file\" option, then select the file below.", importType: .JSON),
     ]
 
     @EnvironmentObject var importNav: ExportNavigation

@@ -20,6 +20,8 @@ public class ImportService {
             return importFromAegis(json: json)
         case .RAIVO:
             return importFromRaivo(json: json)
+        case .LASTPASS:
+            return importFromLastpass(json: json)
         default:
             return nil
         }
@@ -155,6 +157,42 @@ extension ImportService {
         }
 
         if tokens.count != json["db"]["entries"].count {
+            return nil
+        }
+
+        return tokens
+    }
+
+    func importFromLastpass(json: JSON) -> [Token]? {
+        var tokens: [Token] = []
+
+        for (key, subJson) in json["accounts"] {
+            guard
+                let issuer = subJson["issuerName"].string,
+                let account = subJson["userName"].string,
+                let secret = subJson["secret"].string,
+                let digits = subJson["digits"].int,
+                let period = subJson["timeStep"].int,
+                let algorithm = subJson["algorithm"].string,
+                let tokenAlgorithm = TokenAlgorithmEnum(rawValue: algorithm.uppercased())
+            else {
+                logger.error("Error parsing token data for key: \(key)")
+                continue
+            }
+
+            let token = Token()
+            token.issuer = issuer
+            token.account = account
+            token.secret = secret
+            token.digits = digits
+            token.period = period
+            token.type = TokenTypeEnum.TOTP
+            token.algorithm = tokenAlgorithm
+
+            tokens.append(token)
+        }
+
+        if tokens.count != json["accounts"].count {
             return nil
         }
 

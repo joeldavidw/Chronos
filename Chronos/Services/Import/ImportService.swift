@@ -157,7 +157,7 @@ extension ImportService {
         if tokens.count != json["db"]["entries"].count {
             return nil
         }
-        
+
         return tokens
     }
 

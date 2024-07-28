@@ -182,7 +182,7 @@ final class AegisTests: XCTestCase {
         XCTAssertEqual(tokens[3].account, "")
         XCTAssertEqual(tokens[3].period, 30)
         XCTAssertEqual(tokens[3].secret, "MGTMWSHCBRMOBRI2AXNJD4M332")
-        
+
         XCTAssertEqual(tokens[4].digits, 6)
         XCTAssertEqual(tokens[4].type, TokenTypeEnum.HOTP)
         XCTAssertEqual(tokens[4].algorithm, TokenAlgorithmEnum.SHA1)
@@ -206,7 +206,7 @@ final class AegisTests: XCTestCase {
         XCTAssertEqual(tokens[6].account, "user3+hotp@test.com")
         XCTAssertEqual(tokens[6].counter, 101)
         XCTAssertEqual(tokens[6].secret, "F7E5IPN2KYUXE5WZLMSRVTFK7N")
-        
+
         XCTAssertEqual(tokens[7].digits, 6)
         XCTAssertEqual(tokens[7].type, TokenTypeEnum.HOTP)
         XCTAssertEqual(tokens[7].algorithm, TokenAlgorithmEnum.SHA1)

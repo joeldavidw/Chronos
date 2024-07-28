@@ -149,7 +149,7 @@ final class AegisTests: XCTestCase {
         let importService = ImportService()
         let tokens = importService.importFromAegis(json: json)!
 
-        XCTAssertEqual(tokens.count, 6)
+        XCTAssertEqual(tokens.count, 7)
 
         XCTAssertEqual(tokens[0].digits, 6)
         XCTAssertEqual(tokens[0].type, TokenTypeEnum.TOTP)

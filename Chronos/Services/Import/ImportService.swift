@@ -16,6 +16,8 @@ public class ImportService {
         switch importSource.id {
         case .CHRONOS:
             return importFromChronos(json: json)
+        case .AEGIS:
+            return importFromAegis(json: json)
         case .RAIVO:
             return importFromRaivo(json: json)
         default:
@@ -102,6 +104,60 @@ extension ImportService {
             tokens.append(token)
         }
 
+        return tokens
+    }
+
+    func importFromAegis(json: JSON) -> [Token]? {
+        var tokens: [Token] = []
+
+        for (key, subJson) in json["db"]["entries"] {
+            guard
+                let issuer = subJson["issuer"].string,
+                let account = subJson["name"].string,
+                let secret = subJson["info"]["secret"].string,
+                let digits = subJson["info"]["digits"].int,
+                let type = subJson["type"].string,
+                let algorithm = subJson["info"]["algo"].string,
+                let tokenType = TokenTypeEnum(rawValue: type.uppercased()),
+                let tokenAlgorithm = TokenAlgorithmEnum(rawValue: algorithm.uppercased())
+            else {
+                logger.error("Error parsing token data for key: \(key)")
+                continue
+            }
+
+            let token = Token()
+            token.issuer = issuer
+            token.account = account
+            token.secret = secret
+            token.digits = digits
+            token.type = tokenType
+            token.algorithm = tokenAlgorithm
+
+            switch tokenType {
+            case .TOTP:
+                guard let period = subJson["info"]["period"].int
+                else {
+                    logger.error("Error parsing TOTP data for key: \(key)")
+                    continue
+                }
+                token.period = period
+
+            case .HOTP:
+                guard let counter = subJson["info"]["counter"].int
+                else {
+                    logger.error("Error parsing HOTP data for key: \(key)")
+                    continue
+                }
+                token.counter = counter
+            }
+
+            tokens.append(token)
+        }
+
+        if tokens.count != json["db"]["entries"].count {
+            return nil
+        }
+        
         return tokens
     }
 

@@ -1,0 +1,17 @@
+name: 🚀 Feature Request
+description: Request a feature or enhancement.
+title: 'feat: <title>'
+labels: ['enhancement']
+body:
+  - type: textarea
+    attributes:
+      label: Description
+      description: A description of what the feature does.
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: Motivation
+      description: What problem does this feature solve?
+    validations:
+      required: true

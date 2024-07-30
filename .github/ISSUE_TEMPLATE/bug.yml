@@ -1,0 +1,49 @@
+name: 🐛 Bug Report
+description: Create a bug report to help us improve
+title: 'bug: <title>'
+labels: ["bug"]
+body:
+  - type: input
+    id: version
+    attributes:
+      label: Version
+      description: Which version of Chronos are you using?
+      placeholder: "Example: vX.Y"
+    validations:
+      required: true
+  - type: input
+    id: device
+    attributes:
+      label: Device
+      description: Which device are you using?
+      placeholder: "Example: iPhone 16"
+    validations:
+      required: true
+  - type: input
+    id: os_version
+    attributes:
+      label: OS
+      description: Which iOS/iPadOS version is your device on?
+      placeholder: "Example: iOS vX.Y.Z"
+    validations:
+      required: true
+  - type: textarea
+    id: description
+    attributes:
+      label: Description
+      description: A clear and concise description of what the bug is.
+    validations:
+      required: true
+  - type: textarea
+    id: reproduction_steps
+    attributes:
+      label: Steps to reproduce
+    validations:
+      required: true
+  - type: textarea
+    id: additional_info
+    attributes:
+      label: Additional information
+      description: If applicable, list any other relevant information such as stack traces, related issues, etc.
+    validations:
+      required: false

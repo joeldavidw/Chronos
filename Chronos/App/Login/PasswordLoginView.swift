@@ -69,13 +69,13 @@ struct PasswordLoginView: View {
                 if !loginPressed {
                     Text("Login")
                         .bold()
-                        .foregroundStyle(Color(red: 0.04, green: 0, blue: 0.11))
+                        .foregroundStyle(.chronosPurple)
                         .frame(minWidth: 0, maxWidth: .infinity)
                         .frame(height: 32)
                         .disabled(loginPressed)
                 } else {
                     ProgressView()
-                        .tint(Color(red: 0.04, green: 0, blue: 0.11))
+                        .tint(.chronosPurple)
                         .frame(minWidth: 0, maxWidth: .infinity)
                         .frame(height: 32)
                 }
@@ -85,7 +85,7 @@ struct PasswordLoginView: View {
         }
         .padding(16)
         .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity)
-        .background(Color(red: 0.04, green: 0, blue: 0.11).ignoresSafeArea())
+        .background(.chronosPurple.ignoresSafeArea())
         .navigationTitle("Welcome Back")
         .onAppear {
             focusedField = .password

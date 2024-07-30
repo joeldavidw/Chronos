@@ -159,7 +159,7 @@ struct SettingsTab: View {
                 .listSectionSpacing(8)
             }
             .scrollContentBackground(.hidden)
-            .background(Color(red: 0.04, green: 0, blue: 0.11))
+            .background(.chronosPurple)
             .navigationTitle("Settings")
             .navigationBarTitleDisplayMode(.inline)
             .confirmationDialog("Log Out", isPresented: $showLogoutConfirmation, titleVisibility: .visible) {

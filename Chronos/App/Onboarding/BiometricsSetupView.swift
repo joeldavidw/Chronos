@@ -33,7 +33,7 @@ struct BiometricsSetupView: View {
                 stateOnboardingCompleted = true
             } label: {
                 Text("Enable Biometrics")
-                    .foregroundStyle(Color(red: 0.04, green: 0, blue: 0.11))
+                    .foregroundStyle(.chronosPurple)
                     .bold()
                     .frame(minWidth: 0, maxWidth: .infinity)
                     .frame(height: 32)
@@ -56,7 +56,7 @@ struct BiometricsSetupView: View {
         .padding(.vertical, 32)
         .padding(.horizontal, 24)
         .navigationTitle("Biometrics")
-        .background(Color(red: 0.04, green: 0, blue: 0.11))
+        .background(.chronosPurple)
         .navigationBarBackButtonHidden()
     }
 

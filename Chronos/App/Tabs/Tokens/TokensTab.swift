@@ -82,7 +82,7 @@ struct TokensTab: View {
                 TokenRowView(tokenPair: tokenPair)
             }
             .listStyle(.plain)
-            .background(Color(red: 0.04, green: 0, blue: 0.11))
+            .background(.chronosPurple)
             .navigationTitle("Tokens")
             .navigationBarTitleDisplayMode(.inline)
             .searchable(text: $searchQuery, prompt: Text("Search tokens"))

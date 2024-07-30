@@ -62,13 +62,13 @@ struct PasswordReminderView: View {
                     if !verifyPressed {
                         Text("Verify")
                             .bold()
-                            .foregroundStyle(Color(red: 0.04, green: 0, blue: 0.11))
+                            .foregroundStyle(.chronosPurple)
                             .frame(minWidth: 0, maxWidth: .infinity)
                             .frame(height: 32)
                             .disabled(verifyPressed)
                     } else {
                         ProgressView()
-                            .tint(Color(red: 0.04, green: 0, blue: 0.11))
+                            .tint(.chronosPurple)
                             .frame(minWidth: 0, maxWidth: .infinity)
                             .frame(height: 32)
                     }
@@ -88,7 +88,7 @@ struct PasswordReminderView: View {
             }
             .padding(16)
             .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity)
-            .background(Color(red: 0.04, green: 0, blue: 0.11).ignoresSafeArea())
+            .background(.chronosPurple.ignoresSafeArea())
             .navigationTitle("Password Reminder")
             .navigationBarTitleDisplayMode(.inline)
             .onAppear {

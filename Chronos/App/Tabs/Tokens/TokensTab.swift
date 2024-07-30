@@ -33,6 +33,8 @@ struct TokensTab: View {
     @State var detentHeight: CGFloat = 0
     @State var sortCriteria: TokenSortOrder = .ISSUER_ASC
 
+    @State private var searchQuery = ""
+
     let cryptoService = Container.shared.cryptoService()
     let stateService = Container.shared.stateService()
 
@@ -53,6 +55,11 @@ struct TokensTab: View {
             }
             return TokenPair(id: encToken.id, token: decryptedToken, encToken: encToken)
         }
+        .filter { tokenPair in
+            searchQuery.isEmpty ||
+                tokenPair.token.issuer.localizedCaseInsensitiveContains(searchQuery) ||
+                tokenPair.token.account.localizedCaseInsensitiveContains(searchQuery)
+        }
         .sorted(by: { token1, token2 in
             switch sortCriteria {
             case .ISSUER_ASC:
@@ -71,15 +78,14 @@ struct TokensTab: View {
 
     var body: some View {
         NavigationStack {
-            ScrollViewReader { _ in
-                List(tokenPairs) { tokenPair in
-                    TokenRowView(tokenPair: tokenPair)
-                }
-                .listStyle(.plain)
+            List(tokenPairs) { tokenPair in
+                TokenRowView(tokenPair: tokenPair)
             }
+            .listStyle(.plain)
             .background(Color(red: 0.04, green: 0, blue: 0.11))
             .navigationTitle("Tokens")
             .navigationBarTitleDisplayMode(.inline)
+            .searchable(text: $searchQuery, prompt: Text("Search tokens"))
             .toolbar {
                 Menu {
                     ForEach(sortOptions, id: \.criteria) { option in

@@ -29,7 +29,9 @@ struct MainAppView: View {
     }
 
     var body: some View {
-        ZStack {
+        if scenePhase != .active {
+            PrivacyView()
+        } else {
             TabView(selection: $currentTab) {
                 TokensTab()
                     .tag("Tokens")
@@ -43,36 +45,32 @@ struct MainAppView: View {
                         Label("Settings", systemImage: "gearshape")
                     }
             }
+            .onAppear {
+                if filteredVault.isEmpty {
+                    stateService.resetAllStates()
+                    loginStatus.loggedIn = false
+                }
 
-            if scenePhase != .active {
-                PrivacyView()
-            }
-        }
-        .onAppear {
-            if filteredVault.isEmpty {
-                stateService.resetAllStates()
-                loginStatus.loggedIn = false
-            }
-
-            if biometricsEnabled && statePasswordReminderEnabled {
-                if Date().timeIntervalSince1970 >= nextPasswordReminderTimestamp {
-                    showPasswordReminder = true
+                if biometricsEnabled && statePasswordReminderEnabled {
+                    if Date().timeIntervalSince1970 >= nextPasswordReminderTimestamp {
+                        showPasswordReminder = true
+                    }
                 }
             }
-        }
-        .onChange(of: filteredVault) { _, newValue in
-            if newValue.isEmpty {
-                stateService.resetAllStates()
-                loginStatus.loggedIn = false
+            .onChange(of: filteredVault) { _, newValue in
+                if newValue.isEmpty {
+                    stateService.resetAllStates()
+                    loginStatus.loggedIn = false
+                }
             }
-        }
-        .onChange(of: syncMonitor.syncStateSummary) { _, newValue in
-            if newValue == .succeeded {
-                iCloudSyncLastAttempt = Date().timeIntervalSince1970
+            .onChange(of: syncMonitor.syncStateSummary) { _, newValue in
+                if newValue == .succeeded {
+                    iCloudSyncLastAttempt = Date().timeIntervalSince1970
+                }
             }
+            .sheet(isPresented: $showPasswordReminder, content: {
+                PasswordReminderView()
+            })
         }
-        .sheet(isPresented: $showPasswordReminder, content: {
-            PasswordReminderView()
-        })
     }
 }

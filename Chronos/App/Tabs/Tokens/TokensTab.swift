@@ -112,7 +112,7 @@ struct TokensTab: View {
             }
             .overlay(
                 Group {
-                    if tokenPairs.isEmpty {
+                    if tokenPairs.isEmpty && searchQuery.isEmpty {
                         VStack {
                             Image(systemName: "qrcode.viewfinder")
                                 .font(.system(size: 64))
@@ -133,6 +133,20 @@ struct TokensTab: View {
                                     .bold()
                             }
                             .padding(.top, 4)
+                        }
+                        .padding(.horizontal, 24)
+                    } else if !searchQuery.isEmpty {
+                        VStack {
+                            Image(systemName: "magnifyingglass")
+                                .font(.system(size: 64))
+                                .foregroundColor(.gray)
+                                .opacity(0.8)
+
+                            Text("No results found")
+                                .padding(.top, 4)
+                                .multilineTextAlignment(.center)
+                                .foregroundColor(.gray)
+                                .opacity(0.8)
                         }
                         .padding(.horizontal, 24)
                     }

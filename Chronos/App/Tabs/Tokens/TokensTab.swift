@@ -112,41 +112,29 @@ struct TokensTab: View {
             }
             .overlay(
                 Group {
-                    if tokenPairs.isEmpty && searchQuery.isEmpty {
+                    if tokenPairs.isEmpty {
                         VStack {
-                            Image(systemName: "qrcode.viewfinder")
+                            Image(systemName: searchQuery.isEmpty ? "qrcode.viewfinder" : "magnifyingglass")
                                 .font(.system(size: 64))
                                 .foregroundColor(.gray)
                                 .opacity(0.8)
 
-                            Text("No tokens found. Add one by pressing the + icon at the top right corner or the button below.")
+                            Text(searchQuery.isEmpty ? "No tokens found. Add one by pressing the + icon at the top right corner or the button below." : "No results found")
                                 .padding(.top, 4)
                                 .multilineTextAlignment(.center)
                                 .foregroundColor(.gray)
                                 .opacity(0.8)
 
-                            Button {
-                                showTokenAddSheet.toggle()
-                            } label: {
-                                Text("Add Token")
-                                    .padding(.horizontal, 4)
-                                    .bold()
+                            if searchQuery.isEmpty {
+                                Button {
+                                    showTokenAddSheet.toggle()
+                                } label: {
+                                    Text("Add Token")
+                                        .padding(.horizontal, 4)
+                                        .bold()
+                                }
+                                .padding(.top, 4)
                             }
-                            .padding(.top, 4)
-                        }
-                        .padding(.horizontal, 24)
-                    } else if !searchQuery.isEmpty {
-                        VStack {
-                            Image(systemName: "magnifyingglass")
-                                .font(.system(size: 64))
-                                .foregroundColor(.gray)
-                                .opacity(0.8)
-
-                            Text("No results found")
-                                .padding(.top, 4)
-                                .multilineTextAlignment(.center)
-                                .foregroundColor(.gray)
-                                .opacity(0.8)
                         }
                         .padding(.horizontal, 24)
                     }

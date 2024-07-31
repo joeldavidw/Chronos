@@ -1,5 +1,6 @@
 import Factory
 import SwiftUI
+import Combine
 
 struct TOTPRowView: View {
     let token: Token
@@ -8,7 +9,7 @@ struct TOTPRowView: View {
     @State private var secsLeft = 0
     @State private var progress: Double = 1.0
 
-    let timer = Timer.publish(every: 0.1, tolerance: 0.1, on: .main, in: .common).autoconnect()
+    let timer: Publishers.Autoconnect<Timer.TimerPublisher>
 
     let otpService = Container.shared.otpService()
 

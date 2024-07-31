@@ -46,13 +46,15 @@ struct TokensTab: View {
     @State private var filteredAndSortedTokenPairs: [TokenPair] = []
     @State private var tokenPairsCache = TokenPairsCache()
 
+    @State private var timer = Timer.publish(every: 1, tolerance: 0.1, on: .main, in: .common).autoconnect()
+    
     let cryptoService = Container.shared.cryptoService()
     let stateService = Container.shared.stateService()
 
     var body: some View {
         NavigationStack {
             List(filteredAndSortedTokenPairs) { tokenPair in
-                TokenRowView(tokenPair: tokenPair)
+                TokenRowView(tokenPair: tokenPair, timer: timer)
             }
             .onAppear {
                 Task {

@@ -49,10 +49,12 @@ struct TokensTab: View {
     let cryptoService = Container.shared.cryptoService()
     let stateService = Container.shared.stateService()
 
+    let timer = Timer.publish(every: 0.5, on: .main, in: .common).autoconnect()
+
     var body: some View {
         NavigationStack {
             List(filteredAndSortedTokenPairs) { tokenPair in
-                TokenRowView(tokenPair: tokenPair)
+                TokenRowView(tokenPair: tokenPair, timer: timer)
             }
             .onAppear {
                 Task {

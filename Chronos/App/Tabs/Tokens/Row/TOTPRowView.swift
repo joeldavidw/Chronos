@@ -9,7 +9,7 @@ struct TOTPRowView: View {
     @State private var secsLeft = 0
     @State private var progress: Double = 1.0
 
-    let timer = Timer.publish(every: 1, tolerance: 0.1, on: .main, in: .common).autoconnect()
+    let timer = Timer.publish(every: 0.5, on: .main, in: .common).autoconnect()
     let otpService = Container.shared.otpService()
 
     var body: some View {
@@ -59,8 +59,11 @@ struct TOTPRowView: View {
 
     private func updateProgress() {
         let timeLeft = timeLeftForToken(period: token.period)
-        progress = timeLeft / Double(token.period)
         secsLeft = Int(timeLeft.rounded(.up))
+
+        // Circle progress will look smooth; however, the high redraw count causes significant CPU load.
+        // progress = timeLeft / Double(token.period)
+        progress = Double(secsLeft) / Double(token.period)
     }
 
     private func formatOtp(otp: String) -> String {

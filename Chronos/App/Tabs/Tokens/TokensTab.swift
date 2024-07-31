@@ -23,63 +23,52 @@ let sortOptions: [(title: String, criteria: TokenSortOrder)] = [
     ("Account (Z - A)", .ACCOUNT_DESC),
 ]
 
+class TokenPairsCache {
+    var vaultsHash: Int = 0
+    var tokenPairs: [TokenPair] = []
+
+    func update(vaultsHash: Int, tokenPairs: [TokenPair]) {
+        self.vaultsHash = vaultsHash
+        self.tokenPairs = tokenPairs
+    }
+}
+
 struct TokensTab: View {
     @Query private var vaults: [Vault]
 
     @EnvironmentObject var loginStatus: LoginStatus
 
     @State private var showTokenAddSheet = false
-
-    @State var detentHeight: CGFloat = 0
-    @State var sortCriteria: TokenSortOrder = .ISSUER_ASC
-
+    @State private var detentHeight: CGFloat = 0
+    @State private var sortCriteria: TokenSortOrder = .ISSUER_ASC
     @State private var searchQuery = ""
+
+    @State private var filteredAndSortedTokenPairs: [TokenPair] = []
+    @State private var tokenPairsCache = TokenPairsCache()
 
     let cryptoService = Container.shared.cryptoService()
     let stateService = Container.shared.stateService()
 
-    private var tokenPairs: [TokenPair] {
-        // This is necessary because tokenPairs is a computed property. It gets recomputed whenever stateService changes, such as when stateService.masterKey gets cleared.
-        if !loginStatus.loggedIn {
-            return []
-        }
-
-        let vaultId = stateService.getVaultId()
-        guard let vault = vaults.filter({ $0.vaultId == vaultId }).first else {
-            return []
-        }
-
-        let tokenPairs: [TokenPair] = vault.encryptedTokens?.compactMap { encToken in
-            guard let decryptedToken = cryptoService.decryptToken(encryptedToken: encToken) else {
-                return nil
-            }
-            return TokenPair(id: encToken.id, token: decryptedToken, encToken: encToken)
-        }
-        .filter { tokenPair in
-            searchQuery.isEmpty ||
-                tokenPair.token.issuer.localizedCaseInsensitiveContains(searchQuery) ||
-                tokenPair.token.account.localizedCaseInsensitiveContains(searchQuery)
-        }
-        .sorted(by: { token1, token2 in
-            switch sortCriteria {
-            case .ISSUER_ASC:
-                token1.token.issuer.localizedCaseInsensitiveCompare(token2.token.issuer) == .orderedAscending
-            case .ISSUER_DESC:
-                token1.token.issuer.localizedCaseInsensitiveCompare(token2.token.issuer) == .orderedDescending
-            case .ACCOUNT_ASC:
-                token1.token.account.localizedCaseInsensitiveCompare(token2.token.account) == .orderedAscending
-            case .ACCOUNT_DESC:
-                token1.token.account.localizedCaseInsensitiveCompare(token2.token.account) == .orderedDescending
-            }
-        }) ?? []
-
-        return tokenPairs
-    }
-
     var body: some View {
         NavigationStack {
-            List(tokenPairs) { tokenPair in
+            List(filteredAndSortedTokenPairs) { tokenPair in
                 TokenRowView(tokenPair: tokenPair)
+            }
+            .onAppear {
+                Task {
+                    await updateTokenPairs()
+                }
+            }
+            .onChange(of: vaults) { _, _ in
+                Task {
+                    await updateTokenPairs()
+                }
+            }
+            .onChange(of: sortCriteria) { _, _ in
+                updateFilteredAndSortedTokenPairs()
+            }
+            .onChange(of: searchQuery) { _, _ in
+                updateFilteredAndSortedTokenPairs()
             }
             .listStyle(.plain)
             .background(Color(red: 0.04, green: 0, blue: 0.11))
@@ -112,7 +101,7 @@ struct TokensTab: View {
             }
             .overlay(
                 Group {
-                    if tokenPairs.isEmpty {
+                    if filteredAndSortedTokenPairs.isEmpty {
                         VStack {
                             Image(systemName: searchQuery.isEmpty ? "qrcode.viewfinder" : "magnifyingglass")
                                 .font(.system(size: 64))
@@ -147,6 +136,55 @@ struct TokensTab: View {
                         self.detentHeight = height
                     }
                     .presentationDetents([.height(self.detentHeight)])
+            }
+        }
+    }
+
+    func updateTokenPairs() async {
+        guard loginStatus.loggedIn else {
+            filteredAndSortedTokenPairs = []
+            return
+        }
+
+        let vaultId = stateService.getVaultId()
+        guard let vault = vaults.first(where: { $0.vaultId == vaultId }) else {
+            filteredAndSortedTokenPairs = []
+            return
+        }
+
+        if vaults.hashValue == tokenPairsCache.vaultsHash {
+            filteredAndSortedTokenPairs = tokenPairsCache.tokenPairs
+            return
+        }
+
+        let decryptedPairs: [TokenPair] = (vault.encryptedTokens ?? []).compactMap { encToken in
+            guard let decryptedToken = cryptoService.decryptToken(encryptedToken: encToken) else {
+                return nil
+            }
+            return TokenPair(id: encToken.id, token: decryptedToken, encToken: encToken)
+        }
+
+        tokenPairsCache.update(vaultsHash: vaults.hashValue, tokenPairs: decryptedPairs)
+        updateFilteredAndSortedTokenPairs()
+    }
+
+    func updateFilteredAndSortedTokenPairs() {
+        let filteredPairs: [TokenPair] = tokenPairsCache.tokenPairs.filter { tokenPair in
+            searchQuery.isEmpty ||
+                tokenPair.token.issuer.localizedCaseInsensitiveContains(searchQuery) ||
+                tokenPair.token.account.localizedCaseInsensitiveContains(searchQuery)
+        }
+
+        filteredAndSortedTokenPairs = filteredPairs.sorted { token1, token2 in
+            switch sortCriteria {
+            case .ISSUER_ASC:
+                return token1.token.issuer.localizedCaseInsensitiveCompare(token2.token.issuer) == .orderedAscending
+            case .ISSUER_DESC:
+                return token1.token.issuer.localizedCaseInsensitiveCompare(token2.token.issuer) == .orderedDescending
+            case .ACCOUNT_ASC:
+                return token1.token.account.localizedCaseInsensitiveCompare(token2.token.account) == .orderedAscending
+            case .ACCOUNT_DESC:
+                return token1.token.account.localizedCaseInsensitiveCompare(token2.token.account) == .orderedDescending
             }
         }
     }

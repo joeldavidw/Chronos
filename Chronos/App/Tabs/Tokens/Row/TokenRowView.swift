@@ -1,8 +1,8 @@
 import AlertKit
+import Combine
 import EFQRCode
 import Factory
 import SwiftUI
-import Combine
 
 struct TokenRowView: View {
     @Environment(\.modelContext) private var modelContext
@@ -16,7 +16,7 @@ struct TokenRowView: View {
     @AppStorage(StateEnum.TAP_TO_REVEAL_ENABLED.rawValue) private var stateTapToRevealEnabled: Bool = false
 
     @State private var tokenRevealed = false
-    
+
     let tokenPair: TokenPair
     let timer: Publishers.Autoconnect<Timer.TimerPublisher>
 

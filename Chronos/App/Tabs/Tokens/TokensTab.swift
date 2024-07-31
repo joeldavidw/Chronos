@@ -47,7 +47,7 @@ struct TokensTab: View {
     @State private var tokenPairsCache = TokenPairsCache()
 
     @State private var timer = Timer.publish(every: 1, tolerance: 0.1, on: .main, in: .common).autoconnect()
-    
+
     let cryptoService = Container.shared.cryptoService()
     let stateService = Container.shared.stateService()
 

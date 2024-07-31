@@ -1,6 +1,6 @@
+import Combine
 import Factory
 import SwiftUI
-import Combine
 
 struct TOTPRowView: View {
     let token: Token

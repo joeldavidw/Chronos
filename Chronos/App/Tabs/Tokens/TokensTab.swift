@@ -43,6 +43,7 @@ struct TokensTab: View {
 
     @State private var tokenPairs: [TokenPair] = []
     @State private var tokenPairsCache = TokenPairsCache()
+    @State private var debounceTimer: Timer?
 
     let cryptoService = Container.shared.cryptoService()
     let stateService = Container.shared.stateService()
@@ -76,11 +77,10 @@ struct TokensTab: View {
                 sortAndFilterTokenPairs()
             }
             .onChange(of: searchQuery) { _, _ in
-                if searchQuery.isEmpty {
-                    tokenPairs = tokenPairsCache.tokenPairs
+                debounceTimer?.invalidate()
+                debounceTimer = Timer.scheduledTimer(withTimeInterval: 0.15, repeats: false) { _ in
+                    sortAndFilterTokenPairs()
                 }
-
-                sortAndFilterTokenPairs()
             }
             .listStyle(.plain)
             .background(Color(red: 0.04, green: 0, blue: 0.11))
@@ -187,7 +187,7 @@ struct TokensTab: View {
     }
 
     private func sortAndFilterTokenPairs() {
-        tokenPairs = tokenPairs
+        tokenPairs = tokenPairsCache.tokenPairs
             .filter { tokenPair in
                 searchQuery.isEmpty ||
                     tokenPair.token.issuer.localizedCaseInsensitiveContains(searchQuery) ||

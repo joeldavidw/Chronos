@@ -76,6 +76,10 @@ struct TokensTab: View {
                 sortAndFilterTokenPairs()
             }
             .onChange(of: searchQuery) { _, _ in
+                if searchQuery.isEmpty {
+                    tokenPairs = tokenPairsCache.tokenPairs
+                }
+
                 sortAndFilterTokenPairs()
             }
             .listStyle(.plain)

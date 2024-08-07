@@ -244,6 +244,34 @@ final class TwoFASTests: XCTestCase {
                         "serviceTypeID": "3cb83fc3-8e25-4df5-bdde-1f35611c1d0a",
                         "updatedAt": 1_721_919_046_000,
                     ],
+                    [
+                        "icon": [
+                            "iconCollection": [
+                                "id": "A5B3FB65-4EC5-43E6-8EC1-49E24CA9E7AD",
+                            ],
+                            "label": [
+                                "backgroundColor": "Green",
+                                "text": "UN",
+                            ],
+                            "selected": "Label",
+                        ],
+                        "name": "Unknown",
+                        "order": [
+                            "position": 7,
+                        ],
+                        "otp": [
+                            "account": "noIssuer@mail.com",
+                            "algorithm": "SHA1",
+                            "counter": 22,
+                            "digits": 6,
+                            "period": 0,
+                            "source": "manual",
+                            "tokenType": "HOTP",
+                        ],
+                        "secret": "KQOZTMLOJBSMYWIO4BG4UTXDSR",
+                        "serviceTypeID": "3cb83fc3-8e25-4df5-bdde-1f35611c1d0a",
+                        "updatedAt": 1_721_919_046_000,
+                    ],
                 ],
             ]
 
@@ -315,6 +343,14 @@ final class TwoFASTests: XCTestCase {
         XCTAssertEqual(tokens[7].account, "")
         XCTAssertEqual(tokens[7].counter, 22)
         XCTAssertEqual(tokens[7].secret, "KQOZTMLOJBSMYWIO4BG4UTXDSR")
+        
+        XCTAssertEqual(tokens[8].digits, 6)
+        XCTAssertEqual(tokens[8].type, TokenTypeEnum.HOTP)
+        XCTAssertEqual(tokens[8].algorithm, TokenAlgorithmEnum.SHA1)
+        XCTAssertEqual(tokens[8].issuer, "")
+        XCTAssertEqual(tokens[8].account, "noIssuer@mail.com")
+        XCTAssertEqual(tokens[8].counter, 22)
+        XCTAssertEqual(tokens[8].secret, "BB6B7FAYHW2G42ZA4FJHLRWWHU")
     }
 
     func testValidImport_Period() throws {

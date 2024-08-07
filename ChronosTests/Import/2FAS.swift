@@ -343,7 +343,7 @@ final class TwoFASTests: XCTestCase {
         XCTAssertEqual(tokens[7].account, "")
         XCTAssertEqual(tokens[7].counter, 22)
         XCTAssertEqual(tokens[7].secret, "KQOZTMLOJBSMYWIO4BG4UTXDSR")
-        
+
         XCTAssertEqual(tokens[8].digits, 6)
         XCTAssertEqual(tokens[8].type, TokenTypeEnum.HOTP)
         XCTAssertEqual(tokens[8].algorithm, TokenAlgorithmEnum.SHA1)

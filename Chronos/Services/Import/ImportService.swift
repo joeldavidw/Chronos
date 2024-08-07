@@ -18,7 +18,7 @@ public class ImportService {
         case .CHRONOS:
             return importFromChronos(json: inputJson)
         case .TWOFAS:
-            return importFrom2FAS(json: inputJson)
+            return importFromTwoFAS(json: inputJson)
         case .AEGIS:
             return importFromAegis(json: inputJson)
         case .RAIVO:
@@ -100,12 +100,11 @@ extension ImportService {
         }
     }
 
-    func importFrom2FAS(json: JSON) -> [Token]? {
+    func importFromTwoFAS(json: JSON) -> [Token]? {
         var tokens: [Token] = []
 
         for (key, subJson) in json["services"] {
             guard
-                let issuer = subJson["otp"]["issuer"].string,
                 let account = subJson["otp"]["account"].string,
                 let secret = subJson["secret"].string,
                 let digits = subJson["otp"]["digits"].int,
@@ -121,7 +120,7 @@ extension ImportService {
             }
 
             let token = Token()
-            token.issuer = issuer
+            token.issuer = subJson["otp"]["issuer"].string ?? ""
             token.account = account
             token.secret = secret
             token.digits = digits

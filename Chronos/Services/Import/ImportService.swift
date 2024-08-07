@@ -66,6 +66,46 @@ extension ImportService {
         }
     }
 
+    func importFrom2FAS(json: JSON) -> [Token]? {
+        var tokens: [Token] = []
+
+        for (key, subJson) in json["services"] {
+            guard
+                let issuer = subJson["otp"]["issuer"].string,
+                let account = subJson["otp"]["account"].string,
+                let secret = subJson["secret"].string,
+                let digits = subJson["otp"]["digits"].int,
+                let counter = subJson["otp"]["counter"].int,
+                let period = subJson["otp"]["period"].int,
+                let algorithm = subJson["otp"]["algorithm"].string,
+                let tokenAlgorithm = TokenAlgorithmEnum(rawValue: algorithm.uppercased()),
+                let type = subJson["otp"]["tokenType"].string,
+                let tokenType = TokenTypeEnum(rawValue: type.uppercased())
+            else {
+                logger.error("Error parsing token data for key: \(key)")
+                continue
+            }
+
+            let token = Token()
+            token.issuer = issuer
+            token.account = account
+            token.secret = secret
+            token.digits = digits
+            token.period = period
+            token.counter = counter
+            token.type = tokenType
+            token.algorithm = tokenAlgorithm
+
+            tokens.append(token)
+        }
+
+        if tokens.count != json["services"].count {
+            return nil
+        }
+
+        return tokens
+    }
+
     func importFromRaivo(json: JSON) -> [Token]? {
         var tokens: [Token] = []
 

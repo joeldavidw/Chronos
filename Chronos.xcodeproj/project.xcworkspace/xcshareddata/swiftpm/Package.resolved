@@ -15,8 +15,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/ggruen/CloudKitSyncMonitor",
       "state" : {
-        "revision" : "d3bca51a84e416a64bd30d65287041a37f0612f3",
-        "version" : "1.4.0"
+        "revision" : "f84f9c074b2c55adc7dc364a4437cfe7249ae529",
+        "version" : "1.4.1"
       }
     },
     {
@@ -33,8 +33,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/krzyzanowskim/CryptoSwift.git",
       "state" : {
-        "revision" : "c9c3df6ab812de32bae61fc0cd1bf6d45170ebf0",
-        "version" : "1.8.2"
+        "revision" : "678d442c6f7828def400a70ae15968aef67ef52d",
+        "version" : "1.8.3"
       }
     },
     {
@@ -60,8 +60,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/apple/swift-crypto.git",
       "state" : {
-        "revision" : "46072478ca365fe48370993833cb22de9b41567f",
-        "version" : "3.5.2"
+        "revision" : "8dafe0fdce623f65178689f2d6dea7304f7fbe75",
+        "version" : "3.6.0"
       }
     },
     {

@@ -316,7 +316,7 @@ final class TwoFASTests: XCTestCase {
         XCTAssertEqual(tokens[7].counter, 22)
         XCTAssertEqual(tokens[7].secret, "KQOZTMLOJBSMYWIO4BG4UTXDSR")
     }
-    
+
     func testValidImport_Period() throws {
         let json: JSON =
             [

@@ -55,7 +55,7 @@ struct MainAppView: View {
                     if nextPasswordReminderTimestamp == 0 {
                         nextPasswordReminderTimestamp = Date().timeIntervalSince1970 + (2 * 7 * 24 * 60 * 60)
                     }
-                    
+
                     if Date().timeIntervalSince1970 >= nextPasswordReminderTimestamp {
                         showPasswordReminder = true
                     }

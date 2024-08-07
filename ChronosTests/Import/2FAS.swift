@@ -276,7 +276,7 @@ final class TwoFASTests: XCTestCase {
             ]
 
         let importService = ImportService()
-        let tokens = importService.importFrom2FAS(json: json)!
+        let tokens = importService.importFromTwoFAS(json: json)!
 
         XCTAssertEqual(tokens.count, 8)
 
@@ -482,7 +482,7 @@ final class TwoFASTests: XCTestCase {
             ]
 
         let importService = ImportService()
-        let tokens = importService.importFrom2FAS(json: json)!
+        let tokens = importService.importFromTwoFAS(json: json)!
 
         XCTAssertEqual(tokens.count, 4)
 
@@ -648,7 +648,7 @@ final class TwoFASTests: XCTestCase {
             ]
 
         let importService = ImportService()
-        let tokens = importService.importFrom2FAS(json: json)
+        let tokens = importService.importFromTwoFAS(json: json)
 
         XCTAssertNil(tokens)
     }
@@ -695,7 +695,7 @@ final class TwoFASTests: XCTestCase {
             ]
 
         let importService = ImportService()
-        let tokens = importService.importFrom2FAS(json: json)
+        let tokens = importService.importFromTwoFAS(json: json)
 
         XCTAssertNil(tokens)
     }

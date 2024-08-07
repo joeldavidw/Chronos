@@ -16,6 +16,7 @@
 		6B27317A2B53E23800F30621 /* UpdateTokenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B2731792B53E23800F30621 /* UpdateTokenView.swift */; };
 		6B27317C2B53F0B200F30621 /* TokenRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B27317B2B53F0B200F30621 /* TokenRowView.swift */; };
 		6B2F7A822C635B5A00DB1450 /* 2FAS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B2F7A812C635B5A00DB1450 /* 2FAS.swift */; };
+		6B2F7A842C636CE500DB1450 /* Ente.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B2F7A832C636CE500DB1450 /* Ente.swift */; };
 		6B35A4C92B557EE50004D4C5 /* AlertKit in Frameworks */ = {isa = PBXBuildFile; productRef = 6B35A4C82B557EE50004D4C5 /* AlertKit */; };
 		6B39629A2BF5E935000410B0 /* MainAppView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B3962992BF5E935000410B0 /* MainAppView.swift */; };
 		6B39629C2BF5EB3E000410B0 /* AuthenticationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B39629B2BF5EB3E000410B0 /* AuthenticationView.swift */; };
@@ -102,6 +103,7 @@
 		6B2731792B53E23800F30621 /* UpdateTokenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateTokenView.swift; sourceTree = "<group>"; };
 		6B27317B2B53F0B200F30621 /* TokenRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenRowView.swift; sourceTree = "<group>"; };
 		6B2F7A812C635B5A00DB1450 /* 2FAS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = 2FAS.swift; sourceTree = "<group>"; };
+		6B2F7A832C636CE500DB1450 /* Ente.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Ente.swift; sourceTree = "<group>"; };
 		6B3962992BF5E935000410B0 /* MainAppView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainAppView.swift; sourceTree = "<group>"; };
 		6B39629B2BF5EB3E000410B0 /* AuthenticationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationView.swift; sourceTree = "<group>"; };
 		6B39629D2BF63F27000410B0 /* SwiftDataService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftDataService.swift; sourceTree = "<group>"; };
@@ -328,6 +330,7 @@
 				6BBF32022C562F20003CBA66 /* Aegis.swift */,
 				6B4987272C569A6E00A7D97A /* LastPass.swift */,
 				6B2F7A812C635B5A00DB1450 /* 2FAS.swift */,
+				6B2F7A832C636CE500DB1450 /* Ente.swift */,
 			);
 			path = Import;
 			sourceTree = "<group>";
@@ -694,6 +697,7 @@
 				6B8132FD2C4E5F6B00DB367E /* QrCodeGenerationAndParsing.swift in Sources */,
 				6BBF32032C562F20003CBA66 /* Aegis.swift in Sources */,
 				6B4CBF2F2C490FB700983D44 /* Chronos.swift in Sources */,
+				6B2F7A842C636CE500DB1450 /* Ente.swift in Sources */,
 				6BC5F0572C529A2A00BA106F /* GoogleAuthenticator.swift in Sources */,
 				6B4987282C569A6E00A7D97A /* LastPass.swift in Sources */,
 				6BC5F04A2C4FDE6E00BA106F /* ParseOtpAuthUrl.swift in Sources */,

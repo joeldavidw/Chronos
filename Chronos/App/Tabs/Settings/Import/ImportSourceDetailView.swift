@@ -8,7 +8,13 @@ class ImportSourceDetailViewModel: ObservableObject {
     private let importService = Container.shared.importService()
 
     func importTokensFromFile(importSource: ImportSource, fileUrl: URL) {
-        tokens = importService.importTokensViaFile(importSource: importSource, url: fileUrl)
+        if importSource.importType == .JSON {
+            tokens = importService.importTokensViaJsonFile(importSource: importSource, url: fileUrl)
+        }
+
+        if importSource.importType == .TEXT {
+            tokens = importService.importTokensViaTextFile(importSource: importSource, url: fileUrl)
+        }
     }
 
     func importTokensFromString(importSource: ImportSource, scannedStr: String) {
@@ -49,6 +55,22 @@ struct ImportSourceDetailView: View {
                 .fileImporter(
                     isPresented: $showFileImporter,
                     allowedContentTypes: [.json],
+                    allowsMultipleSelection: false,
+                    onCompletion: handleFileImport
+                )
+            }
+
+            if importSource.importType == .TEXT {
+                Button(action: { showFileImporter = true }) {
+                    Text("Select file")
+                        .bold()
+                        .frame(maxWidth: .infinity)
+                        .frame(height: 32)
+                }
+                .buttonStyle(.bordered)
+                .fileImporter(
+                    isPresented: $showFileImporter,
+                    allowedContentTypes: [.text],
                     allowsMultipleSelection: false,
                     onCompletion: handleFileImport
                 )

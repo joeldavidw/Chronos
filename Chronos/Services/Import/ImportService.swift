@@ -6,22 +6,39 @@ import SwiftyJSON
 public class ImportService {
     private let logger = Logger(label: "ImportService")
     private let vaultService = Container.shared.vaultService()
+    private let otpService = Container.shared.otpService()
 
-    func importTokensViaFile(importSource: ImportSource, url: URL) -> [Token]? {
-        guard let json = readFile(url: url) else {
+    func importTokensViaJsonFile(importSource: ImportSource, url: URL) -> [Token]? {
+        guard let inputJson = readJsonFile(url: url) else {
             logger.error("Failed to read file at \(url)")
             return nil
         }
 
         switch importSource.id {
         case .CHRONOS:
-            return importFromChronos(json: json)
+            return importFromChronos(json: inputJson)
+        case .TWOFAS:
+            return importFrom2FAS(json: inputJson)
         case .AEGIS:
-            return importFromAegis(json: json)
+            return importFromAegis(json: inputJson)
         case .RAIVO:
-            return importFromRaivo(json: json)
+            return importFromRaivo(json: inputJson)
         case .LASTPASS:
-            return importFromLastpass(json: json)
+            return importFromLastpass(json: inputJson)
+        default:
+            return nil
+        }
+    }
+
+    func importTokensViaTextFile(importSource: ImportSource, url: URL) -> [Token]? {
+        guard let inputText = readTextFile(url: url) else {
+            logger.error("Failed to read file at \(url)")
+            return nil
+        }
+
+        switch importSource.id {
+        case .ENTE:
+            return importFromEnte(enteText: inputText)
         default:
             return nil
         }
@@ -36,7 +53,7 @@ public class ImportService {
         }
     }
 
-    private func readFile(url: URL) -> JSON? {
+    private func readJsonFile(url: URL) -> JSON? {
         guard url.startAccessingSecurityScopedResource() else {
             logger.error("Failed to start accessing security scoped resource for \(url)")
             return nil
@@ -47,6 +64,23 @@ public class ImportService {
         do {
             let jsonData = try String(contentsOf: url, encoding: .utf8)
             return JSON(parseJSON: jsonData)
+        } catch {
+            logger.error("Error reading file at \(url): \(error.localizedDescription)")
+            return nil
+        }
+    }
+
+    private func readTextFile(url: URL) -> String? {
+        guard url.startAccessingSecurityScopedResource() else {
+            logger.error("Failed to start accessing security scoped resource for \(url)")
+            return nil
+        }
+
+        defer { url.stopAccessingSecurityScopedResource() }
+
+        do {
+            let strData = try String(contentsOf: url, encoding: .utf8)
+            return strData
         } catch {
             logger.error("Error reading file at \(url): \(error.localizedDescription)")
             return nil
@@ -100,6 +134,29 @@ extension ImportService {
         }
 
         if tokens.count != json["services"].count {
+            return nil
+        }
+
+        return tokens
+    }
+
+    func importFromEnte(enteText: String) -> [Token]? {
+        var tokens: [Token] = []
+
+        let lines = enteText.split { $0.isNewline }
+        let nonEmptyLines = lines.filter { !$0.trimmingCharacters(in: .whitespaces).isEmpty }
+        let inputOtpAuthUrls = nonEmptyLines.map { String($0) }
+
+        for otpAuthUrl in inputOtpAuthUrls {
+            do {
+                let token = try otpService.parseOtpAuthUrl(otpAuthStr: otpAuthUrl)
+                tokens.append(token)
+            } catch {
+                return nil
+            }
+        }
+
+        if tokens.count != inputOtpAuthUrls.count {
             return nil
         }
 

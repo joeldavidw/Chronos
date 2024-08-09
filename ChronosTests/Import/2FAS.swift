@@ -13,20 +13,6 @@ final class TwoFASTests: XCTestCase {
                 "schemaVersion": 4,
                 "services": [
                     [
-                        "icon": [
-                            "iconCollection": [
-                                "id": "90CAF674-4269-4193-9749-4849F97CFB53",
-                            ],
-                            "label": [
-                                "backgroundColor": "Orange",
-                                "text": "AP",
-                            ],
-                            "selected": "IconCollection",
-                        ],
-                        "name": "Apple",
-                        "order": [
-                            "position": 0,
-                        ],
                         "otp": [
                             "account": "user1+totp@test.com",
                             "algorithm": "SHA1",
@@ -42,20 +28,6 @@ final class TwoFASTests: XCTestCase {
                         "updatedAt": 1_721_919_046_000,
                     ],
                     [
-                        "icon": [
-                            "iconCollection": [
-                                "id": "A5B3FB65-4EC5-43E6-8EC1-49E24CA9E7AD",
-                            ],
-                            "label": [
-                                "backgroundColor": "Brown",
-                                "text": "AW",
-                            ],
-                            "selected": "Label",
-                        ],
-                        "name": "AWS",
-                        "order": [
-                            "position": 1,
-                        ],
                         "otp": [
                             "account": "user2+totp@test.com",
                             "algorithm": "SHA256",
@@ -71,20 +43,6 @@ final class TwoFASTests: XCTestCase {
                         "updatedAt": 1_721_919_046_000,
                     ],
                     [
-                        "icon": [
-                            "iconCollection": [
-                                "id": "A5B3FB65-4EC5-43E6-8EC1-49E24CA9E7AD",
-                            ],
-                            "label": [
-                                "backgroundColor": "Indigo",
-                                "text": "PG",
-                            ],
-                            "selected": "Label",
-                        ],
-                        "name": "PG",
-                        "order": [
-                            "position": 2,
-                        ],
                         "otp": [
                             "account": "user3+totp@test.com",
                             "algorithm": "SHA512",
@@ -100,20 +58,6 @@ final class TwoFASTests: XCTestCase {
                         "updatedAt": 1_721_919_046_000,
                     ],
                     [
-                        "icon": [
-                            "iconCollection": [
-                                "id": "A5B3FB65-4EC5-43E6-8EC1-49E24CA9E7AD",
-                            ],
-                            "label": [
-                                "backgroundColor": "Gray",
-                                "text": "UN",
-                            ],
-                            "selected": "Label",
-                        ],
-                        "name": "Unknown",
-                        "order": [
-                            "position": 3,
-                        ],
                         "otp": [
                             "account": "",
                             "algorithm": "SHA1",
@@ -129,20 +73,6 @@ final class TwoFASTests: XCTestCase {
                         "updatedAt": 1_721_919_046_000,
                     ],
                     [
-                        "icon": [
-                            "iconCollection": [
-                                "id": "90CAF674-4269-4193-9749-4849F97CFB53",
-                            ],
-                            "label": [
-                                "backgroundColor": "Yellow",
-                                "text": "YU",
-                            ],
-                            "selected": "IconCollection",
-                        ],
-                        "name": "Yubi",
-                        "order": [
-                            "position": 4,
-                        ],
                         "otp": [
                             "account": "user1+hotp@test.com",
                             "algorithm": "SHA1",
@@ -158,20 +88,6 @@ final class TwoFASTests: XCTestCase {
                         "updatedAt": 1_721_919_046_000,
                     ],
                     [
-                        "icon": [
-                            "iconCollection": [
-                                "id": "A5B3FB65-4EC5-43E6-8EC1-49E24CA9E7AD",
-                            ],
-                            "label": [
-                                "backgroundColor": "Red",
-                                "text": "HE",
-                            ],
-                            "selected": "Label",
-                        ],
-                        "name": "Hene",
-                        "order": [
-                            "position": 5,
-                        ],
                         "otp": [
                             "account": "user2+hotp@test.com",
                             "algorithm": "SHA256",
@@ -187,20 +103,6 @@ final class TwoFASTests: XCTestCase {
                         "updatedAt": 1_721_919_046_000,
                     ],
                     [
-                        "icon": [
-                            "iconCollection": [
-                                "id": "A5B3FB65-4EC5-43E6-8EC1-49E24CA9E7AD",
-                            ],
-                            "label": [
-                                "backgroundColor": "Blue",
-                                "text": "NA",
-                            ],
-                            "selected": "Label",
-                        ],
-                        "name": "Nath",
-                        "order": [
-                            "position": 6,
-                        ],
                         "otp": [
                             "account": "user3+hotp@test.com",
                             "algorithm": "SHA512",
@@ -216,20 +118,6 @@ final class TwoFASTests: XCTestCase {
                         "updatedAt": 1_721_919_046_000,
                     ],
                     [
-                        "icon": [
-                            "iconCollection": [
-                                "id": "A5B3FB65-4EC5-43E6-8EC1-49E24CA9E7AD",
-                            ],
-                            "label": [
-                                "backgroundColor": "Green",
-                                "text": "UN",
-                            ],
-                            "selected": "Label",
-                        ],
-                        "name": "Unknown",
-                        "order": [
-                            "position": 7,
-                        ],
                         "otp": [
                             "account": "",
                             "algorithm": "SHA1",
@@ -245,20 +133,6 @@ final class TwoFASTests: XCTestCase {
                         "updatedAt": 1_721_919_046_000,
                     ],
                     [
-                        "icon": [
-                            "iconCollection": [
-                                "id": "A5B3FB65-4EC5-43E6-8EC1-49E24CA9E7AD",
-                            ],
-                            "label": [
-                                "backgroundColor": "Green",
-                                "text": "UN",
-                            ],
-                            "selected": "Label",
-                        ],
-                        "name": "Unknown",
-                        "order": [
-                            "position": 7,
-                        ],
                         "otp": [
                             "account": "noIssuer@mail.com",
                             "algorithm": "SHA1",
@@ -268,7 +142,7 @@ final class TwoFASTests: XCTestCase {
                             "source": "manual",
                             "tokenType": "HOTP",
                         ],
-                        "secret": "KQOZTMLOJBSMYWIO4BG4UTXDSR",
+                        "secret": "BB6B7FAYHW2G42ZA4FJHLRWWHU",
                         "serviceTypeID": "3cb83fc3-8e25-4df5-bdde-1f35611c1d0a",
                         "updatedAt": 1_721_919_046_000,
                     ],
@@ -278,7 +152,7 @@ final class TwoFASTests: XCTestCase {
         let importService = ImportService()
         let tokens = importService.importFromTwoFAS(json: json)!
 
-        XCTAssertEqual(tokens.count, 8)
+        XCTAssertEqual(tokens.count, 9)
 
         XCTAssertEqual(tokens[0].digits, 6)
         XCTAssertEqual(tokens[0].type, TokenTypeEnum.TOTP)
@@ -363,20 +237,6 @@ final class TwoFASTests: XCTestCase {
                 "schemaVersion": 4,
                 "services": [
                     [
-                        "icon": [
-                            "iconCollection": [
-                                "id": "90CAF674-4269-4193-9749-4849F97CFB53",
-                            ],
-                            "label": [
-                                "backgroundColor": "Orange",
-                                "text": "AP",
-                            ],
-                            "selected": "IconCollection",
-                        ],
-                        "name": "Apple",
-                        "order": [
-                            "position": 0,
-                        ],
                         "otp": [
                             "account": "user1+totp@test.com",
                             "algorithm": "SHA1",
@@ -392,20 +252,6 @@ final class TwoFASTests: XCTestCase {
                         "updatedAt": 1_721_919_046_000,
                     ],
                     [
-                        "icon": [
-                            "iconCollection": [
-                                "id": "A5B3FB65-4EC5-43E6-8EC1-49E24CA9E7AD",
-                            ],
-                            "label": [
-                                "backgroundColor": "Brown",
-                                "text": "AW",
-                            ],
-                            "selected": "Label",
-                        ],
-                        "name": "AWS",
-                        "order": [
-                            "position": 1,
-                        ],
                         "otp": [
                             "account": "user2+totp@test.com",
                             "algorithm": "SHA256",
@@ -421,20 +267,6 @@ final class TwoFASTests: XCTestCase {
                         "updatedAt": 1_721_919_046_000,
                     ],
                     [
-                        "icon": [
-                            "iconCollection": [
-                                "id": "A5B3FB65-4EC5-43E6-8EC1-49E24CA9E7AD",
-                            ],
-                            "label": [
-                                "backgroundColor": "Indigo",
-                                "text": "PG",
-                            ],
-                            "selected": "Label",
-                        ],
-                        "name": "PG",
-                        "order": [
-                            "position": 2,
-                        ],
                         "otp": [
                             "account": "user3+totp@test.com",
                             "algorithm": "SHA512",
@@ -450,20 +282,6 @@ final class TwoFASTests: XCTestCase {
                         "updatedAt": 1_721_919_046_000,
                     ],
                     [
-                        "icon": [
-                            "iconCollection": [
-                                "id": "A5B3FB65-4EC5-43E6-8EC1-49E24CA9E7AD",
-                            ],
-                            "label": [
-                                "backgroundColor": "Gray",
-                                "text": "UN",
-                            ],
-                            "selected": "Label",
-                        ],
-                        "name": "Unknown",
-                        "order": [
-                            "position": 3,
-                        ],
                         "otp": [
                             "account": "",
                             "algorithm": "SHA1",
@@ -529,20 +347,6 @@ final class TwoFASTests: XCTestCase {
                 "schemaVersion": 4,
                 "services": [
                     [
-                        "icon": [
-                            "iconCollection": [
-                                "id": "90CAF674-4269-4193-9749-4849F97CFB53",
-                            ],
-                            "label": [
-                                "backgroundColor": "Orange",
-                                "text": "AP",
-                            ],
-                            "selected": "IconCollection",
-                        ],
-                        "name": "Apple",
-                        "order": [
-                            "position": 0,
-                        ],
                         "otp": [
                             "account": "user1+totp@test.com",
                             "algorithm": "SHA1",
@@ -558,20 +362,6 @@ final class TwoFASTests: XCTestCase {
                         "updatedAt": 1_721_919_046_000,
                     ],
                     [
-                        "icon": [
-                            "iconCollection": [
-                                "id": "A5B3FB65-4EC5-43E6-8EC1-49E24CA9E7AD",
-                            ],
-                            "label": [
-                                "backgroundColor": "Brown",
-                                "text": "AW",
-                            ],
-                            "selected": "Label",
-                        ],
-                        "name": "AWS",
-                        "order": [
-                            "position": 1,
-                        ],
                         "otp": [
                             "account": "userMD5+totp@test.com",
                             "algorithm": "MD5",
@@ -587,20 +377,6 @@ final class TwoFASTests: XCTestCase {
                         "updatedAt": 1_721_919_046_000,
                     ],
                     [
-                        "icon": [
-                            "iconCollection": [
-                                "id": "A5B3FB65-4EC5-43E6-8EC1-49E24CA9E7AD",
-                            ],
-                            "label": [
-                                "backgroundColor": "Indigo",
-                                "text": "PG",
-                            ],
-                            "selected": "Label",
-                        ],
-                        "name": "PG",
-                        "order": [
-                            "position": 2,
-                        ],
                         "otp": [
                             "account": "userSHA224@test.com",
                             "algorithm": "SHA224",
@@ -616,20 +392,6 @@ final class TwoFASTests: XCTestCase {
                         "updatedAt": 1_721_919_046_000,
                     ],
                     [
-                        "icon": [
-                            "iconCollection": [
-                                "id": "A5B3FB65-4EC5-43E6-8EC1-49E24CA9E7AD",
-                            ],
-                            "label": [
-                                "backgroundColor": "Indigo",
-                                "text": "PG",
-                            ],
-                            "selected": "Label",
-                        ],
-                        "name": "PG",
-                        "order": [
-                            "position": 2,
-                        ],
                         "otp": [
                             "account": "userSHA334@test.com",
                             "algorithm": "SHA334",
@@ -663,20 +425,6 @@ final class TwoFASTests: XCTestCase {
                 "schemaVersion": 4,
                 "services": [
                     [
-                        "icon": [
-                            "iconCollection": [
-                                "id": "90CAF674-4269-4193-9749-4849F97CFB53",
-                            ],
-                            "label": [
-                                "backgroundColor": "Orange",
-                                "text": "AP",
-                            ],
-                            "selected": "IconCollection",
-                        ],
-                        "name": "Apple",
-                        "order": [
-                            "position": 0,
-                        ],
                         "otp": [
                             "account": "user1+totp@test.com",
                             "algorithm": "SHA1",

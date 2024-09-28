@@ -30,6 +30,9 @@ class Token: Codable, Identifiable {
 
     // HOTP
     var counter: Int = 0
+
+    // Extra Data
+    var pinned: Bool? = false
 }
 
 func validateToken(

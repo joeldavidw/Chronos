@@ -19,9 +19,6 @@ struct TOTPRowView: View {
                 .fontWeight(.light)
                 .lineLimit(1)
                 .onAppear(perform: updateOtp)
-                .onReceive(timer) { _ in
-                    updateOtp()
-                }
 
             Spacer()
 
@@ -64,6 +61,10 @@ struct TOTPRowView: View {
         // Circle progress will look smooth; however, the high redraw count causes significant CPU load.
         // progress = timeLeft / Double(token.period)
         progress = Double(secsLeft) / Double(token.period)
+
+        if secsLeft == token.period {
+            updateOtp()
+        }
     }
 
     private func formatOtp(otp: String) -> String {

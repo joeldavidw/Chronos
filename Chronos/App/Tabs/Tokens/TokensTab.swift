@@ -67,7 +67,7 @@ struct TokensTab: View {
     var body: some View {
         NavigationStack {
             List(tokenPairs) { tokenPair in
-                TokenRowView(tokenPair: tokenPair, timer: timer)
+                TokenRowView(tokenPair: tokenPair, timer: timer, triggerSortAndFilterTokenPairs: self.sortAndFilterTokenPairs)
             }
             .onAppear { Task { await updateTokenPairs() } }
             .onChange(of: encryptedTokens) { _, _ in
@@ -194,6 +194,17 @@ struct TokensTab: View {
                     tokenPair.token.account.localizedCaseInsensitiveContains(searchQuery)
             }
             .sorted { token1, token2 in
+                let pinned1 = token1.token.pinned ?? false
+                let pinned2 = token2.token.pinned ?? false
+
+                if pinned1 != pinned2 {
+                    return pinned1
+                }
+
+                if pinned1 {
+                    return token1.token.issuer.localizedCaseInsensitiveCompare(token2.token.issuer) == .orderedAscending
+                }
+
                 switch sortCriteria {
                 case .ISSUER_ASC:
                     return token1.token.issuer.localizedCaseInsensitiveCompare(token2.token.issuer) == .orderedAscending

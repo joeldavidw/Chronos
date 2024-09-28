@@ -135,6 +135,7 @@ extension CryptoService {
             let tokenJson = try JSONDecoder().decode(Token.self, from: Data(decrypted.plainText))
             return tokenJson
         } catch {
+            print(error)
             return nil
         }
     }

@@ -20,6 +20,8 @@ struct TokenRowView: View {
 
     let timer: Publishers.Autoconnect<Timer.TimerPublisher>
 
+    let triggerSortAndFilterTokenPairs: () -> Void
+
     var token: Token {
         return tokenPair.token
     }
@@ -28,7 +30,8 @@ struct TokenRowView: View {
         return tokenPair.encToken
     }
 
-    let otpService = Container.shared.otpService()
+    private let otpService = Container.shared.otpService()
+    private let cryptoService = Container.shared.cryptoService()
 
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
@@ -41,6 +44,14 @@ struct TokenRowView: View {
                     Text("- \(token.account)")
                         .foregroundStyle(.gray)
                         .lineLimit(1)
+                }
+
+                if token.pinned ?? false {
+                    Spacer()
+
+                    Image(systemName: "pin.fill")
+                        .font(.system(size: 12))
+                        .rotationEffect(Angle(degrees: 45))
                 }
             }
 
@@ -150,6 +161,18 @@ struct TokenRowView: View {
             .tint(.blue)
 
             Button {
+                token.pinned = !(token.pinned ?? false)
+                cryptoService.updateEncryptedToken(encryptedToken: encryptedToken, token: token)
+                triggerSortAndFilterTokenPairs()
+            } label: {
+                VStack(alignment: .center) {
+                    Image(systemName: token.pinned ?? false ? "pin.slash" : "pin")
+                    Text(token.pinned ?? false ? "Unpin" : "Pin")
+                }
+            }
+            .tint(.indigo)
+
+            Button {
                 self.showTokenQRSheet = true
             } label: {
                 VStack(alignment: .center) {
@@ -157,7 +180,7 @@ struct TokenRowView: View {
                     Text("QR")
                 }
             }
-            .tint(.indigo)
+            .tint(.gray)
         }
     }
 

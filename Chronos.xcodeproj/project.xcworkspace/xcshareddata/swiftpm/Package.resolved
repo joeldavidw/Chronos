@@ -1,5 +1,5 @@
 {
-  "originHash" : "19b35a59954c273e4fee0aed72f9d6d02d424ede42e3faace584d56d8e92d701",
+  "originHash" : "00bc3e67b079eb8ac9057f7266564b57edae76381fc1faec463cc4b146921f2c",
   "pins" : [
     {
       "identity" : "alertkit",
@@ -15,8 +15,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/ggruen/CloudKitSyncMonitor",
       "state" : {
-        "revision" : "f84f9c074b2c55adc7dc364a4437cfe7249ae529",
-        "version" : "1.4.1"
+        "revision" : "923c6b0b2360b3a70d3dd69a0c6c8320b075caa9",
+        "version" : "2.0.0"
       }
     },
     {
@@ -24,8 +24,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/twostraws/CodeScanner.git",
       "state" : {
-        "revision" : "34da57fb63b47add20de8a85da58191523ccce57",
-        "version" : "2.5.0"
+        "revision" : "9fa582f4b36c69c2a55bff5fb3377eb170ae273c",
+        "version" : "2.5.1"
       }
     },
     {
@@ -38,21 +38,21 @@
       }
     },
     {
-      "identity" : "efqrcode",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/EFPrefix/EFQRCode",
-      "state" : {
-        "revision" : "2991c2f318ad9529d93b2a73a382a3f9c72c64ce",
-        "version" : "6.2.2"
-      }
-    },
-    {
       "identity" : "factory",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/hmlongco/Factory",
       "state" : {
         "revision" : "587995f7d5cc667951d635fbf6b4252324ba0439",
         "version" : "2.3.2"
+      }
+    },
+    {
+      "identity" : "qrcode",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/dagronf/QRCode",
+      "state" : {
+        "revision" : "b2840eda2755015d1cd53c36236713b3c8285e66",
+        "version" : "21.0.3"
       }
     },
     {
@@ -92,6 +92,15 @@
       }
     },
     {
+      "identity" : "swift-qrcode-generator",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/dagronf/swift-qrcode-generator",
+      "state" : {
+        "revision" : "2b1980b825f08a81ccc762b0c4d17fcde9d5e953",
+        "version" : "2.0.2"
+      }
+    },
+    {
       "identity" : "swift-snapshot-testing",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/pointfreeco/swift-snapshot-testing",
@@ -110,12 +119,12 @@
       }
     },
     {
-      "identity" : "swift_qrcodejs",
+      "identity" : "swiftimagereadwrite",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/ApolloZhu/swift_qrcodejs.git",
+      "location" : "https://github.com/dagronf/SwiftImageReadWrite",
       "state" : {
-        "revision" : "374dc7f7b9e76c6aeb393f6a84590c6d387e1ecb",
-        "version" : "2.2.2"
+        "revision" : "42ace2412279f18bc264bc306e96b51c36e12a33",
+        "version" : "1.9.2"
       }
     },
     {

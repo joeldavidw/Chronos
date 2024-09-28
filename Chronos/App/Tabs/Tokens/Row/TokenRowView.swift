@@ -1,6 +1,5 @@
 import AlertKit
 import Combine
-import EFQRCode
 import Factory
 import SwiftUI
 

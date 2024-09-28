@@ -51,6 +51,7 @@ struct TokenRowView: View {
 
                     Image(systemName: "pin.fill")
                         .font(.system(size: 12))
+                        .rotationEffect(Angle(degrees: 45))
                 }
             }
 

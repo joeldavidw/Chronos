@@ -49,7 +49,6 @@
 		6B7A54742B94B7A30057DCF9 /* PrivacyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B7A54732B94B7A30057DCF9 /* PrivacyView.swift */; };
 		6B8132F22C4975DA00DB367E /* Raivo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B8132F12C4975DA00DB367E /* Raivo.swift */; };
 		6B8132F42C4BAD5A00DB367E /* TokenQRView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B8132F32C4BAD5A00DB367E /* TokenQRView.swift */; };
-		6B8132F72C4BB2B200DB367E /* EFQRCode in Frameworks */ = {isa = PBXBuildFile; productRef = 6B8132F62C4BB2B200DB367E /* EFQRCode */; };
 		6B8132FA2C4C0F6300DB367E /* TokenToOtpAuthUrl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B8132F92C4C0F6300DB367E /* TokenToOtpAuthUrl.swift */; };
 		6B8132FD2C4E5F6B00DB367E /* QrCodeGenerationAndParsing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B8132FC2C4E5F6B00DB367E /* QrCodeGenerationAndParsing.swift */; };
 		6B8133002C4E634100DB367E /* PasswordReminder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B8132FF2C4E634100DB367E /* PasswordReminder.swift */; };
@@ -57,6 +56,7 @@
 		6B8ABEEC2B8F6A4F00F5B514 /* CryptoSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 6B8ABEEB2B8F6A4F00F5B514 /* CryptoSwift */; };
 		6B9581E22B62AFF80029EF3C /* ViewModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B9581E12B62AFF80029EF3C /* ViewModifier.swift */; };
 		6B9581E42B633A880029EF3C /* AddManualTokenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B9581E32B633A880029EF3C /* AddManualTokenView.swift */; };
+		6B96C8842CA7BFB3004ECB11 /* QRCode in Frameworks */ = {isa = PBXBuildFile; productRef = 6B96C8832CA7BFB3004ECB11 /* QRCode */; };
 		6B9D74652C14ADDC008E6582 /* StateService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B9D74642C14ADDC008E6582 /* StateService.swift */; };
 		6B9D74682C1553A1008E6582 /* SecureBytes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B9D74672C1553A1008E6582 /* SecureBytes.swift */; };
 		6BA5DA5C2B9E94F8009908E5 /* SecureEnclaveService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BA5DA5B2B9E94F8009908E5 /* SecureEnclaveService.swift */; };
@@ -166,7 +166,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6B8132F72C4BB2B200DB367E /* EFQRCode in Frameworks */,
+				6B96C8842CA7BFB3004ECB11 /* QRCode in Frameworks */,
 				6B3BB1202B511A9E00DCEF0B /* SwiftOTP in Frameworks */,
 				6B8ABEEC2B8F6A4F00F5B514 /* CryptoSwift in Frameworks */,
 				6B3BB0EE2B4EEEBD00DCEF0B /* Valet in Frameworks */,
@@ -515,9 +515,9 @@
 				6B193C892C27F03300E759B7 /* CloudKitSyncMonitor */,
 				6BF53E4E2C317AA400356461 /* ZipArchive */,
 				6BB37D802C46C751008DA122 /* SwiftyJSON */,
-				6B8132F62C4BB2B200DB367E /* EFQRCode */,
 				6BC5F0472C4F8B1B00BA106F /* Html */,
 				6BC5F0512C52429100BA106F /* SwiftProtobuf */,
+				6B96C8832CA7BFB3004ECB11 /* QRCode */,
 			);
 			productName = Chronos;
 			productReference = 6B3BB0AD2B4EA87C00DCEF0B /* Chronos.app */;
@@ -580,9 +580,9 @@
 				6B193C882C27F03300E759B7 /* XCRemoteSwiftPackageReference "CloudKitSyncMonitor" */,
 				6BF53E4B2C31793100356461 /* XCRemoteSwiftPackageReference "ZipArchive" */,
 				6BB37D7F2C46C751008DA122 /* XCRemoteSwiftPackageReference "SwiftyJSON" */,
-				6B8132F52C4BB2B200DB367E /* XCRemoteSwiftPackageReference "EFQRCode" */,
 				6BC5F0462C4F8B1B00BA106F /* XCRemoteSwiftPackageReference "swift-html" */,
 				6BC5F0502C52429100BA106F /* XCRemoteSwiftPackageReference "swift-protobuf" */,
+				6B96C8822CA7BFB3004ECB11 /* XCRemoteSwiftPackageReference "QRCode" */,
 			);
 			productRefGroup = 6B3BB0AE2B4EA87C00DCEF0B /* Products */;
 			projectDirPath = "";
@@ -871,7 +871,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 12.0;
+				MARKETING_VERSION = 13.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.joeldavidw.ChronosDevDebug;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -918,7 +918,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 12.0;
+				MARKETING_VERSION = 13.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.joeldavidw.ChronosDevRelease;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1244,7 +1244,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 12.0;
+				MARKETING_VERSION = 13.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.joeldavidw.Chronos;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1299,7 +1299,7 @@
 			repositoryURL = "https://github.com/ggruen/CloudKitSyncMonitor";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 1.3.1;
+				minimumVersion = 2.0.0;
 			};
 		};
 		6B35A4C72B557EE50004D4C5 /* XCRemoteSwiftPackageReference "AlertKit" */ = {
@@ -1339,7 +1339,7 @@
 			repositoryURL = "https://github.com/twostraws/CodeScanner.git";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 2.4.1;
+				minimumVersion = 2.5.1;
 			};
 		};
 		6B7383DE2B9C3962008E8867 /* XCRemoteSwiftPackageReference "Factory" */ = {
@@ -1350,20 +1350,20 @@
 				minimumVersion = 2.3.2;
 			};
 		};
-		6B8132F52C4BB2B200DB367E /* XCRemoteSwiftPackageReference "EFQRCode" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/EFPrefix/EFQRCode";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 6.2.2;
-			};
-		};
 		6B8ABEEA2B8F6A4F00F5B514 /* XCRemoteSwiftPackageReference "CryptoSwift" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/krzyzanowskim/CryptoSwift.git";
 			requirement = {
 				kind = upToNextMajorVersion;
 				minimumVersion = 1.8.2;
+			};
+		};
+		6B96C8822CA7BFB3004ECB11 /* XCRemoteSwiftPackageReference "QRCode" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/dagronf/QRCode";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 21.0.3;
 			};
 		};
 		6BB37D7F2C46C751008DA122 /* XCRemoteSwiftPackageReference "SwiftyJSON" */ = {
@@ -1436,15 +1436,15 @@
 			package = 6B7383DE2B9C3962008E8867 /* XCRemoteSwiftPackageReference "Factory" */;
 			productName = Factory;
 		};
-		6B8132F62C4BB2B200DB367E /* EFQRCode */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 6B8132F52C4BB2B200DB367E /* XCRemoteSwiftPackageReference "EFQRCode" */;
-			productName = EFQRCode;
-		};
 		6B8ABEEB2B8F6A4F00F5B514 /* CryptoSwift */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 6B8ABEEA2B8F6A4F00F5B514 /* XCRemoteSwiftPackageReference "CryptoSwift" */;
 			productName = CryptoSwift;
+		};
+		6B96C8832CA7BFB3004ECB11 /* QRCode */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 6B96C8822CA7BFB3004ECB11 /* XCRemoteSwiftPackageReference "QRCode" */;
+			productName = QRCode;
 		};
 		6BB37D802C46C751008DA122 /* SwiftyJSON */ = {
 			isa = XCSwiftPackageProductDependency;

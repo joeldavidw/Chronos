@@ -1,8 +1,8 @@
-import EFQRCode
 import Factory
 import Foundation
 import Html
 import Logging
+import QRCode
 import SwiftData
 import UIKit
 import ZipArchive
@@ -230,10 +230,16 @@ extension ExportService {
 
     func tokenDetailsDiv(token: Token) -> Node {
         let base64Img = otpService.tokenToOtpAuthUrl(token: token).flatMap { otpAuthUrl in
-            EFQRCode.generate(for: otpAuthUrl).flatMap { image in
-                UIImage(cgImage: image).pngData()?.base64EncodedString()
+            guard let image = try? QRCode.build
+                .text(otpAuthUrl)
+                .generate
+                .image(dimension: 256, representation: .png())
+                .base64EncodedString()
+            else {
+                return ""
             }
-        } ?? ""
+            return image
+        }
 
         let periodNode: Node = token.type.rawValue == "TOTP" ? .div(.text("Period: "), .code("\(token.period.description)")) : .text("")
         let counterNode: Node = token.type.rawValue == "HOTP" ? .div(.text("Counter: "), .code("\(token.counter.description)")) : .text("")
@@ -251,7 +257,7 @@ extension ExportService {
                       periodNode,
                       counterNode),
                  .div(attributes: [.style(safe: "flex: 0 0 auto;")],
-                      .img(base64: base64Img, type: .image(.png), alt: "", attributes: [.width(160), .height(160)])))
+                      .img(base64: base64Img!, type: .image(.png), alt: "", attributes: [.width(160), .height(160)])))
         )
     }
 }

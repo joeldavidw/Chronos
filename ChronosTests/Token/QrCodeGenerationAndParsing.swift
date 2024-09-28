@@ -1,5 +1,5 @@
 @testable import Chronos
-import EFQRCode
+import QRCode
 import Vision
 import XCTest
 
@@ -18,8 +18,12 @@ final class QrCodeGenerationAndParsingTests: XCTestCase {
         token1.algorithm = TokenAlgorithmEnum.SHA1
 
         var url = otpService.tokenToOtpAuthUrl(token: token1)!
-        let qr1 = EFQRCode.generate(for: url)
-        detectQRCode(in: UIImage(cgImage: qr1!)) { detectedUrl in
+        let qr1 = try QRCode.build
+            .text(url)
+            .generate
+            .image(dimension: 256, representation: .png())
+
+        detectQRCode(in: UIImage(data: qr1)!) { detectedUrl in
             XCTAssertEqual(detectedUrl, "otpauth://totp/Apple:john@appleseed.com?secret=JBSWY3DPEHPK3PXP&algorithm=SHA1&digits=6&issuer=Apple&period=30")
         }
 
@@ -33,8 +37,12 @@ final class QrCodeGenerationAndParsingTests: XCTestCase {
         token2.algorithm = TokenAlgorithmEnum.SHA1
 
         url = otpService.tokenToOtpAuthUrl(token: token2)!
-        let qr2 = EFQRCode.generate(for: url)
-        detectQRCode(in: UIImage(cgImage: qr2!)) { detectedUrl in
+        let qr2 = try QRCode.build
+            .text(url)
+            .generate
+            .image(dimension: 256, representation: .png())
+
+        detectQRCode(in: UIImage(data: qr2)!) { detectedUrl in
             XCTAssertEqual(detectedUrl, "otpauth://totp/?secret=JBSWY3DPEHPK3PXP&algorithm=SHA1&digits=6&issuer=Apple&period=30")
         }
 
@@ -49,8 +57,12 @@ final class QrCodeGenerationAndParsingTests: XCTestCase {
         token3.algorithm = TokenAlgorithmEnum.SHA256
 
         url = otpService.tokenToOtpAuthUrl(token: token3)!
-        let qr3 = EFQRCode.generate(for: url)
-        detectQRCode(in: UIImage(cgImage: qr3!)) { detectedUrl in
+        let qr3 = try QRCode.build
+            .text(url)
+            .generate
+            .image(dimension: 256, representation: .png())
+
+        detectQRCode(in: UIImage(data: qr3)!) { detectedUrl in
             XCTAssertEqual(detectedUrl, "otpauth://totp/Apple:john@appleseed.com?secret=JBSWY3DPEHPK3PXP&algorithm=SHA256&digits=7&issuer=Apple&period=45")
         }
 
@@ -64,8 +76,12 @@ final class QrCodeGenerationAndParsingTests: XCTestCase {
         token4.algorithm = TokenAlgorithmEnum.SHA1
 
         url = otpService.tokenToOtpAuthUrl(token: token4)!
-        let qr4 = EFQRCode.generate(for: url)
-        detectQRCode(in: UIImage(cgImage: qr4!)) { detectedUrl in
+        let qr4 = try QRCode.build
+            .text(url)
+            .generate
+            .image(dimension: 256, representation: .png())
+
+        detectQRCode(in: UIImage(data: qr4)!) { detectedUrl in
             XCTAssertEqual(detectedUrl, "otpauth://totp/john@doe.com?secret=JBSWY3DPEHPK3PXP&algorithm=SHA1&digits=6&period=30")
         }
 
@@ -80,8 +96,11 @@ final class QrCodeGenerationAndParsingTests: XCTestCase {
         token5.algorithm = TokenAlgorithmEnum.SHA1
 
         url = otpService.tokenToOtpAuthUrl(token: token5)!
-        let qr5 = EFQRCode.generate(for: url)
-        detectQRCode(in: UIImage(cgImage: qr5!)) { detectedUrl in
+        let qr5 = try QRCode.build
+            .text(url)
+            .generate
+            .image(dimension: 256, representation: .png())
+        detectQRCode(in: UIImage(data: qr5)!) { detectedUrl in
             XCTAssertEqual(detectedUrl, "otpauth://totp/My%20Company:john.doe+test@mycompany.com?secret=JBSWY3DPEHPK3PXP&algorithm=SHA1&digits=6&issuer=My%20Company&period=30")
         }
 
@@ -94,8 +113,11 @@ final class QrCodeGenerationAndParsingTests: XCTestCase {
         token6.algorithm = TokenAlgorithmEnum.SHA1
 
         url = otpService.tokenToOtpAuthUrl(token: token6)!
-        let qr6 = EFQRCode.generate(for: url)
-        detectQRCode(in: UIImage(cgImage: qr6!)) { detectedUrl in
+        let qr6 = try QRCode.build
+            .text(url)
+            .generate
+            .image(dimension: 256, representation: .png())
+        detectQRCode(in: UIImage(data: qr6)!) { detectedUrl in
             XCTAssertEqual(detectedUrl, "otpauth://totp/?secret=JBSWY3DPEHPK3PXP&algorithm=SHA1&digits=6&period=30")
         }
 
@@ -110,8 +132,11 @@ final class QrCodeGenerationAndParsingTests: XCTestCase {
         token7.algorithm = TokenAlgorithmEnum.SHA512
 
         url = otpService.tokenToOtpAuthUrl(token: token7)!
-        let qr7 = EFQRCode.generate(for: url)
-        detectQRCode(in: UIImage(cgImage: qr7!)) { detectedUrl in
+        let qr7 = try QRCode.build
+            .text(url)
+            .generate
+            .image(dimension: 256, representation: .png())
+        detectQRCode(in: UIImage(data: qr7)!) { detectedUrl in
             XCTAssertEqual(detectedUrl, "otpauth://totp/Google:alice@google.com?secret=JBSWY3DPEHPK3PXP&algorithm=SHA512&digits=8&issuer=Google&period=60")
         }
 
@@ -126,8 +151,11 @@ final class QrCodeGenerationAndParsingTests: XCTestCase {
         token8.algorithm = TokenAlgorithmEnum.SHA1
 
         url = otpService.tokenToOtpAuthUrl(token: token8)!
-        let qr8 = EFQRCode.generate(for: url)
-        detectQRCode(in: UIImage(cgImage: qr8!)) { detectedUrl in
+        let qr8 = try QRCode.build
+            .text(url)
+            .generate
+            .image(dimension: 256, representation: .png())
+        detectQRCode(in: UIImage(data: qr8)!) { detectedUrl in
             XCTAssertEqual(detectedUrl, "otpauth://totp/Example:user@example.com?secret=&algorithm=SHA1&digits=6&issuer=Example&period=30")
         }
     }
@@ -146,8 +174,11 @@ final class QrCodeGenerationAndParsingTests: XCTestCase {
         token1.algorithm = TokenAlgorithmEnum.SHA1
 
         var url = otpService.tokenToOtpAuthUrl(token: token1)!
-        let qr1 = EFQRCode.generate(for: url)
-        detectQRCode(in: UIImage(cgImage: qr1!)) { detectedUrl in
+        let qr1 = try QRCode.build
+            .text(url)
+            .generate
+            .image(dimension: 256, representation: .png())
+        detectQRCode(in: UIImage(data: qr1)!) { detectedUrl in
             XCTAssertEqual(detectedUrl, "otpauth://hotp/GitHub:user@github.com?secret=JBSWY3DPEHPK3PXP&algorithm=SHA1&digits=6&issuer=GitHub&counter=1")
         }
 
@@ -161,8 +192,11 @@ final class QrCodeGenerationAndParsingTests: XCTestCase {
         token2.algorithm = TokenAlgorithmEnum.SHA1
 
         url = otpService.tokenToOtpAuthUrl(token: token2)!
-        let qr2 = EFQRCode.generate(for: url)
-        detectQRCode(in: UIImage(cgImage: qr2!)) { detectedUrl in
+        let qr2 = try QRCode.build
+            .text(url)
+            .generate
+            .image(dimension: 256, representation: .png())
+        detectQRCode(in: UIImage(data: qr2)!) { detectedUrl in
             XCTAssertEqual(detectedUrl, "otpauth://hotp/?secret=JBSWY3DPEHPK3PXP&algorithm=SHA1&digits=6&issuer=GitHub&counter=1")
         }
 
@@ -177,8 +211,11 @@ final class QrCodeGenerationAndParsingTests: XCTestCase {
         token3.algorithm = TokenAlgorithmEnum.SHA256
 
         url = otpService.tokenToOtpAuthUrl(token: token3)!
-        let qr3 = EFQRCode.generate(for: url)
-        detectQRCode(in: UIImage(cgImage: qr3!)) { detectedUrl in
+        let qr3 = try QRCode.build
+            .text(url)
+            .generate
+            .image(dimension: 256, representation: .png())
+        detectQRCode(in: UIImage(data: qr3)!) { detectedUrl in
             XCTAssertEqual(detectedUrl, "otpauth://hotp/GitHub:user@github.com?secret=JBSWY3DPEHPK3PXP&algorithm=SHA256&digits=7&issuer=GitHub&counter=10")
         }
 
@@ -192,8 +229,11 @@ final class QrCodeGenerationAndParsingTests: XCTestCase {
         token4.algorithm = TokenAlgorithmEnum.SHA1
 
         url = otpService.tokenToOtpAuthUrl(token: token4)!
-        let qr4 = EFQRCode.generate(for: url)
-        detectQRCode(in: UIImage(cgImage: qr4!)) { detectedUrl in
+        let qr4 = try QRCode.build
+            .text(url)
+            .generate
+            .image(dimension: 256, representation: .png())
+        detectQRCode(in: UIImage(data: qr4)!) { detectedUrl in
             XCTAssertEqual(detectedUrl, "otpauth://hotp/user@github.com?secret=JBSWY3DPEHPK3PXP&algorithm=SHA1&digits=6&counter=1")
         }
 
@@ -208,8 +248,11 @@ final class QrCodeGenerationAndParsingTests: XCTestCase {
         token5.algorithm = TokenAlgorithmEnum.SHA1
 
         url = otpService.tokenToOtpAuthUrl(token: token5)!
-        let qr5 = EFQRCode.generate(for: url)
-        detectQRCode(in: UIImage(cgImage: qr5!)) { detectedUrl in
+        let qr5 = try QRCode.build
+            .text(url)
+            .generate
+            .image(dimension: 256, representation: .png())
+        detectQRCode(in: UIImage(data: qr5)!) { detectedUrl in
             XCTAssertEqual(detectedUrl, "otpauth://hotp/My%20Company:user+test@mycompany.com?secret=JBSWY3DPEHPK3PXP&algorithm=SHA1&digits=6&issuer=My%20Company&counter=1")
         }
 
@@ -222,8 +265,11 @@ final class QrCodeGenerationAndParsingTests: XCTestCase {
         token6.algorithm = TokenAlgorithmEnum.SHA1
 
         url = otpService.tokenToOtpAuthUrl(token: token6)!
-        let qr6 = EFQRCode.generate(for: url)
-        detectQRCode(in: UIImage(cgImage: qr6!)) { detectedUrl in
+        let qr6 = try QRCode.build
+            .text(url)
+            .generate
+            .image(dimension: 256, representation: .png())
+        detectQRCode(in: UIImage(data: qr6)!) { detectedUrl in
             XCTAssertEqual(detectedUrl, "otpauth://hotp/?secret=JBSWY3DPEHPK3PXP&algorithm=SHA1&digits=6&counter=1")
         }
 
@@ -238,8 +284,11 @@ final class QrCodeGenerationAndParsingTests: XCTestCase {
         token7.algorithm = TokenAlgorithmEnum.SHA512
 
         url = otpService.tokenToOtpAuthUrl(token: token7)!
-        let qr7 = EFQRCode.generate(for: url)
-        detectQRCode(in: UIImage(cgImage: qr7!)) { detectedUrl in
+        let qr7 = try QRCode.build
+            .text(url)
+            .generate
+            .image(dimension: 256, representation: .png())
+        detectQRCode(in: UIImage(data: qr7)!) { detectedUrl in
             XCTAssertEqual(detectedUrl, "otpauth://hotp/Google:user@google.com?secret=JBSWY3DPEHPK3PXP&algorithm=SHA512&digits=8&issuer=Google&counter=100")
         }
 
@@ -254,8 +303,11 @@ final class QrCodeGenerationAndParsingTests: XCTestCase {
         token8.algorithm = TokenAlgorithmEnum.SHA1
 
         url = otpService.tokenToOtpAuthUrl(token: token8)!
-        let qr8 = EFQRCode.generate(for: url)
-        detectQRCode(in: UIImage(cgImage: qr8!)) { detectedUrl in
+        let qr8 = try QRCode.build
+            .text(url)
+            .generate
+            .image(dimension: 256, representation: .png())
+        detectQRCode(in: UIImage(data: qr8)!) { detectedUrl in
             XCTAssertEqual(detectedUrl, "otpauth://hotp/Example:user@example.com?secret=&algorithm=SHA1&digits=6&issuer=Example&counter=1")
         }
     }

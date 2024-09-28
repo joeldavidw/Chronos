@@ -1,5 +1,5 @@
-import EFQRCode
 import Factory
+import QRCode
 import SwiftUI
 
 struct TokenQRView: View {
@@ -30,9 +30,13 @@ struct TokenQRView: View {
                 .padding(.bottom, 8)
 
                 if let otpAuthUrl = otpService.tokenToOtpAuthUrl(token: token),
-                   let image = EFQRCode.generate(for: otpAuthUrl)
+                   let imageData = try? QRCode.build
+                   .text(otpAuthUrl)
+                   .generate
+                   .image(dimension: 256, representation: .png()),
+                   let uiImage = UIImage(data: imageData)
                 {
-                    Image(uiImage: UIImage(cgImage: image))
+                    Image(uiImage: uiImage)
                         .resizable()
                         .frame(width: 256, height: 256)
                 } else {

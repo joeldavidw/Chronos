@@ -26,11 +26,12 @@ Chronos is an open-source two-factor authentication (2FA) app for iOS, developed
     - JSON
     - HTML with QR codes for scanning and printable for offline storage
 - **Import**
+  - 2FAS Authenticator
   - Aegis
+  - Ente Authenticator
   - Raivo
   - Google Authenticator
   - LastPass Authenticator
-  - WIP more will be added!
 - **Anonymous**
   - No telemetry
   - No app account required

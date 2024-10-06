@@ -5,14 +5,14 @@ public enum OtpAuthUrlError: LocalizedError, Equatable {
     case invalidURL
     case invalidQueryItem
     case invalidType
-    
+
     public var errorDescription: String? {
         switch self {
         case .invalidURL:
             return "Invalid Otp Auth URL."
-        case  .invalidQueryItem:
+        case .invalidQueryItem:
             return "Invalid Query Item."
-        case  .invalidType:
+        case .invalidType:
             return "Invalid Type."
         }
     }

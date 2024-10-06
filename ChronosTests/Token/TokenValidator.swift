@@ -2,10 +2,9 @@
 import XCTest
 
 class TokenValidatorTests: XCTestCase {
-
     // Helper function to create a valid base32 secret
     private func validBase32Secret() -> String {
-        return "JBSWY3DPEHPK3PXP"  // A valid base32 encoded string
+        return "JBSWY3DPEHPK3PXP" // A valid base32 encoded string
     }
 
     // Test valid TOTP token
@@ -63,7 +62,7 @@ class TokenValidatorTests: XCTestCase {
             XCTAssertEqual(error as? TokenError, TokenError.invalidDigits(9))
         }
     }
-    
+
     func testInvalidDigitsLower() {
         let token = Token()
         token.secret = validBase32Secret()
@@ -74,7 +73,7 @@ class TokenValidatorTests: XCTestCase {
             XCTAssertEqual(error as? TokenError, TokenError.invalidDigits(5))
         }
     }
-    
+
     func testInvalidDigitsZero() {
         let token = Token()
         token.secret = validBase32Secret()
@@ -85,7 +84,7 @@ class TokenValidatorTests: XCTestCase {
             XCTAssertEqual(error as? TokenError, TokenError.invalidDigits(0))
         }
     }
-    
+
     func testInvalidDigitsNegative() {
         let token = Token()
         token.secret = validBase32Secret()
@@ -96,7 +95,7 @@ class TokenValidatorTests: XCTestCase {
             XCTAssertEqual(error as? TokenError, TokenError.invalidDigits(-10))
         }
     }
-    
+
     // Test negative counter for HOTP token
     func testNegativeCounterForHOTP() {
         let token = Token()
@@ -122,7 +121,7 @@ class TokenValidatorTests: XCTestCase {
             XCTAssertEqual(error as? TokenError, TokenError.invalidPeriod(0))
         }
     }
-    
+
     func testInvalidPeriodForTOTPNegative() {
         let token = Token()
         token.secret = validBase32Secret()

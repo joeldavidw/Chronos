@@ -28,7 +28,7 @@ final class ParseOtpAuthUrlTests: XCTestCase {
             XCTAssertEqual(error as? OtpAuthUrlError, .invalidQueryItem)
         }
     }
-    
+
     func testTotp() throws {
         // Test case 1: Standard TOTP token
         do {

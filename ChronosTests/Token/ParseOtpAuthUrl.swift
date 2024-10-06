@@ -2,6 +2,33 @@
 import XCTest
 
 final class ParseOtpAuthUrlTests: XCTestCase {
+    // Test invalid URL format
+    func testInvalidUrlFormat() {
+        let invalidUrl = "invalid-url-format"
+
+        XCTAssertThrowsError(try OtpAuthUrlParser.parseOtpAuthUrl(otpAuthStr: invalidUrl)) { error in
+            XCTAssertEqual(error as? OtpAuthUrlError, .invalidURL)
+        }
+    }
+
+    // Test invalid token type
+    func testInvalidTokenType() {
+        let invalidTokenTypeUrl = "otpauth://invalidtype/user@example.com?secret=JBSWY3DPEHPK3PXP"
+
+        XCTAssertThrowsError(try OtpAuthUrlParser.parseOtpAuthUrl(otpAuthStr: invalidTokenTypeUrl)) { error in
+            XCTAssertEqual(error as? OtpAuthUrlError, .invalidType)
+        }
+    }
+
+    // Test missing query items (e.g., missing secret)
+    func testMissingSecretQueryItem() {
+        let missingSecretUrl = "otpauth://totp/user@example.com"
+
+        XCTAssertThrowsError(try OtpAuthUrlParser.parseOtpAuthUrl(otpAuthStr: missingSecretUrl)) { error in
+            XCTAssertEqual(error as? OtpAuthUrlError, .invalidQueryItem)
+        }
+    }
+    
     func testTotp() throws {
         // Test case 1: Standard TOTP token
         do {
@@ -105,7 +132,7 @@ final class ParseOtpAuthUrlTests: XCTestCase {
         do {
             _ = try OtpAuthUrlParser.parseOtpAuthUrl(otpAuthStr: "otpauth://totp/Example:user@example.com?secret=&algorithm=SHA1&digits=6&issuer=Example&period=30")
             XCTFail("Expected OTPError.invalidSecret but no error was thrown")
-        } catch OTPError.invalidSecret {
+        } catch TokenError.invalidSecret {
             // Success: expected error was thrown
         } catch {
             XCTFail("Expected OTPError.invalidSecret but a different error was thrown")
@@ -243,7 +270,7 @@ final class ParseOtpAuthUrlTests: XCTestCase {
         do {
             _ = try OtpAuthUrlParser.parseOtpAuthUrl(otpAuthStr: "otpauth://hotp/Example:user@example.com?secret=&algorithm=SHA1&digits=6&issuer=Example&counter=1")
             XCTFail("Expected OTPError.invalidSecret but no error was thrown")
-        } catch OTPError.invalidSecret {
+        } catch TokenError.invalidSecret {
             // Success: expected error was thrown
         } catch {
             XCTFail("Expected OTPError.invalidSecret but a different error was thrown")

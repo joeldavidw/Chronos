@@ -1,6 +1,23 @@
 import Foundation
 import SwiftOTP
 
+public enum OtpAuthUrlError: LocalizedError, Equatable {
+    case invalidURL
+    case invalidQueryItem
+    case invalidType
+    
+    public var errorDescription: String? {
+        switch self {
+        case .invalidURL:
+            return "Invalid Otp Auth URL."
+        case  .invalidQueryItem:
+            return "Invalid Query Item."
+        case  .invalidType:
+            return "Invalid Type."
+        }
+    }
+}
+
 public class OtpAuthUrlParser {
     static func parseOtpAuthUrl(otpAuthStr: String) throws -> Token {
         guard let otpAuthURL = URL(string: otpAuthStr),
@@ -8,7 +25,7 @@ public class OtpAuthUrlParser {
               let scheme = components.scheme, scheme == "otpauth",
               let host = components.host
         else {
-            throw OTPError.invalidURL
+            throw OtpAuthUrlError.invalidURL
         }
 
         let tokenType = try getTokenType(from: host)
@@ -40,7 +57,7 @@ public class OtpAuthUrlParser {
             }
         }
 
-        guard let queryItems = components.queryItems else { throw OTPError.invalidQueryItem }
+        guard let queryItems = components.queryItems else { throw OtpAuthUrlError.invalidQueryItem }
         for item in queryItems {
             guard let value = item.value?.trimmingCharacters(in: .whitespacesAndNewlines), !value.isEmpty else { continue }
             switch item.name.lowercased() {
@@ -50,7 +67,7 @@ public class OtpAuthUrlParser {
                 token.issuer = value
             case "algorithm":
                 guard let algo = TokenAlgorithmEnum(rawValue: value.uppercased()) else {
-                    throw OTPError.invalidAlgorithm(value)
+                    throw TokenError.invalidAlgorithm(value)
                 }
                 token.algorithm = algo
             case "digits":
@@ -78,7 +95,7 @@ public class OtpAuthUrlParser {
         case "hotp":
             return .HOTP
         default:
-            throw OTPError.invalidType
+            throw OtpAuthUrlError.invalidType
         }
     }
 }

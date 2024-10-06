@@ -6,7 +6,6 @@ import SwiftyJSON
 public class ImportService {
     private let logger = Logger(label: "ImportService")
     private let vaultService = Container.shared.vaultService()
-    private let otpService = Container.shared.otpService()
 
     func importTokensViaJsonFile(importSource: ImportSource, url: URL) -> [Token]? {
         guard let inputJson = readJsonFile(url: url) else {
@@ -148,7 +147,7 @@ extension ImportService {
 
         for otpAuthUrl in inputOtpAuthUrls {
             do {
-                let token = try otpService.parseOtpAuthUrl(otpAuthStr: otpAuthUrl)
+                let token = try OtpAuthUrlParser.parseOtpAuthUrl(otpAuthStr: otpAuthUrl)
                 tokens.append(token)
             } catch {
                 return nil

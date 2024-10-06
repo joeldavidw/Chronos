@@ -30,7 +30,6 @@ struct TokenRowView: View {
         return tokenPair.encToken
     }
 
-    private let otpService = Container.shared.otpService()
     private let cryptoService = Container.shared.cryptoService()
 
     var body: some View {
@@ -82,9 +81,9 @@ struct TokenRowView: View {
             if !stateTapToRevealEnabled {
                 switch token.type {
                 case TokenTypeEnum.TOTP:
-                    UIPasteboard.general.string = otpService.generateTOTP(token: token)
+                    UIPasteboard.general.string = token.generateTOTP()
                 case TokenTypeEnum.HOTP:
-                    UIPasteboard.general.string = otpService.generateHOTP(token: token)
+                    UIPasteboard.general.string = token.generateHOTP()
                 }
 
                 AlertKitAPI.present(

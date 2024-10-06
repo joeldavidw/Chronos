@@ -12,7 +12,6 @@ public class ExportService {
     private let swiftDataService = Container.shared.swiftDataService()
     private let cryptoService = Container.shared.cryptoService()
     private let vaultService = Container.shared.vaultService()
-    private let otpService = Container.shared.otpService()
 
     private let verbatimStyle = Date.VerbatimFormatStyle(
         format: "\(day: .twoDigits)-\(month: .twoDigits)-\(year: .defaultDigits)",
@@ -229,7 +228,7 @@ extension ExportService {
     }
 
     func tokenDetailsDiv(token: Token) -> Node {
-        let base64Img = otpService.tokenToOtpAuthUrl(token: token).flatMap { otpAuthUrl in
+        let base64Img = token.otpAuthUrl().flatMap { otpAuthUrl in
             guard let image = try? QRCode.build
                 .text(otpAuthUrl)
                 .generate

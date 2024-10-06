@@ -142,9 +142,7 @@ extension UpdateTokenView {
         tempToken.counter = counter
         tempToken.period = period
 
-        let valid = validateToken(token: tempToken)
-
-        return valid.isValid
+        return tempToken.validate()
     }
 
     var hasChanged: Bool {

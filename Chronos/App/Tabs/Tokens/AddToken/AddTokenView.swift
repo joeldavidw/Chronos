@@ -9,7 +9,6 @@ struct AddTokenView: View {
     @State private var showTokenManualAddSheet = false
 
     let cryptoService = Container.shared.cryptoService()
-    let otpService = Container.shared.otpService()
     let vaultService = Container.shared.vaultService()
 
     var body: some View {
@@ -80,6 +79,8 @@ struct AddTokenView: View {
     func handleScan(result: Result<ScanResult, ScanError>) {
         switch result {
         case let .success(result):
+            dismiss()
+
             let otpAuthStr = result.string
             guard otpAuthStr.starts(with: "otpauth://") else {
                 AlertKitAPI.present(
@@ -92,11 +93,9 @@ struct AddTokenView: View {
             }
 
             do {
-                let newToken = try otpService.parseOtpAuthUrl(otpAuthStr: otpAuthStr)
+                let newToken = try OtpAuthUrlParser.parseOtpAuthUrl(otpAuthStr: otpAuthStr)
                 let newEncToken = cryptoService.encryptToken(token: newToken)
                 vaultService.insertEncryptedToken(newEncToken)
-
-                dismiss()
 
                 AlertKitAPI.present(
                     title: "Successfully added \(!newToken.issuer.isEmpty ? newToken.issuer : newToken.account)",
@@ -107,6 +106,7 @@ struct AddTokenView: View {
             } catch {
                 AlertKitAPI.present(
                     title: "Invalid 2FA QR Code",
+                    subtitle: error.localizedDescription.description,
                     icon: .error,
                     style: .iOS17AppleMusic,
                     haptic: .error

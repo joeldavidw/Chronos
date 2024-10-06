@@ -18,12 +18,25 @@ public class OtpAuthUrlParser {
         var path = components.path
         if !path.isEmpty {
             path.remove(at: path.startIndex)
-            let labels = path.split(separator: ":", maxSplits: 1).map { String($0) }
-            if labels.count == 2 {
-                token.issuer = labels[0]
-                token.account = labels[1]
-            } else if labels.count == 1 {
-                path.hasPrefix(":") ? (token.account = labels[0]) : (token.issuer = labels[0])
+
+            if !path.contains(":") {
+                token.account = path
+            } else {
+                let label = path.split(separator: ":", maxSplits: 1).map { String($0) }
+
+                if label.count == 2 {
+                    token.issuer = label[0]
+                    token.account = label[1]
+                }
+
+                // Label is malformed e.g. :Account or Issuer:
+                if label.count == 1 {
+                    if path.hasPrefix(":") {
+                        token.account = label[0]
+                    } else if path.hasSuffix(":") {
+                        token.issuer = label[0]
+                    }
+                }
             }
         }
 

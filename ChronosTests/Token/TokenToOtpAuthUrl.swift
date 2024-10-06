@@ -3,8 +3,6 @@ import XCTest
 
 final class TokenToOtpAuthUrlTests: XCTestCase {
     func testTotp() throws {
-        let otpService = OTPService()
-
         // Test case 1: Standard TOTP token
         let token1 = Token()
         token1.issuer = "Apple"
@@ -15,7 +13,7 @@ final class TokenToOtpAuthUrlTests: XCTestCase {
         token1.type = TokenTypeEnum.TOTP
         token1.algorithm = TokenAlgorithmEnum.SHA1
 
-        var url = otpService.tokenToOtpAuthUrl(token: token1)!
+        var url = token1.otpAuthUrl()!
         XCTAssertEqual(url, "otpauth://totp/Apple:john@appleseed.com?secret=JBSWY3DPEHPK3PXP&algorithm=SHA1&digits=6&issuer=Apple&period=30")
 
         // Test case 2: TOTP token without account
@@ -27,7 +25,7 @@ final class TokenToOtpAuthUrlTests: XCTestCase {
         token2.type = TokenTypeEnum.TOTP
         token2.algorithm = TokenAlgorithmEnum.SHA1
 
-        url = otpService.tokenToOtpAuthUrl(token: token2)!
+        url = token2.otpAuthUrl()!
         XCTAssertEqual(url, "otpauth://totp/?secret=JBSWY3DPEHPK3PXP&algorithm=SHA1&digits=6&issuer=Apple&period=30")
 
         // Test case 3: TOTP token with different period and algorithm
@@ -40,7 +38,7 @@ final class TokenToOtpAuthUrlTests: XCTestCase {
         token3.type = TokenTypeEnum.TOTP
         token3.algorithm = TokenAlgorithmEnum.SHA256
 
-        url = otpService.tokenToOtpAuthUrl(token: token3)!
+        url = token3.otpAuthUrl()!
         XCTAssertEqual(url, "otpauth://totp/Apple:john@appleseed.com?secret=JBSWY3DPEHPK3PXP&algorithm=SHA256&digits=7&issuer=Apple&period=45")
 
         // Test case 4: TOTP token without issuer
@@ -52,7 +50,7 @@ final class TokenToOtpAuthUrlTests: XCTestCase {
         token4.type = TokenTypeEnum.TOTP
         token4.algorithm = TokenAlgorithmEnum.SHA1
 
-        url = otpService.tokenToOtpAuthUrl(token: token4)!
+        url = token4.otpAuthUrl()!
         XCTAssertEqual(url, "otpauth://totp/john@doe.com?secret=JBSWY3DPEHPK3PXP&algorithm=SHA1&digits=6&period=30")
 
         // Test case 5: TOTP token with special characters in account and issuer
@@ -65,7 +63,7 @@ final class TokenToOtpAuthUrlTests: XCTestCase {
         token5.type = TokenTypeEnum.TOTP
         token5.algorithm = TokenAlgorithmEnum.SHA1
 
-        url = otpService.tokenToOtpAuthUrl(token: token5)!
+        url = token5.otpAuthUrl()!
         XCTAssertEqual(url, "otpauth://totp/My%20Company:john.doe+test@mycompany.com?secret=JBSWY3DPEHPK3PXP&algorithm=SHA1&digits=6&issuer=My%20Company&period=30")
 
         // Test case 6: TOTP token with no issuer and no account
@@ -76,7 +74,7 @@ final class TokenToOtpAuthUrlTests: XCTestCase {
         token6.type = TokenTypeEnum.TOTP
         token6.algorithm = TokenAlgorithmEnum.SHA1
 
-        url = otpService.tokenToOtpAuthUrl(token: token6)!
+        url = token6.otpAuthUrl()!
         XCTAssertEqual(url, "otpauth://totp/?secret=JBSWY3DPEHPK3PXP&algorithm=SHA1&digits=6&period=30")
 
         // Test case 7: TOTP token with different digits and SHA512 algorithm
@@ -89,7 +87,7 @@ final class TokenToOtpAuthUrlTests: XCTestCase {
         token7.type = TokenTypeEnum.TOTP
         token7.algorithm = TokenAlgorithmEnum.SHA512
 
-        url = otpService.tokenToOtpAuthUrl(token: token7)!
+        url = token7.otpAuthUrl()!
         XCTAssertEqual(url, "otpauth://totp/Google:alice@google.com?secret=JBSWY3DPEHPK3PXP&algorithm=SHA512&digits=8&issuer=Google&period=60")
 
         // Test case 8: TOTP token with empty secret
@@ -102,13 +100,11 @@ final class TokenToOtpAuthUrlTests: XCTestCase {
         token8.type = TokenTypeEnum.TOTP
         token8.algorithm = TokenAlgorithmEnum.SHA1
 
-        url = otpService.tokenToOtpAuthUrl(token: token8)!
+        url = token8.otpAuthUrl()!
         XCTAssertEqual(url, "otpauth://totp/Example:user@example.com?secret=&algorithm=SHA1&digits=6&issuer=Example&period=30")
     }
 
     func testHotp() throws {
-        let otpService = OTPService()
-
         // Test case 1: Standard HOTP token
         let token1 = Token()
         token1.issuer = "GitHub"
@@ -119,7 +115,7 @@ final class TokenToOtpAuthUrlTests: XCTestCase {
         token1.type = TokenTypeEnum.HOTP
         token1.algorithm = TokenAlgorithmEnum.SHA1
 
-        var url = otpService.tokenToOtpAuthUrl(token: token1)!
+        var url = token1.otpAuthUrl()!
         XCTAssertEqual(url, "otpauth://hotp/GitHub:user@github.com?secret=JBSWY3DPEHPK3PXP&algorithm=SHA1&digits=6&issuer=GitHub&counter=1")
 
         // Test case 2: HOTP token without account
@@ -131,7 +127,7 @@ final class TokenToOtpAuthUrlTests: XCTestCase {
         token2.type = TokenTypeEnum.HOTP
         token2.algorithm = TokenAlgorithmEnum.SHA1
 
-        url = otpService.tokenToOtpAuthUrl(token: token2)!
+        url = token2.otpAuthUrl()!
         XCTAssertEqual(url, "otpauth://hotp/?secret=JBSWY3DPEHPK3PXP&algorithm=SHA1&digits=6&issuer=GitHub&counter=1")
 
         // Test case 3: HOTP token with different counter and algorithm
@@ -144,7 +140,7 @@ final class TokenToOtpAuthUrlTests: XCTestCase {
         token3.type = TokenTypeEnum.HOTP
         token3.algorithm = TokenAlgorithmEnum.SHA256
 
-        url = otpService.tokenToOtpAuthUrl(token: token3)!
+        url = token3.otpAuthUrl()!
         XCTAssertEqual(url, "otpauth://hotp/GitHub:user@github.com?secret=JBSWY3DPEHPK3PXP&algorithm=SHA256&digits=7&issuer=GitHub&counter=10")
 
         // Test case 4: HOTP token without issuer
@@ -156,7 +152,7 @@ final class TokenToOtpAuthUrlTests: XCTestCase {
         token4.type = TokenTypeEnum.HOTP
         token4.algorithm = TokenAlgorithmEnum.SHA1
 
-        url = otpService.tokenToOtpAuthUrl(token: token4)!
+        url = token4.otpAuthUrl()!
         XCTAssertEqual(url, "otpauth://hotp/user@github.com?secret=JBSWY3DPEHPK3PXP&algorithm=SHA1&digits=6&counter=1")
 
         // Test case 5: HOTP token with special characters in account and issuer
@@ -169,7 +165,7 @@ final class TokenToOtpAuthUrlTests: XCTestCase {
         token5.type = TokenTypeEnum.HOTP
         token5.algorithm = TokenAlgorithmEnum.SHA1
 
-        url = otpService.tokenToOtpAuthUrl(token: token5)!
+        url = token5.otpAuthUrl()!
         XCTAssertEqual(url, "otpauth://hotp/My%20Company:user+test@mycompany.com?secret=JBSWY3DPEHPK3PXP&algorithm=SHA1&digits=6&issuer=My%20Company&counter=1")
 
         // Test case 6: HOTP token with no issuer and no account
@@ -180,7 +176,7 @@ final class TokenToOtpAuthUrlTests: XCTestCase {
         token6.type = TokenTypeEnum.HOTP
         token6.algorithm = TokenAlgorithmEnum.SHA1
 
-        url = otpService.tokenToOtpAuthUrl(token: token6)!
+        url = token6.otpAuthUrl()!
         XCTAssertEqual(url, "otpauth://hotp/?secret=JBSWY3DPEHPK3PXP&algorithm=SHA1&digits=6&counter=1")
 
         // Test case 7: HOTP token with different digits and SHA512 algorithm
@@ -193,7 +189,7 @@ final class TokenToOtpAuthUrlTests: XCTestCase {
         token7.type = TokenTypeEnum.HOTP
         token7.algorithm = TokenAlgorithmEnum.SHA512
 
-        url = otpService.tokenToOtpAuthUrl(token: token7)!
+        url = token7.otpAuthUrl()!
         XCTAssertEqual(url, "otpauth://hotp/Google:user@google.com?secret=JBSWY3DPEHPK3PXP&algorithm=SHA512&digits=8&issuer=Google&counter=100")
 
         // Test case 8: HOTP token with empty secret
@@ -206,7 +202,7 @@ final class TokenToOtpAuthUrlTests: XCTestCase {
         token8.type = TokenTypeEnum.HOTP
         token8.algorithm = TokenAlgorithmEnum.SHA1
 
-        url = otpService.tokenToOtpAuthUrl(token: token8)!
+        url = token8.otpAuthUrl()!
         XCTAssertEqual(url, "otpauth://hotp/Example:user@example.com?secret=&algorithm=SHA1&digits=6&issuer=Example&counter=1")
     }
 }

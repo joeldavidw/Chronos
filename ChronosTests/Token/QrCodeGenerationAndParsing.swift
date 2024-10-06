@@ -5,8 +5,6 @@ import XCTest
 
 final class QrCodeGenerationAndParsingTests: XCTestCase {
     func testTotp() throws {
-        let otpService = OTPService()
-
         // Test case 1: Standard TOTP token
         let token1 = Token()
         token1.issuer = "Apple"
@@ -17,7 +15,7 @@ final class QrCodeGenerationAndParsingTests: XCTestCase {
         token1.type = TokenTypeEnum.TOTP
         token1.algorithm = TokenAlgorithmEnum.SHA1
 
-        var url = otpService.tokenToOtpAuthUrl(token: token1)!
+        var url = token1.otpAuthUrl()!
         let qr1 = try QRCode.build
             .text(url)
             .generate
@@ -36,7 +34,7 @@ final class QrCodeGenerationAndParsingTests: XCTestCase {
         token2.type = TokenTypeEnum.TOTP
         token2.algorithm = TokenAlgorithmEnum.SHA1
 
-        url = otpService.tokenToOtpAuthUrl(token: token2)!
+        url = token2.otpAuthUrl()!
         let qr2 = try QRCode.build
             .text(url)
             .generate
@@ -56,7 +54,7 @@ final class QrCodeGenerationAndParsingTests: XCTestCase {
         token3.type = TokenTypeEnum.TOTP
         token3.algorithm = TokenAlgorithmEnum.SHA256
 
-        url = otpService.tokenToOtpAuthUrl(token: token3)!
+        url = token3.otpAuthUrl()!
         let qr3 = try QRCode.build
             .text(url)
             .generate
@@ -75,7 +73,7 @@ final class QrCodeGenerationAndParsingTests: XCTestCase {
         token4.type = TokenTypeEnum.TOTP
         token4.algorithm = TokenAlgorithmEnum.SHA1
 
-        url = otpService.tokenToOtpAuthUrl(token: token4)!
+        url = token4.otpAuthUrl()!
         let qr4 = try QRCode.build
             .text(url)
             .generate
@@ -95,7 +93,7 @@ final class QrCodeGenerationAndParsingTests: XCTestCase {
         token5.type = TokenTypeEnum.TOTP
         token5.algorithm = TokenAlgorithmEnum.SHA1
 
-        url = otpService.tokenToOtpAuthUrl(token: token5)!
+        url = token5.otpAuthUrl()!
         let qr5 = try QRCode.build
             .text(url)
             .generate
@@ -112,7 +110,7 @@ final class QrCodeGenerationAndParsingTests: XCTestCase {
         token6.type = TokenTypeEnum.TOTP
         token6.algorithm = TokenAlgorithmEnum.SHA1
 
-        url = otpService.tokenToOtpAuthUrl(token: token6)!
+        url = token6.otpAuthUrl()!
         let qr6 = try QRCode.build
             .text(url)
             .generate
@@ -131,7 +129,7 @@ final class QrCodeGenerationAndParsingTests: XCTestCase {
         token7.type = TokenTypeEnum.TOTP
         token7.algorithm = TokenAlgorithmEnum.SHA512
 
-        url = otpService.tokenToOtpAuthUrl(token: token7)!
+        url = token7.otpAuthUrl()!
         let qr7 = try QRCode.build
             .text(url)
             .generate
@@ -150,7 +148,7 @@ final class QrCodeGenerationAndParsingTests: XCTestCase {
         token8.type = TokenTypeEnum.TOTP
         token8.algorithm = TokenAlgorithmEnum.SHA1
 
-        url = otpService.tokenToOtpAuthUrl(token: token8)!
+        url = token8.otpAuthUrl()!
         let qr8 = try QRCode.build
             .text(url)
             .generate
@@ -161,8 +159,6 @@ final class QrCodeGenerationAndParsingTests: XCTestCase {
     }
 
     func testHotp() throws {
-        let otpService = OTPService()
-
         // Test case 1: Standard HOTP token
         let token1 = Token()
         token1.issuer = "GitHub"
@@ -173,7 +169,7 @@ final class QrCodeGenerationAndParsingTests: XCTestCase {
         token1.type = TokenTypeEnum.HOTP
         token1.algorithm = TokenAlgorithmEnum.SHA1
 
-        var url = otpService.tokenToOtpAuthUrl(token: token1)!
+        var url = token1.otpAuthUrl()!
         let qr1 = try QRCode.build
             .text(url)
             .generate
@@ -191,7 +187,7 @@ final class QrCodeGenerationAndParsingTests: XCTestCase {
         token2.type = TokenTypeEnum.HOTP
         token2.algorithm = TokenAlgorithmEnum.SHA1
 
-        url = otpService.tokenToOtpAuthUrl(token: token2)!
+        url = token2.otpAuthUrl()!
         let qr2 = try QRCode.build
             .text(url)
             .generate
@@ -210,7 +206,7 @@ final class QrCodeGenerationAndParsingTests: XCTestCase {
         token3.type = TokenTypeEnum.HOTP
         token3.algorithm = TokenAlgorithmEnum.SHA256
 
-        url = otpService.tokenToOtpAuthUrl(token: token3)!
+        url = token3.otpAuthUrl()!
         let qr3 = try QRCode.build
             .text(url)
             .generate
@@ -228,7 +224,7 @@ final class QrCodeGenerationAndParsingTests: XCTestCase {
         token4.type = TokenTypeEnum.HOTP
         token4.algorithm = TokenAlgorithmEnum.SHA1
 
-        url = otpService.tokenToOtpAuthUrl(token: token4)!
+        url = token4.otpAuthUrl()!
         let qr4 = try QRCode.build
             .text(url)
             .generate
@@ -247,7 +243,7 @@ final class QrCodeGenerationAndParsingTests: XCTestCase {
         token5.type = TokenTypeEnum.HOTP
         token5.algorithm = TokenAlgorithmEnum.SHA1
 
-        url = otpService.tokenToOtpAuthUrl(token: token5)!
+        url = token5.otpAuthUrl()!
         let qr5 = try QRCode.build
             .text(url)
             .generate
@@ -264,7 +260,7 @@ final class QrCodeGenerationAndParsingTests: XCTestCase {
         token6.type = TokenTypeEnum.HOTP
         token6.algorithm = TokenAlgorithmEnum.SHA1
 
-        url = otpService.tokenToOtpAuthUrl(token: token6)!
+        url = token6.otpAuthUrl()!
         let qr6 = try QRCode.build
             .text(url)
             .generate
@@ -283,7 +279,7 @@ final class QrCodeGenerationAndParsingTests: XCTestCase {
         token7.type = TokenTypeEnum.HOTP
         token7.algorithm = TokenAlgorithmEnum.SHA512
 
-        url = otpService.tokenToOtpAuthUrl(token: token7)!
+        url = token7.otpAuthUrl()!
         let qr7 = try QRCode.build
             .text(url)
             .generate
@@ -302,7 +298,7 @@ final class QrCodeGenerationAndParsingTests: XCTestCase {
         token8.type = TokenTypeEnum.HOTP
         token8.algorithm = TokenAlgorithmEnum.SHA1
 
-        url = otpService.tokenToOtpAuthUrl(token: token8)!
+        url = token8.otpAuthUrl()!
         let qr8 = try QRCode.build
             .text(url)
             .generate

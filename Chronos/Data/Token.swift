@@ -34,16 +34,16 @@ class Token: Codable, Identifiable {
     // Extra Data
     var pinned: Bool? = false
 
-    func validate() -> Bool {
+    var isValid: Bool {
+        return validationError == nil
+    }
+
+    var validationError: Error? {
         do {
             try TokenValidator.validate(token: self)
-            return true
-        } catch let error as OTPError {
-            print("Validation failed: \(error.localizedDescription)")
-            return false
+            return nil
         } catch {
-            print("An unexpected error occurred: \(error)")
-            return false
+            return error
         }
     }
 

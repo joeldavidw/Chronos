@@ -13,46 +13,38 @@ struct TOTPRowView: View {
 
     var body: some View {
         Group {
-            if token.validate() {
-                Text(!otp.isEmpty ? formatOtp(otp: otp) : token.generateTOTP())
-                    .font(.largeTitle)
-                    .fontWeight(.light)
-                    .lineLimit(1)
-                    .onAppear(perform: updateOtp)
+            Text(!otp.isEmpty ? formatOtp(otp: otp) : token.generateTOTP())
+                .font(.largeTitle)
+                .fontWeight(.light)
+                .lineLimit(1)
+                .onAppear(perform: updateOtp)
 
-                Spacer()
+            Spacer()
 
-                ZStack(alignment: .leading) {
-                    Circle()
-                        .stroke(
-                            Color.gray.opacity(0.5),
-                            lineWidth: 2
-                        )
-                        .frame(width: 28, height: 28)
+            ZStack(alignment: .leading) {
+                Circle()
+                    .stroke(
+                        Color.gray.opacity(0.5),
+                        lineWidth: 2
+                    )
+                    .frame(width: 28, height: 28)
 
-                    Circle()
-                        .trim(from: 0.0, to: progress)
-                        .stroke(
-                            Color.white.opacity(0.8),
-                            lineWidth: 2
-                        )
-                        .rotationEffect(.degrees(-90))
-                        .frame(width: 28, height: 28)
+                Circle()
+                    .trim(from: 0.0, to: progress)
+                    .stroke(
+                        Color.white.opacity(0.8),
+                        lineWidth: 2
+                    )
+                    .rotationEffect(.degrees(-90))
+                    .frame(width: 28, height: 28)
 
-                    Text(String(secsLeft))
-                        .font(.system(size: 12))
-                        .frame(width: 28, height: 28, alignment: .center)
-                }
-                .onAppear(perform: updateProgress)
-                .onReceive(timer) { _ in
-                    updateProgress()
-                }
-            } else {
-                Text("Invalid Token")
-                    .font(.title)
-                    .fontWeight(.light)
-                    .opacity(0.5)
-                    .lineLimit(1)
+                Text(String(secsLeft))
+                    .font(.system(size: 12))
+                    .frame(width: 28, height: 28, alignment: .center)
+            }
+            .onAppear(perform: updateProgress)
+            .onReceive(timer) { _ in
+                updateProgress()
             }
         }
     }

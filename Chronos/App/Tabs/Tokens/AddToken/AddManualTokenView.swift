@@ -152,6 +152,6 @@ extension AddManualTokenView {
         tempToken.counter = counter
         tempToken.period = period
 
-        return tempToken.validate()
+        return tempToken.isValid
     }
 }

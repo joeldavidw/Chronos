@@ -100,11 +100,6 @@ public class SwiftDataService {
         }
     }
 
-    public func resetModelContainers() {
-        localModelContainer = setupModelContainer(storeName: "localChronos.sqlite", cloudKitDatabase: .none)
-        cloudModelContainer = setupModelContainer(storeName: "onlineChronos.sqlite", cloudKitDatabase: .automatic)
-    }
-
     public func getCloudModelContainer() -> ModelContainer {
         return cloudModelContainer
     }
@@ -151,7 +146,7 @@ extension SwiftDataService {
 
     func deleteLocallyPersistedChronosData() {
         getLocalModelContainer().deleteAllData()
-        resetModelContainers()
+        localModelContainer = setupModelContainer(storeName: "localChronos.sqlite", cloudKitDatabase: .none)
     }
 
     func permentalyDeleteAllIcloudData() {

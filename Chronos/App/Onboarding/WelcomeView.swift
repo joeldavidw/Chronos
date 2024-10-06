@@ -4,7 +4,6 @@ import SwiftData
 import SwiftUI
 
 struct WelcomeView: View {
-    let swiftDataService = Container.shared.swiftDataService()
     let stateService = Container.shared.stateService()
 
     @Query var vaults: [Vault]
@@ -89,7 +88,6 @@ struct WelcomeView: View {
             }
         }
         .onAppear(perform: {
-            swiftDataService.resetModelContainers()
             iCloudSyncLastAttempt = 0
 
             syncTimer = Timer.scheduledTimer(withTimeInterval: 2.5, repeats: false) { _ in

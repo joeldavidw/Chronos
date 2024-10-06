@@ -14,7 +14,6 @@ public class CryptoService {
 
     private let stateService = Container.shared.stateService()
     private let vaultService = Container.shared.vaultService()
-    private let swiftDataService = Container.shared.swiftDataService()
 
     // scrypt paramaters - n: 2^17, r: 8, p: 1
     private let kdfParams = KdfParams(type: 0, n: 1 << 17, r: 8, p: 1)

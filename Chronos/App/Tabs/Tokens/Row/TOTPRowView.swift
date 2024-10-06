@@ -13,7 +13,7 @@ struct TOTPRowView: View {
 
     var body: some View {
         Group {
-            Text(!otp.isEmpty ? formatOtp(otp: otp) : token.generateTOTP())
+            Text(!otp.isEmpty ? formatOtp(otp: otp) : token.generateOtp())
                 .font(.largeTitle)
                 .fontWeight(.light)
                 .lineLimit(1)
@@ -50,7 +50,7 @@ struct TOTPRowView: View {
     }
 
     private func updateOtp() {
-        otp = token.generateTOTP()
+        otp = token.generateOtp()
     }
 
     private func updateProgress() {

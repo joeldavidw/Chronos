@@ -88,12 +88,7 @@ struct TokenRowView: View {
         .onTapGesture {
             if !stateTapToRevealEnabled {
                 if token.isValid {
-                    switch token.type {
-                    case TokenTypeEnum.TOTP:
-                        UIPasteboard.general.string = token.generateTOTP()
-                    case TokenTypeEnum.HOTP:
-                        UIPasteboard.general.string = token.generateHOTP()
-                    }
+                    UIPasteboard.general.string = token.generateOtp()
 
                     AlertKitAPI.present(
                         title: "Copied",

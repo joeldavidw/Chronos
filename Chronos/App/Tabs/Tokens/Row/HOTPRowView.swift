@@ -13,15 +13,15 @@ struct HOTPRowView: View {
     var encryptedToken: EncryptedToken
 
     var body: some View {
-        Text(!otp.isEmpty ? formatOtp(otp: otp) : token.generateHOTP())
+        Text(!otp.isEmpty ? formatOtp(otp: otp) : token.generateOtp())
             .font(.largeTitle)
             .fontWeight(.light)
             .lineLimit(1)
             .onAppear {
-                otp = token.generateHOTP()
+                otp = token.generateOtp()
             }
             .onChange(of: token.counter) { _, _ in
-                otp = token.generateHOTP()
+                otp = token.generateOtp()
             }
         Spacer()
         Button {
@@ -30,7 +30,7 @@ struct HOTPRowView: View {
             token.counter += 1
             cryptoService.updateEncryptedToken(encryptedToken: encryptedToken, token: token)
 
-            otp = token.generateHOTP()
+            otp = token.generateOtp()
             DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
                 disableIncrementBtn = false
             }

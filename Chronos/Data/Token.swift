@@ -47,7 +47,16 @@ class Token: Codable, Identifiable {
         }
     }
 
-    func generateTOTP() -> String {
+    func generateOtp() -> String {
+        switch type {
+        case .TOTP:
+            return generateTOTP()
+        case .HOTP:
+            return generateHOTP()
+        }
+    }
+
+    private func generateTOTP() -> String {
         let digits = digits
         let secret = base32DecodeToData(secret)!
         let period = period
@@ -67,7 +76,7 @@ class Token: Codable, Identifiable {
         return totp!.generate(time: Date()) ?? ""
     }
 
-    func generateHOTP() -> String {
+    private func generateHOTP() -> String {
         let digits = digits
         let secret = base32DecodeToData(secret)!
         let counter = counter

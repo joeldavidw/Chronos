@@ -7,8 +7,6 @@ struct TokenQRView: View {
 
     @State var token: Token
 
-    let otpService = Container.shared.otpService()
-
     var body: some View {
         NavigationView {
             VStack {
@@ -29,7 +27,7 @@ struct TokenQRView: View {
                 }
                 .padding(.bottom, 8)
 
-                if let otpAuthUrl = otpService.tokenToOtpAuthUrl(token: token),
+                if let otpAuthUrl = token.otpAuthUrl(),
                    let imageData = try? QRCode.build
                    .text(otpAuthUrl)
                    .generate

@@ -33,42 +33,88 @@ class Token: Codable, Identifiable {
 
     // Extra Data
     var pinned: Bool? = false
-}
 
-func validateToken(
-    token: Token
-) -> (isValid: Bool, errorMessage: String?) {
-    if token.account.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
-        return (false, "Invalid account")
+    var isValid: Bool {
+        return validationError == nil
     }
 
-    if token.secret.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
-        return (false, "Invalid secret - empty")
+    var validationError: Error? {
+        do {
+            try TokenValidator.validate(token: self)
+            return nil
+        } catch {
+            return error
+        }
     }
 
-    if base32DecodeToData(token.secret) == nil {
-        return (false, "Invalid secret - not base32 encoded")
+    func generateOtp() -> String {
+        switch type {
+        case .TOTP:
+            return generateTOTP()
+        case .HOTP:
+            return generateHOTP()
+        }
     }
 
-//    // Validate algorithm
-//    guard let algorithm = TokenAlgorithmEnum(rawValue: algorithmString) else {
-//        return (false, "Invalid algorithm")
-//    }
+    private func generateTOTP() -> String {
+        let digits = digits
+        let secret = base32DecodeToData(secret)!
+        let period = period
 
-    // Validate digits
-    guard (6 ... 8).contains(token.digits) else {
-        return (false, "Invalid digits")
+        var otpAlgo = OTPAlgorithm.sha1
+        switch algorithm {
+        case TokenAlgorithmEnum.SHA1:
+            otpAlgo = OTPAlgorithm.sha1
+        case TokenAlgorithmEnum.SHA256:
+            otpAlgo = OTPAlgorithm.sha256
+        case TokenAlgorithmEnum.SHA512:
+            otpAlgo = OTPAlgorithm.sha512
+        }
+
+        let totp = TOTP(secret: secret, digits: digits, timeInterval: period, algorithm: otpAlgo)
+
+        return totp!.generate(time: Date()) ?? ""
     }
 
-    // Validate counter
-    guard token.counter >= 0 else {
-        return (false, "Invalid counter")
+    private func generateHOTP() -> String {
+        let digits = digits
+        let secret = base32DecodeToData(secret)!
+        let counter = counter
+        let algorithm = OTPAlgorithm.sha1
+
+        let hotp = HOTP(secret: secret, digits: digits, algorithm: algorithm)
+
+        return hotp!.generate(counter: UInt64(counter)) ?? ""
     }
 
-    // Validate period
-    guard token.period > 0 else {
-        return (false, "Invalid period")
-    }
+    func otpAuthUrl() -> String? {
+        var components = URLComponents()
+        components.scheme = "otpauth"
+        components.host = type.rawValue.lowercased()
 
-    return (true, nil)
+        components.path = !account.isEmpty
+            ? (!issuer.isEmpty ? "/\(issuer):\(account)" : "/\(account)")
+            : "/"
+
+        var queryItems: [URLQueryItem] = [
+            URLQueryItem(name: "secret", value: secret),
+            URLQueryItem(name: "algorithm", value: algorithm.rawValue),
+            URLQueryItem(name: "digits", value: "\(digits)"),
+        ]
+
+        if !issuer.isEmpty {
+            queryItems.append(URLQueryItem(name: "issuer", value: issuer))
+        }
+
+        switch type {
+        case .TOTP:
+            queryItems.append(URLQueryItem(name: "period", value: "\(period)"))
+        case .HOTP:
+            queryItems.append(URLQueryItem(name: "counter", value: "\(counter)"))
+        }
+
+        components.queryItems = queryItems
+
+        return components.string
+    }
 }

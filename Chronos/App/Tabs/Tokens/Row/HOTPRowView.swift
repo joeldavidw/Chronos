@@ -8,21 +8,20 @@ struct HOTPRowView: View {
     @State private var disableIncrementBtn = false
 
     let cryptoService = Container.shared.cryptoService()
-    let otpService = Container.shared.otpService()
 
     var token: Token
     var encryptedToken: EncryptedToken
 
     var body: some View {
-        Text(!otp.isEmpty ? formatOtp(otp: otp) : otpService.generateHOTP(token: token))
+        Text(!otp.isEmpty ? formatOtp(otp: otp) : token.generateOtp())
             .font(.largeTitle)
             .fontWeight(.light)
             .lineLimit(1)
             .onAppear {
-                otp = otpService.generateHOTP(token: token)
+                otp = token.generateOtp()
             }
             .onChange(of: token.counter) { _, _ in
-                otp = otpService.generateHOTP(token: token)
+                otp = token.generateOtp()
             }
         Spacer()
         Button {
@@ -31,7 +30,7 @@ struct HOTPRowView: View {
             token.counter += 1
             cryptoService.updateEncryptedToken(encryptedToken: encryptedToken, token: token)
 
-            otp = otpService.generateHOTP(token: token)
+            otp = token.generateOtp()
             DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
                 disableIncrementBtn = false
             }

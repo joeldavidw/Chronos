@@ -10,11 +10,10 @@ struct TOTPRowView: View {
     @State private var progress: Double = 1.0
 
     let timer: Publishers.Autoconnect<Timer.TimerPublisher>
-    let otpService = Container.shared.otpService()
 
     var body: some View {
         Group {
-            Text(!otp.isEmpty ? formatOtp(otp: otp) : otpService.generateTOTP(token: token))
+            Text(!otp.isEmpty ? formatOtp(otp: otp) : token.generateOtp())
                 .font(.largeTitle)
                 .fontWeight(.light)
                 .lineLimit(1)
@@ -51,7 +50,7 @@ struct TOTPRowView: View {
     }
 
     private func updateOtp() {
-        otp = otpService.generateTOTP(token: token)
+        otp = token.generateOtp()
     }
 
     private func updateProgress() {

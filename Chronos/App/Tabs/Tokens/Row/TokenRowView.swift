@@ -30,7 +30,6 @@ struct TokenRowView: View {
         return tokenPair.encToken
     }
 
-    private let otpService = Container.shared.otpService()
     private let cryptoService = Container.shared.cryptoService()
 
     var body: some View {
@@ -66,11 +65,19 @@ struct TokenRowView: View {
                 }
             } else {
                 HStack {
-                    switch token.type {
-                    case TokenTypeEnum.TOTP:
-                        TOTPRowView(token: token, timer: timer)
-                    case TokenTypeEnum.HOTP:
-                        HOTPRowView(token: token, encryptedToken: encryptedToken)
+                    if token.isValid {
+                        switch token.type {
+                        case TokenTypeEnum.TOTP:
+                            TOTPRowView(token: token, timer: timer)
+                        case TokenTypeEnum.HOTP:
+                            HOTPRowView(token: token, encryptedToken: encryptedToken)
+                        }
+                    } else {
+                        Text("Invalid Token")
+                            .font(.title)
+                            .fontWeight(.light)
+                            .opacity(0.5)
+                            .lineLimit(1)
                     }
                 }
             }
@@ -80,19 +87,24 @@ struct TokenRowView: View {
         .listRowBackground(Color(red: 0.04, green: 0, blue: 0.11))
         .onTapGesture {
             if !stateTapToRevealEnabled {
-                switch token.type {
-                case TokenTypeEnum.TOTP:
-                    UIPasteboard.general.string = otpService.generateTOTP(token: token)
-                case TokenTypeEnum.HOTP:
-                    UIPasteboard.general.string = otpService.generateHOTP(token: token)
-                }
+                if token.isValid {
+                    UIPasteboard.general.string = token.generateOtp()
 
-                AlertKitAPI.present(
-                    title: "Copied",
-                    icon: .done,
-                    style: .iOS17AppleMusic,
-                    haptic: .success
-                )
+                    AlertKitAPI.present(
+                        title: "Copied",
+                        icon: .done,
+                        style: .iOS17AppleMusic,
+                        haptic: .success
+                    )
+                } else {
+                    AlertKitAPI.present(
+                        title: "Invalid Token",
+                        subtitle: token.validationError?.localizedDescription.description,
+                        icon: .error,
+                        style: .iOS17AppleMusic,
+                        haptic: .success
+                    )
+                }
             } else {
                 tokenRevealed.toggle()
             }
@@ -160,27 +172,29 @@ struct TokenRowView: View {
             }
             .tint(.blue)
 
-            Button {
-                token.pinned = !(token.pinned ?? false)
-                cryptoService.updateEncryptedToken(encryptedToken: encryptedToken, token: token)
-                triggerSortAndFilterTokenPairs()
-            } label: {
-                VStack(alignment: .center) {
-                    Image(systemName: token.pinned ?? false ? "pin.slash" : "pin")
-                    Text(token.pinned ?? false ? "Unpin" : "Pin")
+            if token.isValid {
+                Button {
+                    token.pinned = !(token.pinned ?? false)
+                    cryptoService.updateEncryptedToken(encryptedToken: encryptedToken, token: token)
+                    triggerSortAndFilterTokenPairs()
+                } label: {
+                    VStack(alignment: .center) {
+                        Image(systemName: token.pinned ?? false ? "pin.slash" : "pin")
+                        Text(token.pinned ?? false ? "Unpin" : "Pin")
+                    }
                 }
-            }
-            .tint(.indigo)
+                .tint(.indigo)
 
-            Button {
-                self.showTokenQRSheet = true
-            } label: {
-                VStack(alignment: .center) {
-                    Image(systemName: "qrcode")
-                    Text("QR")
+                Button {
+                    self.showTokenQRSheet = true
+                } label: {
+                    VStack(alignment: .center) {
+                        Image(systemName: "qrcode")
+                        Text("QR")
+                    }
                 }
+                .tint(.gray)
             }
-            .tint(.gray)
         }
     }
 

@@ -18,10 +18,6 @@ extension Container {
         Factory(self) { CryptoService() }
     }
 
-    var otpService: Factory<OTPService> {
-        Factory(self) { OTPService() }
-    }
-
     var stateService: Factory<StateService> {
         Factory(self) { StateService() }
             .singleton

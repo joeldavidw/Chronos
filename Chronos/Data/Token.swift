@@ -47,16 +47,16 @@ class Token: Codable, Identifiable {
         }
     }
 
-    func generateOtp() -> String {
+    func generateOtp(previous: Bool? = false) -> String {
         switch type {
         case .TOTP:
-            return generateTOTP()
+            return generateTOTP(previous: previous)
         case .HOTP:
             return generateHOTP()
         }
     }
 
-    private func generateTOTP() -> String {
+    private func generateTOTP(previous: Bool? = false) -> String {
         let digits = digits
         let secret = base32DecodeToData(secret)!
         let period = period
@@ -73,7 +73,12 @@ class Token: Codable, Identifiable {
 
         let totp = TOTP(secret: secret, digits: digits, timeInterval: period, algorithm: otpAlgo)
 
-        return totp!.generate(time: Date()) ?? ""
+        var time = Date()
+        if let previous {
+            time = previous ? time.addingTimeInterval(-Double(period)) : time
+        }
+
+        return totp!.generate(time: time) ?? ""
     }
 
     private func generateHOTP() -> String {

@@ -15,8 +15,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/ggruen/CloudKitSyncMonitor",
       "state" : {
-        "revision" : "c14a433b284526e29e0021f343bae9e61779164b",
-        "version" : "3.0.0"
+        "revision" : "923c6b0b2360b3a70d3dd69a0c6c8320b075caa9",
+        "version" : "2.0.0"
       }
     },
     {

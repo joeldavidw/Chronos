@@ -1315,7 +1315,7 @@
 			repositoryURL = "https://github.com/ggruen/CloudKitSyncMonitor";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 3.0.0;
+				minimumVersion = 2.0.0;
 			};
 		};
 		6B35A4C72B557EE50004D4C5 /* XCRemoteSwiftPackageReference "AlertKit" */ = {

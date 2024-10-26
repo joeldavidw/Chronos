@@ -18,6 +18,7 @@ struct SettingsTab: View {
     @AppStorage(StateEnum.NEXT_PASSWORD_REMINDER_TIMESTAMP.rawValue) var nextPasswordReminderTimestamp: TimeInterval = 0
 
     @AppStorage(StateEnum.TAP_TO_REVEAL_ENABLED.rawValue) private var stateTapToRevealEnabled: Bool = false
+    @AppStorage(StateEnum.PREVIOUS_TOKEN_ENABLED.rawValue) private var statePreviousTokenEnabled: Bool = false
 
     @StateObject private var exportNav = ExportNavigation()
     @StateObject private var importNav = ExportNavigation()
@@ -126,6 +127,13 @@ struct SettingsTab: View {
                     })
                     .onChange(of: stateTapToRevealEnabled) { _, enabled in
                         stateTapToRevealEnabled = enabled
+                    }
+
+                    Toggle(isOn: $statePreviousTokenEnabled, label: {
+                        Text("Show previous token")
+                    })
+                    .onChange(of: statePreviousTokenEnabled) { _, enabled in
+                        statePreviousTokenEnabled = enabled
                     }
                 }
 

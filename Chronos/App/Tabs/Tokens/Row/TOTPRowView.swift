@@ -6,18 +6,32 @@ struct TOTPRowView: View {
     let token: Token
 
     @State private var otp = ""
+    @State private var prevOtp = ""
     @State private var secsLeft = 0
     @State private var progress: Double = 1.0
+
+    @AppStorage(StateEnum.PREVIOUS_TOKEN_ENABLED.rawValue) private var statePreviousTokenEnabled: Bool = false
 
     let timer: Publishers.Autoconnect<Timer.TimerPublisher>
 
     var body: some View {
         Group {
-            Text(!otp.isEmpty ? formatOtp(otp: otp) : token.generateOtp())
-                .font(.largeTitle)
-                .fontWeight(.light)
-                .lineLimit(1)
-                .onAppear(perform: updateOtp)
+            HStack(alignment: .lastTextBaseline) {
+                Text(!otp.isEmpty ? formatOtp(otp: otp) : token.generateOtp())
+                    .font(.largeTitle)
+                    .fontWeight(.light)
+                    .lineLimit(1)
+                    .onAppear(perform: updateOtp)
+
+                if statePreviousTokenEnabled {
+                    Text("- \(!prevOtp.isEmpty ? formatOtp(otp: prevOtp) : token.generateOtp(previous: true))")
+                        .font(.title)
+                        .fontWeight(.light)
+                        .foregroundStyle(.gray)
+                        .lineLimit(1)
+                        .onAppear(perform: updateOtp)
+                }
+            }
 
             Spacer()
 
@@ -51,6 +65,7 @@ struct TOTPRowView: View {
 
     private func updateOtp() {
         otp = token.generateOtp()
+        prevOtp = token.generateOtp(previous: true)
     }
 
     private func updateProgress() {

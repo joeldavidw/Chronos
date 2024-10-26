@@ -16,6 +16,7 @@ enum StateEnum: String {
     case NEXT_PASSWORD_REMINDER_TIMESTAMP
 
     case TAP_TO_REVEAL_ENABLED
+    case PREVIOUS_TOKEN_ENABLED
 }
 
 public class StateService {
@@ -50,6 +51,7 @@ public class StateService {
         defaults.setValue(true, forKey: StateEnum.PASSWORD_REMINDER_ENABLED.rawValue)
 
         defaults.setValue(false, forKey: StateEnum.TAP_TO_REVEAL_ENABLED.rawValue)
+        defaults.setValue(false, forKey: StateEnum.PREVIOUS_TOKEN_ENABLED.rawValue)
 
         masterKey.clear()
     }

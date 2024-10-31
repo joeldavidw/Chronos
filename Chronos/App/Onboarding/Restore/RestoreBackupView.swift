@@ -107,10 +107,10 @@ struct RestoreBackupView: View {
 
             if passwordVerified {
                 isICloudEnabled = true
-                await UINotificationFeedbackGenerator().notificationOccurred(.success)
+                UINotificationFeedbackGenerator().notificationOccurred(.success)
             } else {
                 passwordInvalid = true
-                await UINotificationFeedbackGenerator().notificationOccurred(.error)
+                UINotificationFeedbackGenerator().notificationOccurred(.error)
             }
         }
     }

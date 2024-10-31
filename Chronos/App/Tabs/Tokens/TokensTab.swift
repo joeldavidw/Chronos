@@ -79,7 +79,9 @@ struct TokensTab: View {
             .onChange(of: searchQuery) { _, _ in
                 debounceTimer?.invalidate()
                 debounceTimer = Timer.scheduledTimer(withTimeInterval: 0.15, repeats: false) { _ in
-                    sortAndFilterTokenPairs()
+                    Task {
+                        await sortAndFilterTokenPairs()
+                    }
                 }
             }
             .listStyle(.plain)

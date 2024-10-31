@@ -106,15 +106,15 @@ struct PasswordReminderView: View {
         Task {
             let context = ModelContext(swiftDataService.getModelContainer())
             let vault = vaultService.getVault(context: context)!
-
+            
             let passwordVerified = await cryptoService.unwrapMasterKeyWithUserPassword(vault: vault, password: Array(password.utf8))
 
             if passwordVerified {
                 dismiss()
-                await UINotificationFeedbackGenerator().notificationOccurred(.success)
+                UINotificationFeedbackGenerator().notificationOccurred(.success)
             } else {
                 passwordInvalid = true
-                await UINotificationFeedbackGenerator().notificationOccurred(.error)
+                UINotificationFeedbackGenerator().notificationOccurred(.error)
             }
 
             verifyPressed = false

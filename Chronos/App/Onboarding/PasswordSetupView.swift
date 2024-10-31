@@ -137,7 +137,7 @@ extension PasswordSetupView {
         let success = vaultService.createVaultCrypto(vaultName: vaultName, chronosCrypto: chronosCrypto)
 
         if success {
-            await UINotificationFeedbackGenerator().notificationOccurred(.success)
+            UINotificationFeedbackGenerator().notificationOccurred(.success)
         }
 
         nextBtnPressed = success

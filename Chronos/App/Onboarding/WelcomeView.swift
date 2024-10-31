@@ -91,16 +91,20 @@ struct WelcomeView: View {
             iCloudSyncLastAttempt = 0
 
             syncTimer = Timer.scheduledTimer(withTimeInterval: 2.5, repeats: false) { _ in
-                showProgressView = false
-                iCloudSyncLastAttempt = Date().timeIntervalSince1970
+                Task { @MainActor in
+                    showProgressView = false
+                    iCloudSyncLastAttempt = Date().timeIntervalSince1970
+                }
             }
         })
         .onChange(of: syncMonitor.syncStateSummary) { _, newValue in
             if newValue == .succeeded {
                 syncTimer?.invalidate()
                 syncTimer = Timer.scheduledTimer(withTimeInterval: 0.8, repeats: false) { _ in
-                    showProgressView = false
-                    iCloudSyncLastAttempt = Date().timeIntervalSince1970
+                    Task { @MainActor in
+                        showProgressView = false
+                        iCloudSyncLastAttempt = Date().timeIntervalSince1970
+                    }
                 }
             }
         }

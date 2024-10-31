@@ -16,7 +16,7 @@ jobs:
       matrix:
         include:
           - xcode: "16.1"
-            ios: "17.7.1"
+            ios: "17.5"
           - xcode: "16.1"
             ios: "18.1"
     name: iOS (${{ matrix.ios }})

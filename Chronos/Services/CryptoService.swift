@@ -18,6 +18,7 @@ public class CryptoService {
     // scrypt paramaters - n: 2^17, r: 8, p: 1
     private let kdfParams = KdfParams(type: 0, n: 1 << 17, r: 8, p: 1)
 
+    @MainActor
     func wrapMasterKeyWithUserPassword(password: [UInt8]) async -> ChronosCrypto {
         let passwordSalt = try! generateRandomSaltHexString()
         let passwordParams = PasswordParams(salt: passwordSalt)
@@ -40,6 +41,7 @@ public class CryptoService {
         }
     }
 
+    @MainActor
     func unwrapMasterKeyWithUserPassword(vault: Vault?, password: [UInt8], isRestore _: Bool = false) async -> Bool {
         guard let vault = vault else {
             return false

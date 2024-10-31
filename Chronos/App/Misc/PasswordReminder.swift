@@ -38,7 +38,9 @@ struct PasswordReminderView: View {
                             .disabled(verifyPressed)
                             .submitLabel(.done)
                             .onSubmit {
-                                doSubmit()
+                                Task {
+                                    await doSubmit()
+                                }
                             }
                     }
                 }
@@ -57,7 +59,9 @@ struct PasswordReminderView: View {
                 }
 
                 Button {
-                    doSubmit()
+                    Task {
+                        await doSubmit()
+                    }
                 } label: {
                     if !verifyPressed {
                         Text("Verify")
@@ -100,24 +104,22 @@ struct PasswordReminderView: View {
         .presentationDragIndicator(.visible)
     }
 
-    func doSubmit() {
+    func doSubmit() async {
         verifyPressed = true
 
-        Task {
-            let context = ModelContext(swiftDataService.getModelContainer())
-            let vault = vaultService.getVault(context: context)!
-            
-            let passwordVerified = await cryptoService.unwrapMasterKeyWithUserPassword(vault: vault, password: Array(password.utf8))
+        let context = ModelContext(swiftDataService.getModelContainer())
+        let vault = vaultService.getVault(context: context)!
 
-            if passwordVerified {
-                dismiss()
-                UINotificationFeedbackGenerator().notificationOccurred(.success)
-            } else {
-                passwordInvalid = true
-                UINotificationFeedbackGenerator().notificationOccurred(.error)
-            }
+        let passwordVerified = await cryptoService.unwrapMasterKeyWithUserPassword(vault: vault, password: Array(password.utf8))
 
-            verifyPressed = false
+        if passwordVerified {
+            dismiss()
+            UINotificationFeedbackGenerator().notificationOccurred(.success)
+        } else {
+            passwordInvalid = true
+            UINotificationFeedbackGenerator().notificationOccurred(.error)
         }
+
+        verifyPressed = false
     }
 }

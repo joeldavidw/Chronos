@@ -15,8 +15,10 @@ jobs:
     strategy:
       matrix:
         include:
-          - xcode: "15.4"
+          - xcode: "16.1"
             ios: "17.5"
+          - xcode: "16.1"
+            ios: "18.1"
     name: iOS (${{ matrix.ios }})
     steps:
       - uses: actions/checkout@a5ac7e51b41094c92402da3b24376905380afc29 # v4.1.6

@@ -15,8 +15,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/ggruen/CloudKitSyncMonitor",
       "state" : {
-        "revision" : "923c6b0b2360b3a70d3dd69a0c6c8320b075caa9",
-        "version" : "2.0.0"
+        "revision" : "c14a433b284526e29e0021f343bae9e61779164b",
+        "version" : "3.0.0"
       }
     },
     {
@@ -51,8 +51,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/dagronf/QRCode",
       "state" : {
-        "revision" : "d21e6135ec27e3aee0fa6ad14c9d88154d1dab25",
-        "version" : "21.2.0"
+        "revision" : "90bf2183e2eec226840751af42a2eaebfd53330b",
+        "version" : "23.0.0"
       }
     },
     {
@@ -159,8 +159,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/square/Valet",
       "state" : {
-        "revision" : "3df8eaa90e1fa0d80830733cdc3c9e098146af3d",
-        "version" : "4.3.0"
+        "revision" : "05c9e514fbd352a6866877ca31326b4e0b7d6d01",
+        "version" : "5.0.0"
       }
     },
     {

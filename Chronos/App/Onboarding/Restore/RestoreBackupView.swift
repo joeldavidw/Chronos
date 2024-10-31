@@ -42,7 +42,9 @@ struct RestoreBackupView: View {
                     .focused($focusedField, equals: .password)
                     .submitLabel(.done)
                     .onSubmit {
-                        doSubmit()
+                        Task {
+                            await doSubmit()
+                        }
                     }
             }
             .frame(height: 48)
@@ -60,7 +62,9 @@ struct RestoreBackupView: View {
             Spacer()
 
             Button {
-                doSubmit()
+                Task {
+                    await doSubmit()
+                }
             } label: {
                 if !restoreBtnPressed {
                     Text("Next")
@@ -90,7 +94,7 @@ struct RestoreBackupView: View {
         }
     }
 
-    func doSubmit() {
+    func doSubmit() async {
         // Defaults to the first vault if the user is not coming from VaultSelectionView.
         // Users will only come from VaultSelectionView if there are multiple vaults.
         if vaults.count == 1 {
@@ -99,19 +103,17 @@ struct RestoreBackupView: View {
 
         restoreBtnPressed = true
 
-        Task {
-            let vault = vaultService.getVaultWithoutContext(isRestore: true)
+        let vault = vaultService.getVaultWithoutContext(isRestore: true)
 
-            passwordVerified = await cryptoService.unwrapMasterKeyWithUserPassword(vault: vault, password: Array(password.utf8), isRestore: true)
-            restoreBtnPressed = false
+        passwordVerified = await cryptoService.unwrapMasterKeyWithUserPassword(vault: vault, password: Array(password.utf8), isRestore: true)
+        restoreBtnPressed = false
 
-            if passwordVerified {
-                isICloudEnabled = true
-                await UINotificationFeedbackGenerator().notificationOccurred(.success)
-            } else {
-                passwordInvalid = true
-                await UINotificationFeedbackGenerator().notificationOccurred(.error)
-            }
+        if passwordVerified {
+            isICloudEnabled = true
+            UINotificationFeedbackGenerator().notificationOccurred(.success)
+        } else {
+            passwordInvalid = true
+            UINotificationFeedbackGenerator().notificationOccurred(.error)
         }
     }
 }

@@ -887,7 +887,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 16.0;
+				MARKETING_VERSION = 17.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.joeldavidw.ChronosDevDebug;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -896,7 +896,7 @@
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_VERSION = 5.0;
+				SWIFT_VERSION = 6.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = "Dev Debug";
@@ -934,7 +934,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 16.0;
+				MARKETING_VERSION = 17.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.joeldavidw.ChronosDevRelease;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -943,7 +943,7 @@
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_VERSION = 5.0;
+				SWIFT_VERSION = 6.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = "Dev Release";
@@ -1260,7 +1260,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 16.0;
+				MARKETING_VERSION = 17.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.joeldavidw.Chronos;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1269,7 +1269,7 @@
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_VERSION = 5.0;
+				SWIFT_VERSION = 6.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = "Prod Release";
@@ -1315,7 +1315,7 @@
 			repositoryURL = "https://github.com/ggruen/CloudKitSyncMonitor";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 2.0.0;
+				minimumVersion = 3.0.0;
 			};
 		};
 		6B35A4C72B557EE50004D4C5 /* XCRemoteSwiftPackageReference "AlertKit" */ = {
@@ -1330,8 +1330,8 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/square/Valet";
 			requirement = {
-				kind = exactVersion;
-				version = 4.3.0;
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.0.0;
 			};
 		};
 		6B3BB11E2B511A9E00DCEF0B /* XCRemoteSwiftPackageReference "SwiftOTP" */ = {
@@ -1347,7 +1347,7 @@
 			repositoryURL = "https://github.com/apple/swift-log.git";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 1.5.4;
+				minimumVersion = 1.6.1;
 			};
 		};
 		6B66D5EB2B526648006DB79D /* XCRemoteSwiftPackageReference "CodeScanner" */ = {
@@ -1363,7 +1363,7 @@
 			repositoryURL = "https://github.com/hmlongco/Factory";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 2.3.2;
+				minimumVersion = 2.4.1;
 			};
 		};
 		6B8ABEEA2B8F6A4F00F5B514 /* XCRemoteSwiftPackageReference "CryptoSwift" */ = {
@@ -1371,7 +1371,7 @@
 			repositoryURL = "https://github.com/krzyzanowskim/CryptoSwift.git";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 1.8.2;
+				minimumVersion = 1.8.3;
 			};
 		};
 		6B96C8822CA7BFB3004ECB11 /* XCRemoteSwiftPackageReference "QRCode" */ = {
@@ -1379,7 +1379,7 @@
 			repositoryURL = "https://github.com/dagronf/QRCode";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 21.0.3;
+				minimumVersion = 23.0.0;
 			};
 		};
 		6BB37D7F2C46C751008DA122 /* XCRemoteSwiftPackageReference "SwiftyJSON" */ = {
@@ -1395,7 +1395,7 @@
 			repositoryURL = "https://github.com/pointfreeco/swift-html";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 0.4.1;
+				minimumVersion = 0.5.0;
 			};
 		};
 		6BC5F0502C52429100BA106F /* XCRemoteSwiftPackageReference "swift-protobuf" */ = {
@@ -1403,7 +1403,7 @@
 			repositoryURL = "https://github.com/apple/swift-protobuf.git";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 1.27.1;
+				minimumVersion = 1.28.2;
 			};
 		};
 		6BF53E4B2C31793100356461 /* XCRemoteSwiftPackageReference "ZipArchive" */ = {
@@ -1411,7 +1411,7 @@
 			repositoryURL = "https://github.com/ZipArchive/ZipArchive";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 2.5.5;
+				minimumVersion = 2.6.0;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */

@@ -916,7 +916,7 @@
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Chronos/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = "Chronos Dev Debug";
+				INFOPLIST_KEY_CFBundleDisplayName = "Chronos Dev Release";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
 				INFOPLIST_KEY_NSCameraUsageDescription = "Access to camera is need to scan QR codes";
 				INFOPLIST_KEY_NSFaceIDUsageDescription = "To unlock the app";
@@ -1241,7 +1241,7 @@
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Chronos/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = "Chronos Dev Debug";
+				INFOPLIST_KEY_CFBundleDisplayName = Chronos;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
 				INFOPLIST_KEY_NSCameraUsageDescription = "Access to camera is need to scan QR codes";
 				INFOPLIST_KEY_NSFaceIDUsageDescription = "To unlock the app";

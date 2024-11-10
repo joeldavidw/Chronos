@@ -37,7 +37,6 @@ struct StorageSetupView: View {
             if iCloudSyncLastAttempt == 0 {
                 Button {} label: {
                     ProgressView()
-                        .tint(Color(red: 0.04, green: 0, blue: 0.11))
                         .frame(minWidth: 0, maxWidth: .infinity)
                         .frame(height: 32)
                 }
@@ -49,7 +48,6 @@ struct StorageSetupView: View {
                         showICloudUnavailableDialog = true
                     }) {
                         Text("iCloud Unavailable")
-                            .foregroundStyle(Color(red: 0.04, green: 0, blue: 0.11))
                             .bold()
                             .frame(minWidth: 0, maxWidth: .infinity)
                             .frame(height: 32)
@@ -70,7 +68,6 @@ struct StorageSetupView: View {
                         }
                     } label: {
                         Text("Enable iCloud")
-                            .foregroundStyle(Color(red: 0.04, green: 0, blue: 0.11))
                             .bold()
                             .frame(minWidth: 0, maxWidth: .infinity)
                             .frame(height: 32)
@@ -135,7 +132,6 @@ struct StorageSetupView: View {
         }
         .padding(.vertical, 32)
         .padding([.horizontal], 24)
-        .background(Color(red: 0.04, green: 0, blue: 0.11))
         .navigationTitle("Storage")
         .navigationBarTitleDisplayMode(.inline)
         .navigationDestination(isPresented: $nextBtnPressed) {

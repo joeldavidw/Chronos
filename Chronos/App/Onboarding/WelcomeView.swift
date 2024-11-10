@@ -74,7 +74,6 @@ struct WelcomeView: View {
             }
             .padding([.horizontal], 24)
             .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity)
-            .background(Color(red: 0.04, green: 0, blue: 0.11))
             .navigationBarTitleDisplayMode(.inline)
             .navigationDestination(isPresented: $getStartedPressed) {
                 StorageSetupView()

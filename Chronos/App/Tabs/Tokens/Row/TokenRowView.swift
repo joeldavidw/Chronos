@@ -84,7 +84,6 @@ struct TokenRowView: View {
         }
         .contentShape(Rectangle())
         .padding(CGFloat(4))
-        .listRowBackground(Color(red: 0.04, green: 0, blue: 0.11))
         .onTapGesture {
             if !stateTapToRevealEnabled {
                 if token.isValid {

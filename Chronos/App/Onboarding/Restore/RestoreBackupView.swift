@@ -68,13 +68,11 @@ struct RestoreBackupView: View {
             } label: {
                 if !restoreBtnPressed {
                     Text("Next")
-                        .foregroundStyle(Color(red: 0.04, green: 0, blue: 0.11))
                         .bold()
                         .frame(minWidth: 0, maxWidth: .infinity)
                         .frame(height: 32)
                 } else {
                     ProgressView()
-                        .tint(Color(red: 0.04, green: 0, blue: 0.11))
                         .frame(minWidth: 0, maxWidth: .infinity)
                         .frame(height: 32)
                 }
@@ -88,7 +86,6 @@ struct RestoreBackupView: View {
         .navigationDestination(isPresented: $passwordVerified) {
             BiometricsSetupView()
         }
-        .background(Color(red: 0.04, green: 0, blue: 0.11).ignoresSafeArea())
         .onAppear {
             focusedField = .password
         }

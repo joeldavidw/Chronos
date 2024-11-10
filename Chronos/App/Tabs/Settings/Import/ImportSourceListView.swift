@@ -48,7 +48,6 @@ struct ImportSourceListView: View {
                         ImportSourceDetailView(importSource: importSource)
                     } label: {
                         Text(importSource.name)
-                            .fontWeight(.semibold)
                     }
                 }
             }

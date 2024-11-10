@@ -53,7 +53,6 @@ struct EncryptedExportConfirmPasswordView: View {
         }
         .padding([.horizontal], 24)
         .navigationTitle("Encrypted Export")
-        .background(Color(red: 0.04, green: 0, blue: 0.11))
         .navigationBarTitleDisplayMode(.inline)
         .navigationBarItems(trailing:
             Button {

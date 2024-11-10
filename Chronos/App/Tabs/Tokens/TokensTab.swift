@@ -85,12 +85,11 @@ struct TokensTab: View {
                 }
             }
             .listStyle(.plain)
-            .background(Color("Background"))
             .navigationTitle("Tokens")
             .navigationBarTitleDisplayMode(.inline)
-            .searchable(text: $searchQuery, prompt: Text("Search tokens"))
+            .searchable(text: $searchQuery, placement: .navigationBarDrawer(displayMode: .always), prompt: Text("Search tokens"))
             .toolbar {
-                ToolbarContent()
+//                ToolbarContent()
             }
             .overlay(
                 EmptyStateView()

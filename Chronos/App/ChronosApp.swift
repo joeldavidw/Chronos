@@ -10,7 +10,6 @@ struct ChronosApp: SwiftUI.App {
         WindowGroup {
             ContentView()
                 .environmentObject(LoginStatus())
-//                .background(Color("Background"))
         }
     }
 }

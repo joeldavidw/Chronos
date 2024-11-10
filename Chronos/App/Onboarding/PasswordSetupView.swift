@@ -86,13 +86,11 @@ struct PasswordSetupView: View {
                 } label: {
                     if !isEncrypting {
                         Text("Next")
-                            .foregroundStyle(Color(red: 0.04, green: 0, blue: 0.11))
                             .bold()
                             .frame(minWidth: 0, maxWidth: .infinity)
                             .frame(height: 32)
                     } else {
                         ProgressView()
-                            .tint(Color(red: 0.04, green: 0, blue: 0.11))
                             .frame(minWidth: 0, maxWidth: .infinity)
                             .frame(height: 32)
                     }
@@ -104,7 +102,6 @@ struct PasswordSetupView: View {
             .padding(.vertical, 32)
             .padding(.horizontal, 24)
         }
-        .background(Color(red: 0.04, green: 0, blue: 0.11).ignoresSafeArea())
         .navigationTitle("Setup")
         .navigationBarTitleDisplayMode(.inline)
         .navigationDestination(isPresented: $nextBtnPressed) {

@@ -78,7 +78,6 @@ struct ExportSelectionView: View {
             .navigationTitle("Export Selection")
             .padding([.horizontal], 24)
             .padding([.bottom], 32)
-            .background(Color(red: 0.04, green: 0, blue: 0.11))
             .navigationBarTitleDisplayMode(.inline)
         }
     }

@@ -89,7 +89,7 @@ struct TokensTab: View {
             .navigationBarTitleDisplayMode(.inline)
             .searchable(text: $searchQuery, placement: .navigationBarDrawer(displayMode: .always), prompt: Text("Search tokens"))
             .toolbar {
-               ToolbarContent()
+                ToolbarContent()
             }
             .overlay(
                 EmptyStateView()

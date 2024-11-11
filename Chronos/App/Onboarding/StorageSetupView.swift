@@ -14,7 +14,7 @@ struct StorageSetupView: View {
     @State private var restoreBtnPressed: Bool = false
     @State private var showICloudUnavailableDialog: Bool = false
 
-    @ObservedObject var syncMonitor = SyncMonitor.shared
+    @ObservedObject var syncMonitor = SyncMonitor.default
 
     @FocusState private var focusedField: FocusedField?
 

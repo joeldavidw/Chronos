@@ -51,6 +51,7 @@ struct TOTPRowView: View {
                     )
                     .rotationEffect(.degrees(-90))
                     .frame(width: 28, height: 28)
+                    .animation(.default, value: progress)
 
                 Text(String(secsLeft))
                     .font(.system(size: 12))

@@ -23,6 +23,7 @@ struct HOTPRowView: View {
             .onChange(of: token.counter) { _, _ in
                 otp = token.generateOtp()
             }
+            .animation(nil, value: UUID())
         Spacer()
         Button {
             disableIncrementBtn = true

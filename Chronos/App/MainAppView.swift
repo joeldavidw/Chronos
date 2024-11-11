@@ -13,7 +13,7 @@ struct MainAppView: View {
     @Environment(\.scenePhase) private var scenePhase
     @EnvironmentObject var loginStatus: LoginStatus
 
-    @ObservedObject var syncMonitor = SyncMonitor.shared
+    @ObservedObject var syncMonitor = SyncMonitor.default
 
     @AppStorage(StateEnum.ICLOUD_SYNC_LAST_ATTEMPT.rawValue) var iCloudSyncLastAttempt: TimeInterval = 0
     @AppStorage(StateEnum.NEXT_PASSWORD_REMINDER_TIMESTAMP.rawValue) var nextPasswordReminderTimestamp: TimeInterval = 0

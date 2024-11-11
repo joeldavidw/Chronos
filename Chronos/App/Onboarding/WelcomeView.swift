@@ -8,7 +8,7 @@ struct WelcomeView: View {
 
     @Query var vaults: [Vault]
 
-    @ObservedObject var syncMonitor = SyncMonitor.shared
+    @ObservedObject var syncMonitor = SyncMonitor.default
 
     @State private var getStartedPressed: Bool = false
     @State private var restorePressed: Bool = false

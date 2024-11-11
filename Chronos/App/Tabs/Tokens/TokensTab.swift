@@ -91,9 +91,9 @@ struct TokensTab: View {
             .toolbar {
                 ToolbarContent()
             }
-            .overlay(
+            .overlay {
                 EmptyStateView()
-            )
+            }
             .sheet(isPresented: $showTokenAddSheet) {
                 AddTokenView()
                     .getSheetHeight()
@@ -102,6 +102,7 @@ struct TokensTab: View {
                     }
                     .presentationDetents([.height(self.detentHeight)])
             }
+            .animation(.default, value: UUID())
         }
     }
 
@@ -134,29 +135,41 @@ struct TokensTab: View {
 
     private func EmptyStateView() -> some View {
         Group {
-            if tokenPairs.isEmpty {
+            if encryptedTokens.isEmpty {
                 VStack {
-                    Image(systemName: searchQuery.isEmpty ? "qrcode.viewfinder" : "magnifyingglass")
+                    Image(systemName: "qrcode.viewfinder")
                         .font(.system(size: 64))
                         .foregroundColor(.gray)
                         .opacity(0.8)
 
-                    Text(searchQuery.isEmpty ? "No tokens found. Add one by pressing the + icon at the top right corner or the button below." : "No results found")
+                    Text("No tokens found. Add one by pressing the + icon at the top right corner or the button below.")
                         .padding(.top, 4)
                         .multilineTextAlignment(.center)
                         .foregroundColor(.gray)
                         .opacity(0.8)
 
-                    if searchQuery.isEmpty {
-                        Button {
-                            showTokenAddSheet.toggle()
-                        } label: {
-                            Text("Add Token")
-                                .padding(.horizontal, 4)
-                                .bold()
-                        }
-                        .padding(.top, 4)
+                    Button {
+                        showTokenAddSheet.toggle()
+                    } label: {
+                        Text("Add Token")
+                            .padding(.horizontal, 4)
+                            .bold()
                     }
+                    .padding(.top, 4)
+                }
+                .padding(.horizontal, 24)
+            } else if tokenPairs.isEmpty && !searchQuery.isEmpty {
+                VStack {
+                    Image(systemName: "magnifyingglass")
+                        .font(.system(size: 64))
+                        .foregroundColor(.gray)
+                        .opacity(0.8)
+
+                    Text("No results found")
+                        .padding(.top, 4)
+                        .multilineTextAlignment(.center)
+                        .foregroundColor(.gray)
+                        .opacity(0.8)
                 }
                 .padding(.horizontal, 24)
             }

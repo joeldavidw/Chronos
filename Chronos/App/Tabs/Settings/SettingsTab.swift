@@ -101,7 +101,7 @@ struct SettingsTab: View {
 
                 Section(header: Text("Security")) {
                     Toggle(isOn: $stateBiometricsAuth, label: {
-                        Text("Biometics Authentication")
+                        Text("Biometrics Authentication")
                     })
                     .onChange(of: stateBiometricsAuth) { _, enabled in
                         if enabled {

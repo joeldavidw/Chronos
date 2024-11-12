@@ -9,14 +9,27 @@ on:
       - main
 
 jobs:
-  run_tests:
+  run_tests_ios_17:
+    runs-on: macos-14
+    environment: ${{ github.event_name == 'push' && 'default' || 'ci-macos' }}
+    strategy:
+      matrix:
+        include:
+          - xcode: "15.4"
+            ios: "17.5"
+    name: iOS (${{ matrix.ios }})
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+      - name: Select Xcode
+        run: sudo xcode-select -switch /Applications/Xcode_${{ matrix.xcode }}.app && /usr/bin/xcodebuild -version
+      - name: Run unit tests
+        run: xcodebuild test -scheme 'Chronos Dev Release' -project Chronos.xcodeproj -destination 'platform=iOS Simulator,name=iPhone 15 Pro Max,OS=${{ matrix.ios }}' | xcpretty && exit ${PIPESTATUS[0]}
+  run_tests_ios_18:
     runs-on: macos-15
     environment: ${{ github.event_name == 'push' && 'default' || 'ci-macos' }}
     strategy:
       matrix:
         include:
-          - xcode: "16.1"
-            ios: "17.5"
           - xcode: "16.1"
             ios: "18.1"
     name: iOS (${{ matrix.ios }})
@@ -25,4 +38,4 @@ jobs:
       - name: Select Xcode
         run: sudo xcode-select -switch /Applications/Xcode_${{ matrix.xcode }}.app && /usr/bin/xcodebuild -version
       - name: Run unit tests
-        run: xcodebuild test -scheme 'Chronos Dev Release' -project Chronos.xcodeproj -destination 'platform=iOS Simulator,name=iPhone 15 Pro Max,OS=${{ matrix.ios }}' | xcpretty && exit ${PIPESTATUS[0]}
+        run: xcodebuild test -scheme 'Chronos Dev Release' -project Chronos.xcodeproj -destination 'platform=iOS Simulator,name=iPhone 16 Pro Max,OS=${{ matrix.ios }}' | xcpretty && exit ${PIPESTATUS[0]}

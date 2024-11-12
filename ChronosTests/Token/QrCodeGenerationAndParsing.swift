@@ -310,28 +310,40 @@ final class QrCodeGenerationAndParsingTests: XCTestCase {
 }
 
 func detectQRCode(in image: UIImage, completion: @escaping (String?) -> Void) {
+    // Ensure the image has a CGImage representation
     guard let cgImage = image.cgImage else {
         completion(nil)
         return
     }
 
+    // Configure the request to detect barcodes
     let request = VNDetectBarcodesRequest { request, error in
-        guard error == nil else {
-            completion(nil)
+        if let error = error {
+            print("Barcode detection error: \(error.localizedDescription)")
+            DispatchQueue.main.async { completion(nil) }
             return
         }
 
-        let results = request.results as? [VNBarcodeObservation]
-        let payload = results?.first?.payloadStringValue
-        completion(payload)
+        // Extract the first payload string if available
+        if let results = request.results as? [VNBarcodeObservation],
+           let payload = results.first?.payloadStringValue
+        {
+            DispatchQueue.main.async { completion(payload) }
+        } else {
+            DispatchQueue.main.async { completion(nil) }
+        }
     }
 
+    // Create an image request handler for the given CGImage
     let handler = VNImageRequestHandler(cgImage: cgImage, options: [:])
+
+    // Perform the request asynchronously
     DispatchQueue.global(qos: .userInitiated).async {
         do {
             try handler.perform([request])
         } catch {
-            completion(nil)
+            print("Failed to perform barcode detection: \(error.localizedDescription)")
+            DispatchQueue.main.async { completion(nil) }
         }
     }
 }

@@ -10,7 +10,7 @@ on:
 
 jobs:
   run_tests:
-    runs-on: macos-14
+    runs-on: macos-15
     environment: ${{ github.event_name == 'push' && 'default' || 'ci-macos' }}
     strategy:
       matrix:

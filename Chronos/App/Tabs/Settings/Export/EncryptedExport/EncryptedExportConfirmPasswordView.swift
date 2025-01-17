@@ -38,7 +38,7 @@ struct EncryptedExportConfirmPasswordView: View {
                     }
             }
             .frame(height: 48)
-            .background(Color(.systemGray6))
+            .background(Color(.systemGray5))
             .cornerRadius(8)
 
             if !isPasswordValid {

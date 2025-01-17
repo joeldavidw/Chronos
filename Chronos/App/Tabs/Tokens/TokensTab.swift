@@ -98,7 +98,9 @@ struct TokensTab: View {
                 AddTokenView()
                     .getSheetHeight()
                     .onPreferenceChange(SheetHeightPreferenceKey.self) { height in
-                        self.detentHeight = height
+                        Task { @MainActor in
+                            self.detentHeight = height
+                        }
                     }
                     .presentationDetents([.height(self.detentHeight)])
             }

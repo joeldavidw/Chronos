@@ -34,6 +34,9 @@ class Token: Codable, Identifiable {
     // Extra Data
     var pinned: Bool? = false
 
+    // Tags
+    var tags: [String]? = []
+
     var isValid: Bool {
         return validationError == nil
     }

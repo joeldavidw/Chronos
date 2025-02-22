@@ -15,9 +15,11 @@ struct AddManualTokenView: View {
     @State private var digits: Int = 6
     @State private var counter: Int = 0
     @State private var period: Int = 30
+    @State private var tags: [String]
 
     let cryptoService = Container.shared.cryptoService()
     let vaultService = Container.shared.vaultService()
+    let stateService = Container.shared.stateService()
 
     let parentDismiss: DismissAction
 
@@ -30,6 +32,7 @@ struct AddManualTokenView: View {
         _digits = State(initialValue: 6)
         _counter = State(initialValue: 0)
         _period = State(initialValue: 30)
+        _tags = State(initialValue: [])
         parentDismiss = _parentDismiss
     }
 
@@ -46,6 +49,16 @@ struct AddManualTokenView: View {
                     TextField("Account", text: $account)
                         .disableAutocorrection(true)
                         .autocapitalization(/*@START_MENU_TOKEN@*/ .none/*@END_MENU_TOKEN@*/)
+                }
+                LabeledContent("Tags") {
+                    NavigationLink {
+                        TokenTagsSelectionView(selectedTags: $tags)
+                    } label: {
+                        HStack {
+                            Spacer()
+                            Text(tags.joined(separator: ", "))
+                        }
+                    }
                 }
                 LabeledContent("Secret") {
                     Group {
@@ -130,6 +143,7 @@ struct AddManualTokenView: View {
             newToken.digits = digits
             newToken.counter = counter
             newToken.period = period
+            newToken.tags = tags
 
             let newEncToken = cryptoService.encryptToken(token: newToken)
             vaultService.insertEncryptedToken(newEncToken)
@@ -151,6 +165,7 @@ extension AddManualTokenView {
         tempToken.digits = digits
         tempToken.counter = counter
         tempToken.period = period
+        tempToken.tags = tags
 
         return tempToken.isValid
     }

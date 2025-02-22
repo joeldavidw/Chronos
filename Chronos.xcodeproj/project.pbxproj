@@ -55,6 +55,7 @@
 		6B8132FA2C4C0F6300DB367E /* TokenToOtpAuthUrl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B8132F92C4C0F6300DB367E /* TokenToOtpAuthUrl.swift */; };
 		6B8132FD2C4E5F6B00DB367E /* QrCodeGenerationAndParsing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B8132FC2C4E5F6B00DB367E /* QrCodeGenerationAndParsing.swift */; };
 		6B8133002C4E634100DB367E /* PasswordReminder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B8132FF2C4E634100DB367E /* PasswordReminder.swift */; };
+		6B8289F22D6A1EB700D12AC6 /* TokenTagSelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B8289F12D6A1EB700D12AC6 /* TokenTagSelectionView.swift */; };
 		6B842DD52BE33E2E00056F0F /* RestoreBackupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B842DD42BE33E2E00056F0F /* RestoreBackupView.swift */; };
 		6B8ABEEC2B8F6A4F00F5B514 /* CryptoSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 6B8ABEEB2B8F6A4F00F5B514 /* CryptoSwift */; };
 		6B9581E22B62AFF80029EF3C /* ViewModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B9581E12B62AFF80029EF3C /* ViewModifier.swift */; };
@@ -141,6 +142,7 @@
 		6B8132F92C4C0F6300DB367E /* TokenToOtpAuthUrl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenToOtpAuthUrl.swift; sourceTree = "<group>"; };
 		6B8132FC2C4E5F6B00DB367E /* QrCodeGenerationAndParsing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QrCodeGenerationAndParsing.swift; sourceTree = "<group>"; };
 		6B8132FF2C4E634100DB367E /* PasswordReminder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordReminder.swift; sourceTree = "<group>"; };
+		6B8289F12D6A1EB700D12AC6 /* TokenTagSelectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenTagSelectionView.swift; sourceTree = "<group>"; };
 		6B842DD42BE33E2E00056F0F /* RestoreBackupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestoreBackupView.swift; sourceTree = "<group>"; };
 		6B9581E12B62AFF80029EF3C /* ViewModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModifier.swift; sourceTree = "<group>"; };
 		6B9581E32B633A880029EF3C /* AddManualTokenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddManualTokenView.swift; sourceTree = "<group>"; };
@@ -405,6 +407,7 @@
 			isa = PBXGroup;
 			children = (
 				6B8132FF2C4E634100DB367E /* PasswordReminder.swift */,
+				6B8289F12D6A1EB700D12AC6 /* TokenTagSelectionView.swift */,
 			);
 			path = Misc;
 			sourceTree = "<group>";
@@ -701,6 +704,7 @@
 				6B27317A2B53E23800F30621 /* UpdateTokenView.swift in Sources */,
 				6BC5F0552C52464600BA106F /* GoogleAuth.pb.swift in Sources */,
 				6B27317C2B53F0B200F30621 /* TokenRowView.swift in Sources */,
+				6B8289F22D6A1EB700D12AC6 /* TokenTagSelectionView.swift in Sources */,
 				6B8133002C4E634100DB367E /* PasswordReminder.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -886,7 +890,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 17.3;
+				MARKETING_VERSION = 18.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.joeldavidw.ChronosDevDebug;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -932,7 +936,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 17.3;
+				MARKETING_VERSION = 18.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.joeldavidw.ChronosDevRelease;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1257,7 +1261,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 17.3;
+				MARKETING_VERSION = 18.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.joeldavidw.Chronos;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";

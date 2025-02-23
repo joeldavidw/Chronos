@@ -68,6 +68,7 @@ struct TokenTagsCreationView: View {
     @Binding var selectedTags: Set<String>
 
     private let stateService = Container.shared.stateService()
+    private let tagService = Container.shared.tagService()
 
     @State private var newTag: String = ""
     @State private var verified: Bool = false
@@ -95,12 +96,6 @@ struct TokenTagsCreationView: View {
     }
 
     var isValid: Bool {
-        let tempTag = newTag.trimmingCharacters(in: .whitespacesAndNewlines).lowercased()
-
-        let isNotEmpty = !tempTag.isEmpty
-        let isUnique = !stateService.tags.contains { $0.caseInsensitiveCompare(tempTag) == .orderedSame }
-        let hasValidCharacters = tempTag.range(of: "^[\\p{L}0-9_\\s\\p{P}\\p{S}]+$", options: .regularExpression) != nil
-
-        return isNotEmpty && isUnique && hasValidCharacters
+        return tagService.validateTag(newTag)
     }
 }

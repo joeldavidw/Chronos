@@ -6,6 +6,7 @@ struct TagCreationView: View {
 
     private let stateService = Container.shared.stateService()
     private let cryptoService = Container.shared.cryptoService()
+    private let tagService = Container.shared.tagService()
 
     @State private var newTag: String = ""
     @State private var verified: Bool = false
@@ -44,12 +45,6 @@ struct TagCreationView: View {
     }
 
     var isValid: Bool {
-        let tempTag = newTag.trimmingCharacters(in: .whitespacesAndNewlines).lowercased()
-
-        let isNotEmpty = !tempTag.isEmpty
-        let isUnique = !stateService.tags.map { $0.lowercased() }.contains(tempTag)
-        let hasValidCharacters = tempTag.range(of: "^[\\p{L}0-9_\\s\\p{P}\\p{S}]+$", options: .regularExpression) != nil
-
-        return isNotEmpty && isUnique && hasValidCharacters && !selectedTokenPair.isEmpty
+        return tagService.validateTag(newTag) && !selectedTokenPair.isEmpty
     }
 }

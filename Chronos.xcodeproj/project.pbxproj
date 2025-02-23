@@ -61,6 +61,7 @@
 		6B828A082D6B4CDF00D12AC6 /* TagCreationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B828A072D6B4CDF00D12AC6 /* TagCreationView.swift */; };
 		6B828A0A2D6B4D2300D12AC6 /* TagTokenSelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B828A092D6B4D2300D12AC6 /* TagTokenSelectionView.swift */; };
 		6B828A0C2D6B6A5A00D12AC6 /* TagCreationUpdateForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B828A0B2D6B6A5A00D12AC6 /* TagCreationUpdateForm.swift */; };
+		6B828A0E2D6B6DC900D12AC6 /* TagService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B828A0D2D6B6DC900D12AC6 /* TagService.swift */; };
 		6B842DD52BE33E2E00056F0F /* RestoreBackupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B842DD42BE33E2E00056F0F /* RestoreBackupView.swift */; };
 		6B8ABEEC2B8F6A4F00F5B514 /* CryptoSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 6B8ABEEB2B8F6A4F00F5B514 /* CryptoSwift */; };
 		6B9581E22B62AFF80029EF3C /* ViewModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B9581E12B62AFF80029EF3C /* ViewModifier.swift */; };
@@ -153,6 +154,7 @@
 		6B828A072D6B4CDF00D12AC6 /* TagCreationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagCreationView.swift; sourceTree = "<group>"; };
 		6B828A092D6B4D2300D12AC6 /* TagTokenSelectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagTokenSelectionView.swift; sourceTree = "<group>"; };
 		6B828A0B2D6B6A5A00D12AC6 /* TagCreationUpdateForm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagCreationUpdateForm.swift; sourceTree = "<group>"; };
+		6B828A0D2D6B6DC900D12AC6 /* TagService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagService.swift; sourceTree = "<group>"; };
 		6B842DD42BE33E2E00056F0F /* RestoreBackupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestoreBackupView.swift; sourceTree = "<group>"; };
 		6B9581E12B62AFF80029EF3C /* ViewModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModifier.swift; sourceTree = "<group>"; };
 		6B9581E32B633A880029EF3C /* AddManualTokenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddManualTokenView.swift; sourceTree = "<group>"; };
@@ -391,6 +393,7 @@
 				6B9D74642C14ADDC008E6582 /* StateService.swift */,
 				6B12B09F2C19DB7800E9ED2D /* ExportService.swift */,
 				6B3F92AA2C1C7987004125A8 /* VaultService.swift */,
+				6B828A0D2D6B6DC900D12AC6 /* TagService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -733,6 +736,7 @@
 				6B27317A2B53E23800F30621 /* UpdateTokenView.swift in Sources */,
 				6BC5F0552C52464600BA106F /* GoogleAuth.pb.swift in Sources */,
 				6B27317C2B53F0B200F30621 /* TokenRowView.swift in Sources */,
+				6B828A0E2D6B6DC900D12AC6 /* TagService.swift in Sources */,
 				6B8133002C4E634100DB367E /* PasswordReminder.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

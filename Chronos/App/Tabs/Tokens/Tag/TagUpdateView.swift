@@ -6,6 +6,7 @@ struct TagUpdateView: View {
 
     private let stateService = Container.shared.stateService()
     private let cryptoService = Container.shared.cryptoService()
+    private let tagService = Container.shared.tagService()
 
     @State private var newTag: String = ""
     @State private var verified: Bool = false
@@ -15,7 +16,6 @@ struct TagUpdateView: View {
     @State var selectedTag: String
 
     @State var selectedTokenPair: [TokenPair] = []
-    @State var originalTokenPair: [TokenPair] = []
 
     var body: some View {
         VStack {
@@ -23,7 +23,6 @@ struct TagUpdateView: View {
         }
         .onAppear {
             newTag = selectedTag
-            originalTokenPair = tokenPairs.filter { ($0.token.tags ?? []).contains(selectedTag) }
             selectedTokenPair = tokenPairs.filter { ($0.token.tags ?? []).contains(selectedTag) }
         }
         .background(Color(.systemGray6))
@@ -31,13 +30,15 @@ struct TagUpdateView: View {
         .navigationBarTitleDisplayMode(.inline)
         .navigationBarItems(trailing: Button(selectedTokenPair.isEmpty ? "Delete" : "Done") {
             for tokenPair in tokenPairs {
-                tokenPair.token.tags?.remove(selectedTag)
-
-                if selectedTokenPair.contains(where: { $0.id == tokenPair.id }) {
-                    tokenPair.token.tags?.insert(newTag)
+                if tokenPair.token.tags?.contains(selectedTag) ?? false {
+                    tokenPair.token.tags?.remove(selectedTag)
+                    
+                    if selectedTokenPair.contains(where: { $0.id == tokenPair.id }) {
+                        tokenPair.token.tags?.insert(newTag)
+                    }
+                    
+                    cryptoService.updateEncryptedToken(encryptedToken: tokenPair.encToken, token: tokenPair.token)
                 }
-
-                cryptoService.updateEncryptedToken(encryptedToken: tokenPair.encToken, token: tokenPair.token)
             }
 
             stateService.tags.remove(selectedTag)
@@ -56,12 +57,6 @@ struct TagUpdateView: View {
     }
 
     var isValid: Bool {
-        let tempTag = newTag.trimmingCharacters(in: .whitespacesAndNewlines).lowercased()
-
-        let isNotEmpty = !tempTag.isEmpty
-        let isUnique = !stateService.tags.map { $0.lowercased() }.contains(tempTag) || (newTag == selectedTag)
-        let hasValidCharacters = tempTag.range(of: "^[\\p{L}0-9_\\s\\p{P}\\p{S}]+$", options: .regularExpression) != nil
-
-        return isNotEmpty && isUnique && hasValidCharacters
+        return tagService.validateTag(newTag) || selectedTag == newTag
     }
 }

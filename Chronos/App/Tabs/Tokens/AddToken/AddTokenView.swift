@@ -7,9 +7,9 @@ struct AddTokenView: View {
     @Environment(\.dismiss) var dismiss
     @State private var unableToAccessCamera = false
     @State private var showTokenManualAddSheet = false
+    @State private var showTokenAddSheet = false
 
-    let cryptoService = Container.shared.cryptoService()
-    let vaultService = Container.shared.vaultService()
+    @State private var newToken: Token?
 
     var body: some View {
         VStack {
@@ -20,6 +20,7 @@ struct AddTokenView: View {
                 Text("Scan 2FA QR code or enter token details manually")
                     .font(.caption)
             }
+            .padding(.top, 8)
 
             VStack {
                 if !unableToAccessCamera {
@@ -31,7 +32,6 @@ struct AddTokenView: View {
                         isPaused: showTokenManualAddSheet,
                         completion: handleScan
                     )
-                    .frame(height: 200, alignment: .center)
                     .frame(minWidth: 0, maxWidth: .infinity)
                     .cornerRadius(8)
                 } else {
@@ -48,7 +48,6 @@ struct AddTokenView: View {
                         .padding(.top, 4)
                         Spacer()
                     }
-                    .frame(height: 200, alignment: .center)
                     .frame(minWidth: 0, maxWidth: .infinity)
                     .background(.black)
                     .cornerRadius(8)
@@ -64,11 +63,15 @@ struct AddTokenView: View {
                 }
                 .buttonStyle(.bordered)
                 .padding(.vertical, 8)
-                .sheet(isPresented: $showTokenManualAddSheet) {
-                    NavigationView {
-                        AddManualTokenView(_parentDismiss: dismiss)
-                            .interactiveDismissDisabled(true)
-                    }
+                .navigationDestination(isPresented: $showTokenManualAddSheet) {
+                    AddManualTokenView(dismissAction: dismiss)
+                        .interactiveDismissDisabled(true)
+                        .presentationDragIndicator(.hidden)
+                }
+                .navigationDestination(isPresented: $showTokenAddSheet) {
+                    AddManualTokenView(dismissAction: dismiss, token: newToken)
+                        .interactiveDismissDisabled(true)
+                        .presentationDragIndicator(.hidden)
                 }
             }
             .padding(.top, 16)
@@ -79,8 +82,6 @@ struct AddTokenView: View {
     func handleScan(result: Result<ScanResult, ScanError>) {
         switch result {
         case let .success(result):
-            dismiss()
-
             let otpAuthStr = result.string
             guard otpAuthStr.starts(with: "otpauth://") else {
                 AlertKitAPI.present(
@@ -94,15 +95,8 @@ struct AddTokenView: View {
 
             do {
                 let newToken = try OtpAuthUrlParser.parseOtpAuthUrl(otpAuthStr: otpAuthStr)
-                let newEncToken = cryptoService.encryptToken(token: newToken)
-                vaultService.insertEncryptedToken(newEncToken)
-
-                AlertKitAPI.present(
-                    title: "Successfully added \(!newToken.issuer.isEmpty ? newToken.issuer : newToken.account)",
-                    icon: .done,
-                    style: .iOS17AppleMusic,
-                    haptic: .success
-                )
+                self.newToken = newToken
+                showTokenAddSheet = true
             } catch {
                 AlertKitAPI.present(
                     title: "Invalid 2FA QR Code",

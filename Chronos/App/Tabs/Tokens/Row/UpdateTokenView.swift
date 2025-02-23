@@ -9,7 +9,8 @@ struct UpdateTokenView: View {
     @State var token: Token
     var encryptedToken: EncryptedToken
 
-    let cryptoService = Container.shared.cryptoService()
+    private let cryptoService = Container.shared.cryptoService()
+    private let stateService = Container.shared.stateService()
 
     @State private var issuer: String
     @State private var account: String
@@ -19,6 +20,7 @@ struct UpdateTokenView: View {
     @State private var digits: Int
     @State private var counter: Int
     @State private var period: Int
+    @State private var tags: Set<String>
 
     @State var showSecret: Bool = false
 
@@ -34,6 +36,7 @@ struct UpdateTokenView: View {
         _digits = State(initialValue: token.digits)
         _counter = State(initialValue: token.counter)
         _period = State(initialValue: token.period)
+        _tags = State(initialValue: token.tags ?? [])
     }
 
     var body: some View {
@@ -49,6 +52,16 @@ struct UpdateTokenView: View {
                     TextField("Account", text: $account)
                         .disableAutocorrection(true)
                         .autocapitalization(/*@START_MENU_TOKEN@*/ .none/*@END_MENU_TOKEN@*/)
+                }
+                LabeledContent("Tags") {
+                    NavigationLink {
+                        TokenTagsSelectionView(selectedTags: $tags)
+                    } label: {
+                        HStack {
+                            Spacer()
+                            Text(tags.joined(separator: ", "))
+                        }
+                    }
                 }
                 LabeledContent("Secret") {
                     Group {
@@ -108,7 +121,6 @@ struct UpdateTokenView: View {
                 }
             }
         }
-
         .multilineTextAlignment(.trailing)
         .navigationBarItems(leading: Button("Cancel", action: {
             dismiss()
@@ -122,6 +134,7 @@ struct UpdateTokenView: View {
             token.digits = digits
             token.counter = counter
             token.period = period
+            token.tags = tags
 
             cryptoService.updateEncryptedToken(encryptedToken: encryptedToken, token: token)
             dismiss()
@@ -141,6 +154,7 @@ extension UpdateTokenView {
         tempToken.digits = digits
         tempToken.counter = counter
         tempToken.period = period
+        tempToken.tags = tags
 
         return tempToken.isValid
     }
@@ -153,6 +167,7 @@ extension UpdateTokenView {
             algorithm != token.algorithm ||
             digits != token.digits ||
             counter != token.counter ||
-            period != token.period
+            period != token.period ||
+            tags != token.tags
     }
 }

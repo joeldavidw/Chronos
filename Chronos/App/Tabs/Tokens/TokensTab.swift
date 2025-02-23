@@ -35,11 +35,15 @@ class TokenPairsCache {
 struct TokensTab: View {
     @Query private var vaults: [Vault]
     @EnvironmentObject var loginStatus: LoginStatus
+    @Environment(\.colorScheme) var colorScheme
 
     @State private var showTokenAddSheet = false
+    @State private var showTagsManagementSheet = false
     @State private var detentHeight: CGFloat = 0
     @State private var sortCriteria: TokenSortOrder = .ISSUER_ASC
     @State private var searchQuery = ""
+
+    @State private var currentTag = "All"
 
     @State private var tokenPairs: [TokenPair] = []
     @State private var tokenPairsCache = TokenPairsCache()
@@ -66,10 +70,13 @@ struct TokensTab: View {
 
     var body: some View {
         NavigationStack {
+            TagsScrollBar()
             List(tokenPairs) { tokenPair in
                 TokenRowView(tokenPair: tokenPair, timer: timer, triggerSortAndFilterTokenPairs: self.sortAndFilterTokenPairs)
             }
-            .onAppear { Task { await updateTokenPairs() } }
+            .onAppear {
+                Task { await updateTokenPairs() }
+            }
             .onChange(of: encryptedTokens) { _, _ in
                 Task { await updateTokenPairs() }
             }
@@ -84,10 +91,15 @@ struct TokensTab: View {
                     }
                 }
             }
+            .onChange(of: currentTag) { _, _ in
+                sortAndFilterTokenPairs()
+            }
             .listStyle(.plain)
-            .navigationTitle("Tokens")
+            .navigationTitle(currentTag == "All" ? "Tokens" : currentTag)
             .navigationBarTitleDisplayMode(.inline)
-            .searchable(text: $searchQuery, placement: .navigationBarDrawer(displayMode: .always), prompt: Text("Search tokens"))
+            .searchable(text: $searchQuery,
+                        placement: .navigationBarDrawer(displayMode: .always),
+                        prompt: Text(currentTag == "All" ? "Search tokens" : "Search \"\(currentTag)\" tokens"))
             .toolbar {
                 ToolbarContent()
             }
@@ -95,42 +107,116 @@ struct TokensTab: View {
                 EmptyStateView()
             }
             .sheet(isPresented: $showTokenAddSheet) {
-                AddTokenView()
-                    .getSheetHeight()
-                    .onPreferenceChange(SheetHeightPreferenceKey.self) { height in
-                        Task { @MainActor in
-                            self.detentHeight = height
-                        }
-                    }
-                    .presentationDetents([.height(self.detentHeight)])
+                NavigationStack {
+                    AddTokenView()
+                        .presentationDragIndicator(.visible)
+                }
             }
             .animation(.default, value: UUID())
         }
     }
 
-    private func ToolbarContent() -> some ToolbarContent {
-        ToolbarItemGroup(placement: .navigationBarTrailing) {
-            Menu {
-                ForEach(sortOptions, id: \.criteria) { option in
+    private func TagsScrollBar() -> some View {
+        ScrollView(.horizontal, showsIndicators: false) {
+            LazyHStack(spacing: 8) {
+                Button {
+                    currentTag = "All"
+                } label: {
+                    Text("All")
+                        .font(.subheadline)
+                        .fontWeight(.medium)
+                        .lineLimit(1)
+                        .padding(.horizontal, 12)
+                        .padding(.vertical, 6)
+                        .foregroundStyle(currentTag == "All" ? .white : (colorScheme == .dark ? .white : .black))
+                        .background(currentTag == "All" ? Color.accentColor : Color(.systemGray5))
+                        .clipShape(Capsule())
+                }
+
+                ForEach(Array(stateService.tags), id: \.self) { tag in
                     Button {
-                        sortCriteria = option.criteria
+                        currentTag = tag
                     } label: {
-                        if sortCriteria == option.criteria {
-                            Label(option.title, systemImage: "checkmark")
-                        } else {
-                            Text(option.title)
-                        }
+                        Text(tag)
+                            .font(.subheadline)
+                            .fontWeight(.medium)
+                            .lineLimit(1)
+                            .padding(.horizontal, 12)
+                            .padding(.vertical, 6)
+                            .foregroundStyle(currentTag == tag ? .white : (colorScheme == .dark ? .white : .black))
+                            .background(currentTag == tag ? Color.accentColor : Color(.systemGray5))
+                            .clipShape(Capsule())
                     }
                 }
-            } label: {
-                Label("Sort Order", systemImage: "arrow.up.arrow.down")
             }
-            .menuOrder(.fixed)
+            .padding(.horizontal)
+            .frame(height: 32)
+        }
+    }
 
-            Button {
-                showTokenAddSheet.toggle()
-            } label: {
-                Image(systemName: "plus")
+    private func ToolbarContent() -> some ToolbarContent {
+        Group {
+            ToolbarItemGroup(placement: .topBarLeading) {
+                Menu {
+                    Button {
+                        currentTag = "All"
+                    } label: {
+                        HStack {
+                            Text("All")
+                            if currentTag == "All" {
+                                Image(systemName: "checkmark")
+                            }
+                        }
+                    }
+                    ForEach(Array(stateService.tags), id: \.self) { tag in
+                        if tag != "All" {
+                            Button {
+                                currentTag = tag
+                            } label: {
+                                HStack {
+                                    Text(tag)
+                                    if currentTag == tag {
+                                        Image(systemName: "checkmark")
+                                    }
+                                }
+                            }
+                        }
+                    }
+//                    Divider()
+//                    Button {
+//                        showTagsManagementSheet = true
+//                    } label: {
+//                        Text("Manage Tags")
+//                    }
+                } label: {
+                    Label("Tag", systemImage: "tag")
+                }
+                .menuOrder(.fixed)
+            }
+
+            ToolbarItemGroup(placement: .navigationBarTrailing) {
+                Menu {
+                    ForEach(sortOptions, id: \.criteria) { option in
+                        Button {
+                            sortCriteria = option.criteria
+                        } label: {
+                            if sortCriteria == option.criteria {
+                                Label(option.title, systemImage: "checkmark")
+                            } else {
+                                Text(option.title)
+                            }
+                        }
+                    }
+                } label: {
+                    Label("Sort Order", systemImage: "arrow.up.arrow.down")
+                }
+                .menuOrder(.fixed)
+
+                Button {
+                    showTokenAddSheet.toggle()
+                } label: {
+                    Image(systemName: "plus")
+                }
             }
         }
     }
@@ -184,11 +270,11 @@ struct TokensTab: View {
             return
         }
 
-        if encryptedTokens.hashValue == tokenPairsCache.encryptedTokensHash {
-            tokenPairs = tokenPairsCache.tokenPairs
-            sortAndFilterTokenPairs()
-            return
-        }
+//        if encryptedTokens.hashValue == tokenPairsCache.encryptedTokensHash {
+//            tokenPairs = tokenPairsCache.tokenPairs
+//            sortAndFilterTokenPairs()
+//            return
+//        }
 
         let decryptedPairs: [TokenPair] = encryptedTokens.compactMap { encToken in
             guard let decryptedToken = cryptoService.decryptToken(encryptedToken: encToken) else {
@@ -196,6 +282,12 @@ struct TokensTab: View {
             }
             return TokenPair(id: encToken.id, token: decryptedToken, encToken: encToken)
         }
+
+        stateService.tags = Set(
+            decryptedPairs
+                .flatMap { $0.token.tags ?? [] }
+                .sorted { $0.localizedCaseInsensitiveCompare($1) == .orderedAscending }
+        )
 
         tokenPairsCache.update(encryptedTokensHash: encryptedTokens.hashValue, tokenPairs: decryptedPairs)
         tokenPairs = decryptedPairs
@@ -205,9 +297,16 @@ struct TokensTab: View {
     private func sortAndFilterTokenPairs() {
         tokenPairs = tokenPairsCache.tokenPairs
             .filter { tokenPair in
-                searchQuery.isEmpty ||
-                    tokenPair.token.issuer.localizedCaseInsensitiveContains(searchQuery) ||
-                    tokenPair.token.account.localizedCaseInsensitiveContains(searchQuery)
+                if currentTag == "All" {
+                    return searchQuery.isEmpty ||
+                        tokenPair.token.issuer.localizedCaseInsensitiveContains(searchQuery) ||
+                        tokenPair.token.account.localizedCaseInsensitiveContains(searchQuery)
+                }
+
+                return (tokenPair.token.tags?.contains(currentTag) ?? false) &&
+                    (searchQuery.isEmpty ||
+                        tokenPair.token.issuer.localizedCaseInsensitiveContains(searchQuery) ||
+                        tokenPair.token.account.localizedCaseInsensitiveContains(searchQuery))
             }
             .sorted { token1, token2 in
                 let pinned1 = token1.token.pinned ?? false

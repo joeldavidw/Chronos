@@ -2,7 +2,6 @@ import Factory
 import SwiftUI
 
 struct AddManualTokenView: View {
-    @Environment(\.dismiss) var dismiss
     @Environment(\.colorScheme) var colorScheme
 
     @State var showSecret: Bool = false
@@ -15,22 +14,25 @@ struct AddManualTokenView: View {
     @State private var digits: Int = 6
     @State private var counter: Int = 0
     @State private var period: Int = 30
+    @State private var tags: Set<String>
 
     let cryptoService = Container.shared.cryptoService()
     let vaultService = Container.shared.vaultService()
 
-    let parentDismiss: DismissAction
+    var dismissAction: DismissAction
 
-    init(_parentDismiss: DismissAction) {
-        _issuer = State(initialValue: "")
-        _account = State(initialValue: "")
-        _secret = State(initialValue: "")
-        _type = State(initialValue: TokenTypeEnum.TOTP)
-        _algorithm = State(initialValue: TokenAlgorithmEnum.SHA1)
-        _digits = State(initialValue: 6)
-        _counter = State(initialValue: 0)
-        _period = State(initialValue: 30)
-        parentDismiss = _parentDismiss
+    init(dismissAction: DismissAction, token: Token? = nil) {
+        _issuer = State(initialValue: token?.issuer ?? "")
+        _account = State(initialValue: token?.account ?? "")
+        _secret = State(initialValue: token?.secret ?? "")
+        _type = State(initialValue: token?.type ?? TokenTypeEnum.TOTP)
+        _algorithm = State(initialValue: token?.algorithm ?? TokenAlgorithmEnum.SHA1)
+        _digits = State(initialValue: token?.digits ?? 6)
+        _counter = State(initialValue: token?.counter ?? 0)
+        _period = State(initialValue: token?.period ?? 30)
+        _tags = State(initialValue: token?.tags ?? [])
+
+        self.dismissAction = dismissAction
     }
 
     var body: some View {
@@ -46,6 +48,16 @@ struct AddManualTokenView: View {
                     TextField("Account", text: $account)
                         .disableAutocorrection(true)
                         .autocapitalization(/*@START_MENU_TOKEN@*/ .none/*@END_MENU_TOKEN@*/)
+                }
+                LabeledContent("Tags") {
+                    NavigationLink {
+                        TokenTagsSelectionView(selectedTags: $tags)
+                    } label: {
+                        HStack {
+                            Spacer()
+                            Text(tags.joined(separator: ", "))
+                        }
+                    }
                 }
                 LabeledContent("Secret") {
                     Group {
@@ -115,11 +127,7 @@ struct AddManualTokenView: View {
                 }
             }
         }
-
         .multilineTextAlignment(.trailing)
-        .navigationBarItems(leading: Button("Cancel", action: {
-            dismiss()
-        }))
         .navigationBarItems(trailing: Button("Save", action: {
             let newToken = Token()
             newToken.issuer = issuer
@@ -130,12 +138,12 @@ struct AddManualTokenView: View {
             newToken.digits = digits
             newToken.counter = counter
             newToken.period = period
+            newToken.tags = tags
 
             let newEncToken = cryptoService.encryptToken(token: newToken)
             vaultService.insertEncryptedToken(newEncToken)
 
-            parentDismiss()
-            dismiss()
+            dismissAction()
         }).disabled(!isValid))
     }
 }
@@ -151,6 +159,7 @@ extension AddManualTokenView {
         tempToken.digits = digits
         tempToken.counter = counter
         tempToken.period = period
+        tempToken.tags = tags
 
         return tempToken.isValid
     }

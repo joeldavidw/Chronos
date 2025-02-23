@@ -30,4 +30,8 @@ extension Container {
     var importService: Factory<ImportService> {
         Factory(self) { ImportService() }
     }
+
+    var tagService: Factory<TagService> {
+        Factory(self) { TagService() }
+    }
 }

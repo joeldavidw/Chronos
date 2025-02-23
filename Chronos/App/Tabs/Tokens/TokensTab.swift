@@ -107,6 +107,7 @@ struct TokensTab: View {
             .sheet(isPresented: $showTokenAddSheet) {
                 NavigationStack {
                     AddTokenView()
+                        .presentationDragIndicator(.visible)
                 }
             }
             .animation(.default, value: UUID())

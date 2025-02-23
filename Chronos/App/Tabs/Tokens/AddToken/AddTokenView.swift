@@ -20,6 +20,7 @@ struct AddTokenView: View {
                 Text("Scan 2FA QR code or enter token details manually")
                     .font(.caption)
             }
+            .padding(.top, 8)
 
             VStack {
                 if !unableToAccessCamera {
@@ -47,7 +48,6 @@ struct AddTokenView: View {
                         .padding(.top, 4)
                         Spacer()
                     }
-                    .frame(height: 200, alignment: .center)
                     .frame(minWidth: 0, maxWidth: .infinity)
                     .background(.black)
                     .cornerRadius(8)
@@ -65,9 +65,13 @@ struct AddTokenView: View {
                 .padding(.vertical, 8)
                 .navigationDestination(isPresented: $showTokenManualAddSheet) {
                     AddManualTokenView(dismissAction: dismiss)
+                        .interactiveDismissDisabled(true)
+                        .presentationDragIndicator(.hidden)
                 }
                 .navigationDestination(isPresented: $showTokenAddSheet) {
                     AddManualTokenView(dismissAction: dismiss, token: newToken)
+                        .interactiveDismissDisabled(true)
+                        .presentationDragIndicator(.hidden)
                 }
             }
             .padding(.top, 16)

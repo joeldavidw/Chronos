@@ -71,20 +71,12 @@ struct TokensTab: View {
     var body: some View {
         NavigationStack {
             TagsScrollBar()
-                .sheet(isPresented: $showTagsManagementSheet) {
-                    NavigationStack {
-                        TagManagementView(tokenPairs: tokenPairs)
-                    }
-                }
-                .onChange(of: showTagsManagementSheet) {
-                    if !stateService.tags.contains(currentTag) {
-                        currentTag = "All"
-                    }
-                }
             List(tokenPairs) { tokenPair in
                 TokenRowView(tokenPair: tokenPair, timer: timer, triggerSortAndFilterTokenPairs: self.sortAndFilterTokenPairs)
             }
-            .onAppear { Task { await updateTokenPairs() }}
+            .onAppear {
+                Task { await updateTokenPairs() }
+            }
             .onChange(of: encryptedTokens) { _, _ in
                 Task { await updateTokenPairs() }
             }
@@ -169,23 +161,33 @@ struct TokensTab: View {
                     Button {
                         currentTag = "All"
                     } label: {
-                        Label("All", systemImage: currentTag == "All" ? "checkmark" : "")
+                        HStack {
+                            Text("All")
+                            if currentTag == "All" {
+                                Image(systemName: "checkmark")
+                            }
+                        }
                     }
                     ForEach(Array(stateService.tags), id: \.self) { tag in
                         if tag != "All" {
                             Button {
                                 currentTag = tag
                             } label: {
-                                Label(tag, systemImage: currentTag == tag ? "checkmark" : "")
+                                HStack {
+                                    Text(tag)
+                                    if currentTag == tag {
+                                        Image(systemName: "checkmark")
+                                    }
+                                }
                             }
                         }
                     }
-                    Divider()
-                    Button {
-                        showTagsManagementSheet = true
-                    } label: {
-                        Text("Manage Tags")
-                    }
+//                    Divider()
+//                    Button {
+//                        showTagsManagementSheet = true
+//                    } label: {
+//                        Text("Manage Tags")
+//                    }
                 } label: {
                     Label("Tag", systemImage: "tag")
                 }
@@ -268,11 +270,11 @@ struct TokensTab: View {
             return
         }
 
-        if encryptedTokens.hashValue == tokenPairsCache.encryptedTokensHash {
-            tokenPairs = tokenPairsCache.tokenPairs
-            sortAndFilterTokenPairs()
-            return
-        }
+//        if encryptedTokens.hashValue == tokenPairsCache.encryptedTokensHash {
+//            tokenPairs = tokenPairsCache.tokenPairs
+//            sortAndFilterTokenPairs()
+//            return
+//        }
 
         let decryptedPairs: [TokenPair] = encryptedTokens.compactMap { encToken in
             guard let decryptedToken = cryptoService.decryptToken(encryptedToken: encToken) else {

@@ -31,7 +31,6 @@ struct AddTokenView: View {
                         isPaused: showTokenManualAddSheet,
                         completion: handleScan
                     )
-                    .frame(height: 200, alignment: .center)
                     .frame(minWidth: 0, maxWidth: .infinity)
                     .cornerRadius(8)
                 } else {
@@ -64,20 +63,11 @@ struct AddTokenView: View {
                 }
                 .buttonStyle(.bordered)
                 .padding(.vertical, 8)
-                .sheet(isPresented: $showTokenManualAddSheet) {
-                    NavigationView {
-                        AddManualTokenView(_parentDismiss: dismiss)
-                            .interactiveDismissDisabled(true)
-                    }
+                .navigationDestination(isPresented: $showTokenManualAddSheet) {
+                    AddManualTokenView(dismissAction: dismiss)
                 }
-                .sheet(isPresented: Binding(
-                    get: { showTokenAddSheet && newToken != nil },
-                    set: { showTokenAddSheet = $0 }
-                )) {
-                    NavigationView {
-                        AddManualTokenView(_parentDismiss: dismiss, token: newToken!)
-                            .interactiveDismissDisabled(true)
-                    }
+                .navigationDestination(isPresented: $showTokenAddSheet) {
+                    AddManualTokenView(dismissAction: dismiss, token: newToken)
                 }
             }
             .padding(.top, 16)
@@ -88,8 +78,6 @@ struct AddTokenView: View {
     func handleScan(result: Result<ScanResult, ScanError>) {
         switch result {
         case let .success(result):
-            dismiss()
-
             let otpAuthStr = result.string
             guard otpAuthStr.starts(with: "otpauth://") else {
                 AlertKitAPI.present(
@@ -103,11 +91,8 @@ struct AddTokenView: View {
 
             do {
                 let newToken = try OtpAuthUrlParser.parseOtpAuthUrl(otpAuthStr: otpAuthStr)
-
-                DispatchQueue.main.async {
-                    self.newToken = newToken
-                    showTokenAddSheet = true
-                }
+                self.newToken = newToken
+                showTokenAddSheet = true
             } catch {
                 AlertKitAPI.present(
                     title: "Invalid 2FA QR Code",

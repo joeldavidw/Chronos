@@ -2,7 +2,6 @@ import Factory
 import SwiftUI
 
 struct AddManualTokenView: View {
-    @Environment(\.dismiss) var dismiss
     @Environment(\.colorScheme) var colorScheme
 
     @State var showSecret: Bool = false
@@ -19,11 +18,10 @@ struct AddManualTokenView: View {
 
     let cryptoService = Container.shared.cryptoService()
     let vaultService = Container.shared.vaultService()
-    let stateService = Container.shared.stateService()
 
-    let parentDismiss: DismissAction
+    var dismissAction: DismissAction
 
-    init(_parentDismiss: DismissAction, token: Token? = nil) {
+    init(dismissAction: DismissAction, token: Token? = nil) {
         _issuer = State(initialValue: token?.issuer ?? "")
         _account = State(initialValue: token?.account ?? "")
         _secret = State(initialValue: token?.secret ?? "")
@@ -34,7 +32,7 @@ struct AddManualTokenView: View {
         _period = State(initialValue: token?.period ?? 30)
         _tags = State(initialValue: token?.tags ?? [])
 
-        parentDismiss = _parentDismiss
+        self.dismissAction = dismissAction
     }
 
     var body: some View {
@@ -129,11 +127,7 @@ struct AddManualTokenView: View {
                 }
             }
         }
-
         .multilineTextAlignment(.trailing)
-        .navigationBarItems(leading: Button("Cancel", action: {
-            dismiss()
-        }))
         .navigationBarItems(trailing: Button("Save", action: {
             let newToken = Token()
             newToken.issuer = issuer
@@ -149,8 +143,7 @@ struct AddManualTokenView: View {
             let newEncToken = cryptoService.encryptToken(token: newToken)
             vaultService.insertEncryptedToken(newEncToken)
 
-            parentDismiss()
-            dismiss()
+            dismissAction()
         }).disabled(!isValid))
     }
 }

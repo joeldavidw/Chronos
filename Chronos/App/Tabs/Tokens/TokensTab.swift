@@ -105,14 +105,9 @@ struct TokensTab: View {
                 EmptyStateView()
             }
             .sheet(isPresented: $showTokenAddSheet) {
-                AddTokenView()
-                    .getSheetHeight()
-                    .onPreferenceChange(SheetHeightPreferenceKey.self) { height in
-                        Task { @MainActor in
-                            self.detentHeight = height
-                        }
-                    }
-                    .presentationDetents([.height(self.detentHeight)])
+                NavigationStack {
+                    AddTokenView()
+                }
             }
             .animation(.default, value: UUID())
         }

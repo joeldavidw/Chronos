@@ -23,16 +23,17 @@ struct AddManualTokenView: View {
 
     let parentDismiss: DismissAction
 
-    init(_parentDismiss: DismissAction) {
-        _issuer = State(initialValue: "")
-        _account = State(initialValue: "")
-        _secret = State(initialValue: "")
-        _type = State(initialValue: TokenTypeEnum.TOTP)
-        _algorithm = State(initialValue: TokenAlgorithmEnum.SHA1)
-        _digits = State(initialValue: 6)
-        _counter = State(initialValue: 0)
-        _period = State(initialValue: 30)
-        _tags = State(initialValue: [])
+    init(_parentDismiss: DismissAction, token: Token? = nil) {
+        _issuer = State(initialValue: token?.issuer ?? "")
+        _account = State(initialValue: token?.account ?? "")
+        _secret = State(initialValue: token?.secret ?? "")
+        _type = State(initialValue: token?.type ?? TokenTypeEnum.TOTP)
+        _algorithm = State(initialValue: token?.algorithm ?? TokenAlgorithmEnum.SHA1)
+        _digits = State(initialValue: token?.digits ?? 6)
+        _counter = State(initialValue: token?.counter ?? 0)
+        _period = State(initialValue: token?.period ?? 30)
+        _tags = State(initialValue: token?.tags ?? [])
+
         parentDismiss = _parentDismiss
     }
 

@@ -174,10 +174,6 @@ struct TokensTab: View {
                             }
                         }
                     }
-                    Divider()
-                    Button {} label: {
-                        Text("Manage Tags...")
-                    }
                 } label: {
                     Label("Tag", systemImage: "tag")
                 }

@@ -52,7 +52,7 @@ final class ChronosTests: XCTestCase {
         XCTAssertEqual(tokens[1].period, 30)
         XCTAssertEqual(tokens[1].secret, "ff")
     }
-    
+
     func testValidWithAdditionalDataImport() throws {
         let json: JSON = [
             "tokens": [
@@ -109,7 +109,6 @@ final class ChronosTests: XCTestCase {
         XCTAssertEqual(tokens[1].secret, "ff")
         XCTAssertEqual(tokens[1].pinned, false)
         XCTAssertEqual(tokens[1].tags, [])
-
     }
 
     func testInvalidImport_MissingVariables() throws {

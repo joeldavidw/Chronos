@@ -32,11 +32,11 @@ struct TagUpdateView: View {
             for tokenPair in tokenPairs {
                 if tokenPair.token.tags?.contains(selectedTag) ?? false {
                     tokenPair.token.tags?.remove(selectedTag)
-                    
+
                     if selectedTokenPair.contains(where: { $0.id == tokenPair.id }) {
                         tokenPair.token.tags?.insert(newTag)
                     }
-                    
+
                     cryptoService.updateEncryptedToken(encryptedToken: tokenPair.encToken, token: tokenPair.token)
                 }
             }

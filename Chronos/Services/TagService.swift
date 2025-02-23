@@ -14,7 +14,7 @@ public class TagService {
         let isNotEmpty = !tempTag.isEmpty
         let isUnique = !stateService.tags.contains { $0.caseInsensitiveCompare(tempTag) == .orderedSame }
         let hasValidCharacters = tempTag.range(of: "^[\\p{L}0-9_\\s\\p{P}\\p{S}]+$", options: .regularExpression) != nil
-        let hasValidLength = (1...20).contains(tempTag.count)
+        let hasValidLength = (1 ... 20).contains(tempTag.count)
 
         return isNotEmpty && isUnique && hasValidCharacters && hasValidLength
     }

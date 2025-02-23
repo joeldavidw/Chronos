@@ -20,7 +20,7 @@ struct UpdateTokenView: View {
     @State private var digits: Int
     @State private var counter: Int
     @State private var period: Int
-    @State private var tags: [String]
+    @State private var tags: Set<String>
 
     @State var showSecret: Bool = false
 

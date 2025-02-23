@@ -14,7 +14,7 @@ struct AddManualTokenView: View {
     @State private var digits: Int = 6
     @State private var counter: Int = 0
     @State private var period: Int = 30
-    @State private var tags: [String]
+    @State private var tags: Set<String>
 
     let cryptoService = Container.shared.cryptoService()
     let vaultService = Container.shared.vaultService()

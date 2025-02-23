@@ -38,6 +38,7 @@ struct TokensTab: View {
     @Environment(\.colorScheme) var colorScheme
 
     @State private var showTokenAddSheet = false
+    @State private var showTagsManagementSheet = false
     @State private var detentHeight: CGFloat = 0
     @State private var sortCriteria: TokenSortOrder = .ISSUER_ASC
     @State private var searchQuery = ""
@@ -70,11 +71,20 @@ struct TokensTab: View {
     var body: some View {
         NavigationStack {
             TagsScrollBar()
-
+                .sheet(isPresented: $showTagsManagementSheet) {
+                    NavigationStack {
+                        TagManagementView(tokenPairs: tokenPairs)
+                    }
+                }
+                .onChange(of: showTagsManagementSheet) {
+                    if !stateService.tags.contains(currentTag) {
+                        currentTag = "All"
+                    }
+                }
             List(tokenPairs) { tokenPair in
                 TokenRowView(tokenPair: tokenPair, timer: timer, triggerSortAndFilterTokenPairs: self.sortAndFilterTokenPairs)
             }
-            .onAppear { Task { await updateTokenPairs() } }
+            .onAppear { Task { await updateTokenPairs() }}
             .onChange(of: encryptedTokens) { _, _ in
                 Task { await updateTokenPairs() }
             }
@@ -131,7 +141,7 @@ struct TokensTab: View {
                         .clipShape(Capsule())
                 }
 
-                ForEach(stateService.tags, id: \.self) { tag in
+                ForEach(Array(stateService.tags), id: \.self) { tag in
                     Button {
                         currentTag = tag
                     } label: {
@@ -161,7 +171,7 @@ struct TokensTab: View {
                     } label: {
                         Label("All", systemImage: currentTag == "All" ? "checkmark" : "")
                     }
-                    ForEach(stateService.tags, id: \.self) { tag in
+                    ForEach(Array(stateService.tags), id: \.self) { tag in
                         if tag != "All" {
                             Button {
                                 currentTag = tag
@@ -169,6 +179,12 @@ struct TokensTab: View {
                                 Label(tag, systemImage: currentTag == tag ? "checkmark" : "")
                             }
                         }
+                    }
+                    Divider()
+                    Button {
+                        showTagsManagementSheet = true
+                    } label: {
+                        Text("Manage Tags")
                     }
                 } label: {
                     Label("Tag", systemImage: "tag")
@@ -265,9 +281,11 @@ struct TokensTab: View {
             return TokenPair(id: encToken.id, token: decryptedToken, encToken: encToken)
         }
 
-        stateService.tags = Array(Set(decryptedPairs.flatMap { tokenPair in
-            tokenPair.token.tags ?? []
-        })).sorted { $0.localizedCaseInsensitiveCompare($1) == .orderedAscending }
+        stateService.tags = Set(
+            decryptedPairs
+                .flatMap { $0.token.tags ?? [] }
+                .sorted { $0.localizedCaseInsensitiveCompare($1) == .orderedAscending }
+        )
 
         tokenPairsCache.update(encryptedTokensHash: encryptedTokens.hashValue, tokenPairs: decryptedPairs)
         tokenPairs = decryptedPairs

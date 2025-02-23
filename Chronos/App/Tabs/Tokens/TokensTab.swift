@@ -113,6 +113,9 @@ struct TokensTab: View {
                 }
             }
             .animation(.default, value: UUID())
+            .navigationDestination(isPresented: $showTagsManagementSheet) {
+                TagManagementView()
+            }
         }
     }
 
@@ -182,12 +185,12 @@ struct TokensTab: View {
                             }
                         }
                     }
-//                    Divider()
-//                    Button {
-//                        showTagsManagementSheet = true
-//                    } label: {
-//                        Text("Manage Tags")
-//                    }
+                    Divider()
+                    Button {
+                        showTagsManagementSheet = true
+                    } label: {
+                        Text("Manage Tags")
+                    }
                 } label: {
                     Label("Tag", systemImage: "tag")
                 }

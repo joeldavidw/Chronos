@@ -82,6 +82,8 @@ struct TokenRowView: View {
                 }
             }
         }
+        .listRowSeparator(.hidden, edges: .top)
+        .listRowSeparator(.visible, edges: .bottom)
         .contentShape(Rectangle())
         .padding(CGFloat(4))
         .onTapGesture {

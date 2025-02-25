@@ -33,17 +33,20 @@ struct MainAppView: View {
             PrivacyView()
         } else {
             TabView(selection: $currentTab) {
-                TokensTab()
-                    .tag("Tokens")
-                    .tabItem {
-                        Label("Tokens", systemImage: "lock.fill")
-                    }
+                Group {
+                    TokensTab()
+                        .tag("Tokens")
+                        .tabItem {
+                            Label("Tokens", systemImage: "lock.fill")
+                        }
 
-                SettingsTab()
-                    .tag("Settings")
-                    .tabItem {
-                        Label("Settings", systemImage: "gearshape")
-                    }
+                    SettingsTab()
+                        .tag("Settings")
+                        .tabItem {
+                            Label("Settings", systemImage: "gearshape")
+                        }
+                }
+                .toolbarBackground(.visible, for: .tabBar)
             }
             .onAppear {
                 if filteredVault.isEmpty {

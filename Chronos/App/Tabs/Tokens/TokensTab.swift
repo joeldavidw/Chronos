@@ -100,6 +100,7 @@ struct TokensTab: View {
             .toolbar {
                 ToolbarContent()
             }
+            .toolbarBackground(isSearchablePresented ? .visible : .hidden, for: .navigationBar)
             .overlay {
                 EmptyStateView()
             }
@@ -117,7 +118,6 @@ struct TokensTab: View {
             .safeAreaInset(edge: .top) {
                 if !isSearchablePresented {
                     TagsScrollBar()
-                        .animation(nil, value: UUID())
                 } else {
                     Divider()
                 }

@@ -48,6 +48,7 @@ struct TokensTab: View {
     @State private var tokenPairs: [TokenPair] = []
     @State private var tokenPairsCache = TokenPairsCache()
     @State private var debounceTimer: Timer?
+    @State private var isSearchablePresented: Bool = false
 
     let cryptoService = Container.shared.cryptoService()
     let stateService = Container.shared.stateService()
@@ -70,7 +71,6 @@ struct TokensTab: View {
 
     var body: some View {
         NavigationStack {
-            TagsScrollBar()
             List(tokenPairs) { tokenPair in
                 TokenRowView(tokenPair: tokenPair, timer: timer, triggerSortAndFilterTokenPairs: self.sortAndFilterTokenPairs)
             }
@@ -97,11 +97,19 @@ struct TokensTab: View {
             .listStyle(.plain)
             .navigationTitle(currentTag == "All" ? "Tokens" : currentTag)
             .navigationBarTitleDisplayMode(.inline)
-            .searchable(text: $searchQuery,
-                        placement: .navigationBarDrawer(displayMode: .always),
-                        prompt: Text(currentTag == "All" ? "Search tokens" : "Search \"\(currentTag)\" tokens"))
             .toolbar {
                 ToolbarContent()
+            }
+            .searchable(text: $searchQuery,
+                        isPresented: $isSearchablePresented,
+                        placement: .navigationBarDrawer(displayMode: .automatic),
+                        prompt: Text(currentTag == "All" ? "Search tokens" : "Search \"\(currentTag)\" tokens"))
+            .safeAreaInset(edge: .top) {
+                if !isSearchablePresented {
+                    TagsScrollBar()
+                } else {
+                    Divider()
+                }
             }
             .overlay {
                 EmptyStateView()
@@ -117,40 +125,46 @@ struct TokensTab: View {
     }
 
     private func TagsScrollBar() -> some View {
-        ScrollView(.horizontal, showsIndicators: false) {
-            LazyHStack(spacing: 8) {
-                Button {
-                    currentTag = "All"
-                } label: {
-                    Text("All")
-                        .font(.subheadline)
-                        .fontWeight(.medium)
-                        .lineLimit(1)
-                        .padding(.horizontal, 12)
-                        .padding(.vertical, 6)
-                        .foregroundStyle(currentTag == "All" ? .white : (colorScheme == .dark ? .white : .black))
-                        .background(currentTag == "All" ? Color.accentColor : Color(.systemGray5))
-                        .clipShape(Capsule())
-                }
-
-                ForEach(Array(stateService.tags), id: \.self) { tag in
+        VStack(spacing: 0) {
+            ScrollView(.horizontal, showsIndicators: false) {
+                LazyHStack(spacing: 8) {
                     Button {
-                        currentTag = tag
+                        currentTag = "All"
                     } label: {
-                        Text(tag)
+                        Text("All")
                             .font(.subheadline)
                             .fontWeight(.medium)
                             .lineLimit(1)
                             .padding(.horizontal, 12)
                             .padding(.vertical, 6)
-                            .foregroundStyle(currentTag == tag ? .white : (colorScheme == .dark ? .white : .black))
-                            .background(currentTag == tag ? Color.accentColor : Color(.systemGray5))
+                            .foregroundStyle(currentTag == "All" ? .white : (colorScheme == .dark ? .white : .black))
+                            .background(currentTag == "All" ? Color.accentColor : Color(.systemGray5))
                             .clipShape(Capsule())
                     }
+
+                    ForEach(Array(stateService.tags).sorted(), id: \.self) { tag in
+                        Button {
+                            currentTag = tag
+                        } label: {
+                            Text(tag)
+                                .font(.subheadline)
+                                .fontWeight(.medium)
+                                .lineLimit(1)
+                                .padding(.horizontal, 12)
+                                .padding(.vertical, 6)
+                                .foregroundStyle(currentTag == tag ? .white : (colorScheme == .dark ? .white : .black))
+                                .background(currentTag == tag ? Color.accentColor : Color(.systemGray5))
+                                .clipShape(Capsule())
+                        }
+                    }
                 }
+                .padding(.horizontal)
+                .frame(height: 32)
             }
-            .padding(.horizontal)
-            .frame(height: 32)
+            .padding(.bottom, 8)
+            .background(Color.clear.overlay(.ultraThinMaterial))
+
+            Divider()
         }
     }
 
@@ -168,7 +182,7 @@ struct TokensTab: View {
                             }
                         }
                     }
-                    ForEach(Array(stateService.tags), id: \.self) { tag in
+                    ForEach(Array(stateService.tags).sorted(), id: \.self) { tag in
                         if tag != "All" {
                             Button {
                                 currentTag = tag
@@ -270,11 +284,11 @@ struct TokensTab: View {
             return
         }
 
-//        if encryptedTokens.hashValue == tokenPairsCache.encryptedTokensHash {
-//            tokenPairs = tokenPairsCache.tokenPairs
-//            sortAndFilterTokenPairs()
-//            return
-//        }
+        if encryptedTokens.hashValue == tokenPairsCache.encryptedTokensHash {
+            tokenPairs = tokenPairsCache.tokenPairs
+            sortAndFilterTokenPairs()
+            return
+        }
 
         let decryptedPairs: [TokenPair] = encryptedTokens.compactMap { encToken in
             guard let decryptedToken = cryptoService.decryptToken(encryptedToken: encToken) else {

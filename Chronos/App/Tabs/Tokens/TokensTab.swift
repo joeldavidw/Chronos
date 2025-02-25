@@ -100,17 +100,6 @@ struct TokensTab: View {
             .toolbar {
                 ToolbarContent()
             }
-            .searchable(text: $searchQuery,
-                        isPresented: $isSearchablePresented,
-                        placement: .navigationBarDrawer(displayMode: .automatic),
-                        prompt: Text(currentTag == "All" ? "Search tokens" : "Search \"\(currentTag)\" tokens"))
-            .safeAreaInset(edge: .top) {
-                if !isSearchablePresented {
-                    TagsScrollBar()
-                } else {
-                    Divider()
-                }
-            }
             .overlay {
                 EmptyStateView()
             }
@@ -121,6 +110,18 @@ struct TokensTab: View {
                 }
             }
             .animation(.default, value: UUID())
+            .searchable(text: $searchQuery,
+                        isPresented: $isSearchablePresented,
+                        placement: .navigationBarDrawer(displayMode: .automatic),
+                        prompt: Text(currentTag == "All" ? "Search tokens" : "Search \"\(currentTag)\" tokens"))
+            .safeAreaInset(edge: .top) {
+                if !isSearchablePresented {
+                    TagsScrollBar()
+                        .animation(nil, value: UUID())
+                } else {
+                    Divider()
+                }
+            }
         }
     }
 

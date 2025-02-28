@@ -15,32 +15,40 @@ struct TagUpdateView: View {
     var tokenPairs: [TokenPair]
     @State var selectedTag: String
 
-    @State var selectedTokenPair: [TokenPair] = []
+    @State var initialTokenPairs: [TokenPair] = []
+    @State var selectedTokenPairs: [TokenPair] = []
 
     var body: some View {
         VStack {
-            TagCreationUpdateForm(newTag: $newTag, showTokenAdditionSheet: $showTokenAdditionSheet, selectedTokenPair: $selectedTokenPair)
+            TagCreationUpdateForm(newTag: $newTag, showTokenAdditionSheet: $showTokenAdditionSheet, selectedTokenPair: $selectedTokenPairs)
         }
         .onAppear {
             newTag = selectedTag
-            selectedTokenPair = tokenPairs.filter { ($0.token.tags ?? []).contains(selectedTag) }
+            initialTokenPairs = tokenPairs.filter { ($0.token.tags ?? []).contains(selectedTag) }
+            selectedTokenPairs = tokenPairs.filter { ($0.token.tags ?? []).contains(selectedTag) }
         }
         .background(Color(.systemGray6))
         .navigationTitle("Update \"\(selectedTag)\" Tag")
         .navigationBarTitleDisplayMode(.inline)
-        .navigationBarItems(trailing: Button(selectedTokenPair.isEmpty ? "Delete" : "Done") {
-            for tokenPair in tokenPairs {
+        .navigationBarItems(trailing: Button(selectedTokenPairs.isEmpty ? "Delete" : "Done") {
+            let toRemove = initialTokenPairs.filter { item in
+                !selectedTokenPairs.contains(where: { $0.id == item.id })
+            }
+            for tokenPair in toRemove {
                 tokenPair.token.tags?.remove(selectedTag)
+                cryptoService.updateEncryptedToken(encryptedToken: tokenPair.encToken, token: tokenPair.token)
+            }
 
-                if selectedTokenPair.contains(where: { $0.id == tokenPair.id }) {
-                    tokenPair.token.tags?.insert(newTag)
-                }
-
+            let toAdd = selectedTokenPairs.filter { item in
+                !initialTokenPairs.contains(where: { $0.id == item.id })
+            }
+            for tokenPair in toAdd {
+                tokenPair.token.tags?.insert(selectedTag)
                 cryptoService.updateEncryptedToken(encryptedToken: tokenPair.encToken, token: tokenPair.token)
             }
 
             stateService.tags.remove(selectedTag)
-            if !selectedTokenPair.isEmpty {
+            if !selectedTokenPairs.isEmpty {
                 stateService.tags.insert(newTag)
             }
 
@@ -49,7 +57,7 @@ struct TagUpdateView: View {
         .disabled(!isValid))
         .sheet(isPresented: $showTokenAdditionSheet) {
             NavigationStack {
-                TagTokenSelectionView(tokenPairs: tokenPairs, selectedTokenPair: $selectedTokenPair)
+                TagTokenSelectionView(tokenPairs: tokenPairs, selectedTokenPair: $selectedTokenPairs)
             }
         }
     }

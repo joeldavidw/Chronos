@@ -112,7 +112,8 @@ struct TokensTab: View {
             }
             .animation(.default, value: UUID())
             .navigationDestination(isPresented: $showTagsManagementSheet) {
-                TagManagementView()
+                TagManagementView(tokenPairs: tokenPairs)
+            }
             .searchable(text: $searchQuery,
                         isPresented: $isSearchablePresented,
                         placement: .navigationBarDrawer(displayMode: .automatic),

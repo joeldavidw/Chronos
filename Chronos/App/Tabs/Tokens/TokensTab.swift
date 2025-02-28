@@ -111,6 +111,9 @@ struct TokensTab: View {
                 }
             }
             .animation(.default, value: UUID())
+            .navigationDestination(isPresented: $showTagsManagementSheet) {
+                TagManagementView(tokenPairs: tokenPairs)
+            }
             .searchable(text: $searchQuery,
                         isPresented: $isSearchablePresented,
                         placement: .navigationBarDrawer(displayMode: .automatic),
@@ -197,12 +200,12 @@ struct TokensTab: View {
                             }
                         }
                     }
-//                    Divider()
-//                    Button {
-//                        showTagsManagementSheet = true
-//                    } label: {
-//                        Text("Manage Tags")
-//                    }
+                    Divider()
+                    Button {
+                        showTagsManagementSheet = true
+                    } label: {
+                        Text("Manage Tags")
+                    }
                 } label: {
                     Label("Tag", systemImage: "tag")
                 }

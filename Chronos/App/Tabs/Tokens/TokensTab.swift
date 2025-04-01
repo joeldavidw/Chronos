@@ -22,16 +22,6 @@ let sortOptions: [(title: String, criteria: TokenSortOrder)] = [
     ("Account (Z - A)", .ACCOUNT_DESC),
 ]
 
-class TokenPairsCache {
-    var encryptedTokensHash: Int = 0
-    var tokenPairs: [TokenPair] = []
-
-    func update(encryptedTokensHash: Int, tokenPairs: [TokenPair]) {
-        self.encryptedTokensHash = encryptedTokensHash
-        self.tokenPairs = tokenPairs
-    }
-}
-
 struct TokensTab: View {
     @Query private var vaults: [Vault]
     @EnvironmentObject var loginStatus: LoginStatus
@@ -46,7 +36,6 @@ struct TokensTab: View {
     @State private var currentTag = "All"
 
     @State private var tokenPairs: [TokenPair] = []
-    @State private var tokenPairsCache = TokenPairsCache()
     @State private var debounceTimer: Timer?
     @State private var isSearchablePresented: Bool = false
 
@@ -72,7 +61,7 @@ struct TokensTab: View {
     var body: some View {
         NavigationStack {
             List(tokenPairs) { tokenPair in
-                TokenRowView(tokenPair: tokenPair, timer: timer, triggerSortAndFilterTokenPairs: self.sortAndFilterTokenPairs)
+                TokenRowView(tokenPair: tokenPair, timer: timer)
             }
             .onAppear {
                 Task { await updateTokenPairs() }
@@ -81,18 +70,16 @@ struct TokensTab: View {
                 Task { await updateTokenPairs() }
             }
             .onChange(of: sortCriteria) { _, _ in
-                sortAndFilterTokenPairs()
+                Task { await updateTokenPairs() }
             }
             .onChange(of: searchQuery) { _, _ in
                 debounceTimer?.invalidate()
                 debounceTimer = Timer.scheduledTimer(withTimeInterval: 0.15, repeats: false) { _ in
-                    Task {
-                        await sortAndFilterTokenPairs()
-                    }
+                    Task { await updateTokenPairs() }
                 }
             }
             .onChange(of: currentTag) { _, _ in
-                sortAndFilterTokenPairs()
+                Task { await updateTokenPairs() }
             }
             .listStyle(.plain)
             .navigationTitle(currentTag == "All" ? "Tokens" : currentTag)
@@ -111,6 +98,9 @@ struct TokensTab: View {
                 }
             }
             .animation(.default, value: UUID())
+            .navigationDestination(isPresented: $showTagsManagementSheet) {
+                TagManagementView()
+            }
             .searchable(text: $searchQuery,
                         isPresented: $isSearchablePresented,
                         placement: .navigationBarDrawer(displayMode: .automatic),
@@ -127,44 +117,52 @@ struct TokensTab: View {
 
     private func TagsScrollBar() -> some View {
         VStack(spacing: 0) {
-            ScrollView(.horizontal, showsIndicators: false) {
-                LazyHStack(spacing: 8) {
-                    Button {
-                        currentTag = "All"
-                    } label: {
-                        Text("All")
-                            .font(.subheadline)
-                            .fontWeight(.medium)
-                            .lineLimit(1)
-                            .padding(.horizontal, 12)
-                            .padding(.vertical, 6)
-                            .foregroundStyle(currentTag == "All" ? .white : (colorScheme == .dark ? .white : .black))
-                            .background(currentTag == "All" ? Color.accentColor : Color(.systemGray5))
-                            .clipShape(Capsule())
-                    }
-
-                    ForEach(Array(stateService.tags).sorted(), id: \.self) { tag in
+            ScrollViewReader { scrollProxy in
+                ScrollView(.horizontal, showsIndicators: false) {
+                    LazyHStack(spacing: 8) {
                         Button {
-                            currentTag = tag
+                            currentTag = "All"
                         } label: {
-                            Text(tag)
+                            Text("All")
                                 .font(.subheadline)
                                 .fontWeight(.medium)
                                 .lineLimit(1)
                                 .padding(.horizontal, 12)
                                 .padding(.vertical, 6)
-                                .foregroundStyle(currentTag == tag ? .white : (colorScheme == .dark ? .white : .black))
-                                .background(currentTag == tag ? Color.accentColor : Color(.systemGray5))
+                                .foregroundStyle(currentTag == "All" ? .white : (colorScheme == .dark ? .white : .black))
+                                .background(currentTag == "All" ? Color.accentColor : Color(.systemGray5))
                                 .clipShape(Capsule())
                         }
+                        .id("All")
+
+                        ForEach(Array(stateService.tags).sorted(), id: \.self) { tag in
+                            Button {
+                                currentTag = tag
+                            } label: {
+                                Text(tag)
+                                    .font(.subheadline)
+                                    .fontWeight(.medium)
+                                    .lineLimit(1)
+                                    .padding(.horizontal, 12)
+                                    .padding(.vertical, 6)
+                                    .foregroundStyle(currentTag == tag ? .white : (colorScheme == .dark ? .white : .black))
+                                    .background(currentTag == tag ? Color.accentColor : Color(.systemGray5))
+                                    .clipShape(Capsule())
+                            }
+                            .id(tag)
+                        }
+                    }
+                    .padding(.horizontal)
+                    .frame(height: 32)
+                }
+                .padding(.bottom, 8)
+                .background(Color.clear.overlay(.ultraThinMaterial))
+                .onChange(of: currentTag) { _, tag in
+                    withAnimation {
+                        scrollProxy.scrollTo(tag, anchor: .center)
                     }
                 }
-                .padding(.horizontal)
-                .frame(height: 32)
             }
-            .padding(.bottom, 8)
-            .background(Color.clear.overlay(.ultraThinMaterial))
-
             Divider()
         }
     }
@@ -197,12 +195,12 @@ struct TokensTab: View {
                             }
                         }
                     }
-//                    Divider()
-//                    Button {
-//                        showTagsManagementSheet = true
-//                    } label: {
-//                        Text("Manage Tags")
-//                    }
+                    Divider()
+                    Button {
+                        showTagsManagementSheet = true
+                    } label: {
+                        Text("Manage Tags")
+                    }
                 } label: {
                     Label("Tag", systemImage: "tag")
                 }
@@ -285,12 +283,6 @@ struct TokensTab: View {
             return
         }
 
-        if encryptedTokens.hashValue == tokenPairsCache.encryptedTokensHash {
-            tokenPairs = tokenPairsCache.tokenPairs
-            sortAndFilterTokenPairs()
-            return
-        }
-
         let decryptedPairs: [TokenPair] = encryptedTokens.compactMap { encToken in
             guard let decryptedToken = cryptoService.decryptToken(encryptedToken: encToken) else {
                 return nil
@@ -304,13 +296,7 @@ struct TokensTab: View {
                 .sorted { $0.localizedCaseInsensitiveCompare($1) == .orderedAscending }
         )
 
-        tokenPairsCache.update(encryptedTokensHash: encryptedTokens.hashValue, tokenPairs: decryptedPairs)
         tokenPairs = decryptedPairs
-        sortAndFilterTokenPairs()
-    }
-
-    private func sortAndFilterTokenPairs() {
-        tokenPairs = tokenPairsCache.tokenPairs
             .filter { tokenPair in
                 if currentTag == "All" {
                     return searchQuery.isEmpty ||

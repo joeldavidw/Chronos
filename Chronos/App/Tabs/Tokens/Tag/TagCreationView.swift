@@ -17,7 +17,7 @@ struct TagCreationView: View {
 
     var body: some View {
         VStack {
-            TagCreationUpdateForm(newTag: $newTag, showTokenAdditionSheet: $showTokenAdditionSheet, selectedTokenPair: $selectedTokenPair)
+            TagCreationUpdateForm(newTag: $newTag, showTokenAdditionSheet: $showTokenAdditionSheet, selectedTokenPairs: $selectedTokenPair)
         }
         .background(Color(.systemGray6))
         .navigationTitle("New Tag")

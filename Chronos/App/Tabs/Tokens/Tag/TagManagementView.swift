@@ -1,20 +1,20 @@
 import Factory
-import SwiftUI
 import SwiftData
+import SwiftUI
 
 struct TagManagementView: View {
     @Query private var vaults: [Vault]
-    
+
     @Environment(\.dismiss) var dismiss
     @Environment(\.colorScheme) var colorScheme
     @EnvironmentObject var loginStatus: LoginStatus
-    
+
     @State private var tokenPairs: [TokenPair] = []
     @State private var tags: Set<String> = []
 
     private let stateService = Container.shared.stateService()
     private let cryptoService = Container.shared.cryptoService()
-    
+
     private var encryptedTokens: [EncryptedToken] {
         if !loginStatus.loggedIn {
             return []
@@ -28,7 +28,7 @@ struct TagManagementView: View {
 
         return vault.encryptedTokens ?? []
     }
-    
+
     var body: some View {
         VStack {
             List {
@@ -61,7 +61,7 @@ struct TagManagementView: View {
         .navigationTitle("Tags")
         .navigationBarTitleDisplayMode(.inline)
     }
-    
+
     private func updateTokenPairs() async {
         guard loginStatus.loggedIn else {
             tokenPairs = []

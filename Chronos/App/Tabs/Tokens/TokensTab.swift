@@ -287,7 +287,7 @@ struct TokensTab: View {
                 .flatMap { $0.token.tags ?? [] }
                 .sorted { $0.localizedCaseInsensitiveCompare($1) == .orderedAscending }
         )
-        
+
         tokenPairs = decryptedPairs
             .filter { tokenPair in
                 if currentTag == "All" {

@@ -19,7 +19,7 @@ struct TagUpdateView: View {
 
     var body: some View {
         VStack {
-            TagCreationUpdateForm(newTag: $newTag, showTokenAdditionSheet: $showTokenAdditionSheet, selectedTokenPair: $selectedTokenPairs)
+            TagCreationUpdateForm(newTag: $newTag, showTokenAdditionSheet: $showTokenAdditionSheet, selectedTokenPairs: $selectedTokenPairs)
         }
         .onAppear {
             newTag = selectedTag
@@ -37,7 +37,7 @@ struct TagUpdateView: View {
                 tokenPair.token.tags?.remove(selectedTag)
                 cryptoService.updateEncryptedToken(encryptedToken: tokenPair.encToken, token: tokenPair.token)
             }
-            
+
             for tokenPair in selectedTokenPairs {
                 tokenPair.token.tags?.remove(selectedTag)
                 tokenPair.token.tags?.insert(newTag)

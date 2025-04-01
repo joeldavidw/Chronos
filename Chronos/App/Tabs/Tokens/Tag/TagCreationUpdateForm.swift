@@ -5,7 +5,7 @@ struct TagCreationUpdateForm: View {
     @Binding var newTag: String
     @Binding var showTokenAdditionSheet: Bool
 
-    @Binding var selectedTokenPair: [TokenPair]
+    @Binding var selectedTokenPairs: [TokenPair]
 
     var body: some View {
         Form {
@@ -24,7 +24,7 @@ struct TagCreationUpdateForm: View {
                             .labelStyle(.titleAndIcon)
                     }
                 }
-                ForEach(selectedTokenPair, id: \.id) { tokenPair in
+                List(selectedTokenPairs, id: \.id) { tokenPair in
                     VStack(alignment: .leading, spacing: 4) {
                         HStack(spacing: 4) {
                             Text(!tokenPair.token.issuer.isEmpty ? tokenPair.token.issuer : tokenPair.token.account)
@@ -44,6 +44,21 @@ struct TagCreationUpdateForm: View {
                                 .font(.footnote)
                                 .lineLimit(1)
                         }
+                    }
+                    .swipeActions(edge: .trailing) {
+                        Button {
+                            withAnimation {
+                                if let index = selectedTokenPairs.firstIndex(where: { $0.id == tokenPair.id }) {
+                                    selectedTokenPairs.remove(at: index)
+                                }
+                            }
+                        } label: {
+                            VStack(alignment: .center) {
+                                Image(systemName: "trash")
+                                Text("Delete")
+                            }
+                        }
+                        .tint(.red)
                     }
                 }
             }

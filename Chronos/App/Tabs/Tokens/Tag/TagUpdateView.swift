@@ -4,7 +4,6 @@ import SwiftUI
 struct TagUpdateView: View {
     @Environment(\.dismiss) var dismiss
 
-    private let stateService = Container.shared.stateService()
     private let cryptoService = Container.shared.cryptoService()
     private let tagService = Container.shared.tagService()
 
@@ -15,8 +14,8 @@ struct TagUpdateView: View {
     var tokenPairs: [TokenPair]
     @State var selectedTag: String
 
-    @State var initialTokenPairs: [TokenPair] = []
-    @State var selectedTokenPairs: [TokenPair] = []
+    @State private var initialTokenPairs: [TokenPair] = []
+    @State private var selectedTokenPairs: [TokenPair] = []
 
     var body: some View {
         VStack {
@@ -38,18 +37,11 @@ struct TagUpdateView: View {
                 tokenPair.token.tags?.remove(selectedTag)
                 cryptoService.updateEncryptedToken(encryptedToken: tokenPair.encToken, token: tokenPair.token)
             }
-
-            let toAdd = selectedTokenPairs.filter { item in
-                !initialTokenPairs.contains(where: { $0.id == item.id })
-            }
-            for tokenPair in toAdd {
-                tokenPair.token.tags?.insert(selectedTag)
+            
+            for tokenPair in selectedTokenPairs {
+                tokenPair.token.tags?.remove(selectedTag)
+                tokenPair.token.tags?.insert(newTag)
                 cryptoService.updateEncryptedToken(encryptedToken: tokenPair.encToken, token: tokenPair.token)
-            }
-
-            stateService.tags.remove(selectedTag)
-            if !selectedTokenPairs.isEmpty {
-                stateService.tags.insert(newTag)
             }
 
             dismiss()

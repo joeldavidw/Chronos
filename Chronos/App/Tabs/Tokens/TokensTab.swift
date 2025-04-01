@@ -22,16 +22,6 @@ let sortOptions: [(title: String, criteria: TokenSortOrder)] = [
     ("Account (Z - A)", .ACCOUNT_DESC),
 ]
 
-class TokenPairsCache {
-    var encryptedTokensHash: Int = 0
-    var tokenPairs: [TokenPair] = []
-
-    func update(encryptedTokensHash: Int, tokenPairs: [TokenPair]) {
-        self.encryptedTokensHash = encryptedTokensHash
-        self.tokenPairs = tokenPairs
-    }
-}
-
 struct TokensTab: View {
     @Query private var vaults: [Vault]
     @EnvironmentObject var loginStatus: LoginStatus
@@ -46,7 +36,6 @@ struct TokensTab: View {
     @State private var currentTag = "All"
 
     @State private var tokenPairs: [TokenPair] = []
-    @State private var tokenPairsCache = TokenPairsCache()
     @State private var debounceTimer: Timer?
     @State private var isSearchablePresented: Bool = false
 
@@ -72,7 +61,7 @@ struct TokensTab: View {
     var body: some View {
         NavigationStack {
             List(tokenPairs) { tokenPair in
-                TokenRowView(tokenPair: tokenPair, timer: timer, triggerSortAndFilterTokenPairs: self.sortAndFilterTokenPairs)
+                TokenRowView(tokenPair: tokenPair, timer: timer)
             }
             .onAppear {
                 Task { await updateTokenPairs() }
@@ -81,18 +70,16 @@ struct TokensTab: View {
                 Task { await updateTokenPairs() }
             }
             .onChange(of: sortCriteria) { _, _ in
-                sortAndFilterTokenPairs()
+                Task { await updateTokenPairs() }
             }
             .onChange(of: searchQuery) { _, _ in
                 debounceTimer?.invalidate()
                 debounceTimer = Timer.scheduledTimer(withTimeInterval: 0.15, repeats: false) { _ in
-                    Task {
-                        await sortAndFilterTokenPairs()
-                    }
+                    Task { await updateTokenPairs() }
                 }
             }
             .onChange(of: currentTag) { _, _ in
-                sortAndFilterTokenPairs()
+                Task { await updateTokenPairs() }
             }
             .listStyle(.plain)
             .navigationTitle(currentTag == "All" ? "Tokens" : currentTag)
@@ -112,7 +99,7 @@ struct TokensTab: View {
             }
             .animation(.default, value: UUID())
             .navigationDestination(isPresented: $showTagsManagementSheet) {
-                TagManagementView(tokenPairs: tokenPairs)
+                TagManagementView()
             }
             .searchable(text: $searchQuery,
                         isPresented: $isSearchablePresented,
@@ -288,12 +275,6 @@ struct TokensTab: View {
             return
         }
 
-        if encryptedTokens.hashValue == tokenPairsCache.encryptedTokensHash {
-            tokenPairs = tokenPairsCache.tokenPairs
-            sortAndFilterTokenPairs()
-            return
-        }
-
         let decryptedPairs: [TokenPair] = encryptedTokens.compactMap { encToken in
             guard let decryptedToken = cryptoService.decryptToken(encryptedToken: encToken) else {
                 return nil
@@ -306,14 +287,8 @@ struct TokensTab: View {
                 .flatMap { $0.token.tags ?? [] }
                 .sorted { $0.localizedCaseInsensitiveCompare($1) == .orderedAscending }
         )
-
-        tokenPairsCache.update(encryptedTokensHash: encryptedTokens.hashValue, tokenPairs: decryptedPairs)
+        
         tokenPairs = decryptedPairs
-        sortAndFilterTokenPairs()
-    }
-
-    private func sortAndFilterTokenPairs() {
-        tokenPairs = tokenPairsCache.tokenPairs
             .filter { tokenPair in
                 if currentTag == "All" {
                     return searchQuery.isEmpty ||

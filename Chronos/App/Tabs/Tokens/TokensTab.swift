@@ -117,44 +117,52 @@ struct TokensTab: View {
 
     private func TagsScrollBar() -> some View {
         VStack(spacing: 0) {
-            ScrollView(.horizontal, showsIndicators: false) {
-                LazyHStack(spacing: 8) {
-                    Button {
-                        currentTag = "All"
-                    } label: {
-                        Text("All")
-                            .font(.subheadline)
-                            .fontWeight(.medium)
-                            .lineLimit(1)
-                            .padding(.horizontal, 12)
-                            .padding(.vertical, 6)
-                            .foregroundStyle(currentTag == "All" ? .white : (colorScheme == .dark ? .white : .black))
-                            .background(currentTag == "All" ? Color.accentColor : Color(.systemGray5))
-                            .clipShape(Capsule())
-                    }
-
-                    ForEach(Array(stateService.tags).sorted(), id: \.self) { tag in
+            ScrollViewReader { scrollProxy in
+                ScrollView(.horizontal, showsIndicators: false) {
+                    LazyHStack(spacing: 8) {
                         Button {
-                            currentTag = tag
+                            currentTag = "All"
                         } label: {
-                            Text(tag)
+                            Text("All")
                                 .font(.subheadline)
                                 .fontWeight(.medium)
                                 .lineLimit(1)
                                 .padding(.horizontal, 12)
                                 .padding(.vertical, 6)
-                                .foregroundStyle(currentTag == tag ? .white : (colorScheme == .dark ? .white : .black))
-                                .background(currentTag == tag ? Color.accentColor : Color(.systemGray5))
+                                .foregroundStyle(currentTag == "All" ? .white : (colorScheme == .dark ? .white : .black))
+                                .background(currentTag == "All" ? Color.accentColor : Color(.systemGray5))
                                 .clipShape(Capsule())
                         }
+                        .id("All")
+
+                        ForEach(Array(stateService.tags).sorted(), id: \.self) { tag in
+                            Button {
+                                currentTag = tag
+                            } label: {
+                                Text(tag)
+                                    .font(.subheadline)
+                                    .fontWeight(.medium)
+                                    .lineLimit(1)
+                                    .padding(.horizontal, 12)
+                                    .padding(.vertical, 6)
+                                    .foregroundStyle(currentTag == tag ? .white : (colorScheme == .dark ? .white : .black))
+                                    .background(currentTag == tag ? Color.accentColor : Color(.systemGray5))
+                                    .clipShape(Capsule())
+                            }
+                            .id(tag)
+                        }
+                    }
+                    .padding(.horizontal)
+                    .frame(height: 32)
+                }
+                .padding(.bottom, 8)
+                .background(Color.clear.overlay(.ultraThinMaterial))
+                .onChange(of: currentTag) { _, tag in
+                    withAnimation {
+                        scrollProxy.scrollTo(tag, anchor: .center)
                     }
                 }
-                .padding(.horizontal)
-                .frame(height: 32)
             }
-            .padding(.bottom, 8)
-            .background(Color.clear.overlay(.ultraThinMaterial))
-
             Divider()
         }
     }

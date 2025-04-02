@@ -25,7 +25,10 @@ struct TagCreationView: View {
         .navigationBarItems(trailing: Button("Done", action: {
             for tokenPair in selectedTokenPair {
                 let updatedTokenPair = tokenPair
-                updatedTokenPair.token.tags?.insert(newTag)
+
+                var tags = tokenPair.token.tags ?? []
+                tags.insert(newTag)
+                tokenPair.token.tags = tags
 
                 cryptoService.updateEncryptedToken(encryptedToken: tokenPair.encToken, token: updatedTokenPair.token)
             }

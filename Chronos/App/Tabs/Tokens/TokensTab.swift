@@ -82,7 +82,7 @@ struct TokensTab: View {
                 Task { await updateTokenPairs() }
             }
             .listStyle(.plain)
-            .navigationTitle(currentTag == "All" ? "Tokens" : currentTag)
+            .navigationTitle("Tokens")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarContent()
@@ -94,7 +94,6 @@ struct TokensTab: View {
             .sheet(isPresented: $showTokenAddSheet) {
                 NavigationStack {
                     AddTokenView()
-                        .presentationDragIndicator(.visible)
                 }
             }
             .animation(.default, value: UUID())
@@ -295,6 +294,10 @@ struct TokensTab: View {
                 .flatMap { $0.token.tags ?? [] }
                 .sorted { $0.localizedCaseInsensitiveCompare($1) == .orderedAscending }
         )
+
+        if currentTag != "All" && !stateService.tags.contains(currentTag) {
+            currentTag = "All"
+        }
 
         tokenPairs = decryptedPairs
             .filter { tokenPair in

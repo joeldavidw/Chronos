@@ -20,6 +20,8 @@ struct TokenRowView: View {
 
     let timer: Publishers.Autoconnect<Timer.TimerPublisher>
 
+    let triggerSortAndFilterTokenPairs: () -> Void
+
     var token: Token {
         return tokenPair.token
     }
@@ -116,7 +118,7 @@ struct TokenRowView: View {
         }
         .sheet(item: $selectedTokenForUpdate) { tokenToUpdate in
             NavigationView {
-                UpdateTokenView(token: tokenToUpdate, encryptedToken: encryptedToken)
+                UpdateTokenView(token: tokenToUpdate, encryptedToken: encryptedToken, triggerSortAndFilterTokenPairs: triggerSortAndFilterTokenPairs)
                     .interactiveDismissDisabled(true)
             }
         }
@@ -175,6 +177,7 @@ struct TokenRowView: View {
                 Button {
                     token.pinned = !(token.pinned ?? false)
                     cryptoService.updateEncryptedToken(encryptedToken: encryptedToken, token: token)
+                    triggerSortAndFilterTokenPairs()
                 } label: {
                     VStack(alignment: .center) {
                         Image(systemName: token.pinned ?? false ? "pin.slash" : "pin")

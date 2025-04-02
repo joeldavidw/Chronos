@@ -12,6 +12,8 @@ struct UpdateTokenView: View {
     private let cryptoService = Container.shared.cryptoService()
     private let stateService = Container.shared.stateService()
 
+    let triggerSortAndFilterTokenPairs: () -> Void
+
     @State private var issuer: String
     @State private var account: String
     @State private var secret: String
@@ -24,9 +26,10 @@ struct UpdateTokenView: View {
 
     @State var showSecret: Bool = false
 
-    init(token: Token, encryptedToken: EncryptedToken) {
+    init(token: Token, encryptedToken: EncryptedToken, triggerSortAndFilterTokenPairs: @escaping () -> Void) {
         self.token = token
         self.encryptedToken = encryptedToken
+        self.triggerSortAndFilterTokenPairs = triggerSortAndFilterTokenPairs
 
         _issuer = State(initialValue: token.issuer)
         _account = State(initialValue: token.account)
@@ -137,6 +140,7 @@ struct UpdateTokenView: View {
             token.tags = tags
 
             cryptoService.updateEncryptedToken(encryptedToken: encryptedToken, token: token)
+            triggerSortAndFilterTokenPairs()
             dismiss()
         })
         .disabled(!isValid || !hasChanged))

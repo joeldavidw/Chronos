@@ -61,7 +61,7 @@ struct TokensTab: View {
     var body: some View {
         NavigationStack {
             List(tokenPairs) { tokenPair in
-                TokenRowView(tokenPair: tokenPair, timer: timer)
+                TokenRowView(tokenPair: tokenPair, timer: timer, triggerSortAndFilterTokenPairs: self.sortAndFilterTokenPairs)
             }
             .onAppear {
                 Task { await updateTokenPairs() }
@@ -70,7 +70,7 @@ struct TokensTab: View {
                 Task { await updateTokenPairs() }
             }
             .onChange(of: sortCriteria) { _, _ in
-                Task { await updateTokenPairs() }
+                sortAndFilterTokenPairs()
             }
             .onChange(of: searchQuery) { _, _ in
                 debounceTimer?.invalidate()
@@ -289,8 +289,13 @@ struct TokensTab: View {
             return TokenPair(id: encToken.id, token: decryptedToken, encToken: encToken)
         }
 
+        tokenPairs = decryptedPairs
+        sortAndFilterTokenPairs()
+    }
+
+    private func sortAndFilterTokenPairs() {
         stateService.tags = Set(
-            decryptedPairs
+            tokenPairs
                 .flatMap { $0.token.tags ?? [] }
                 .sorted { $0.localizedCaseInsensitiveCompare($1) == .orderedAscending }
         )
@@ -299,7 +304,7 @@ struct TokensTab: View {
             currentTag = "All"
         }
 
-        tokenPairs = decryptedPairs
+        tokenPairs = tokenPairs
             .filter { tokenPair in
                 if currentTag == "All" {
                     return searchQuery.isEmpty ||

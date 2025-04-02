@@ -33,6 +33,7 @@ struct TagUpdateView: View {
             let toRemove = initialTokenPairs.filter { item in
                 !selectedTokenPairs.contains(where: { $0.id == item.id })
             }
+
             for tokenPair in toRemove {
                 tokenPair.token.tags?.remove(selectedTag)
                 cryptoService.updateEncryptedToken(encryptedToken: tokenPair.encToken, token: tokenPair.token)
@@ -40,7 +41,11 @@ struct TagUpdateView: View {
 
             for tokenPair in selectedTokenPairs {
                 tokenPair.token.tags?.remove(selectedTag)
-                tokenPair.token.tags?.insert(newTag)
+
+                var tags = tokenPair.token.tags ?? []
+                tags.insert(newTag)
+                tokenPair.token.tags = tags
+
                 cryptoService.updateEncryptedToken(encryptedToken: tokenPair.encToken, token: tokenPair.token)
             }
 

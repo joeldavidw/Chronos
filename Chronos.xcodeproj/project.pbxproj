@@ -65,7 +65,6 @@
 		6B842DD52BE33E2E00056F0F /* RestoreBackupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B842DD42BE33E2E00056F0F /* RestoreBackupView.swift */; };
 		6B8ABEEC2B8F6A4F00F5B514 /* CryptoSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 6B8ABEEB2B8F6A4F00F5B514 /* CryptoSwift */; };
 		6B9581E22B62AFF80029EF3C /* ViewModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B9581E12B62AFF80029EF3C /* ViewModifier.swift */; };
-		6B9581E42B633A880029EF3C /* AddManualTokenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B9581E32B633A880029EF3C /* AddManualTokenView.swift */; };
 		6B96C8842CA7BFB3004ECB11 /* QRCode in Frameworks */ = {isa = PBXBuildFile; productRef = 6B96C8832CA7BFB3004ECB11 /* QRCode */; };
 		6B9D74652C14ADDC008E6582 /* StateService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B9D74642C14ADDC008E6582 /* StateService.swift */; };
 		6B9D74682C1553A1008E6582 /* SecureBytes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B9D74672C1553A1008E6582 /* SecureBytes.swift */; };
@@ -157,7 +156,6 @@
 		6B828A132D6B81D200D12AC6 /* TagUpdateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagUpdateView.swift; sourceTree = "<group>"; };
 		6B842DD42BE33E2E00056F0F /* RestoreBackupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestoreBackupView.swift; sourceTree = "<group>"; };
 		6B9581E12B62AFF80029EF3C /* ViewModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModifier.swift; sourceTree = "<group>"; };
-		6B9581E32B633A880029EF3C /* AddManualTokenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddManualTokenView.swift; sourceTree = "<group>"; };
 		6B9D74642C14ADDC008E6582 /* StateService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateService.swift; sourceTree = "<group>"; };
 		6B9D74672C1553A1008E6582 /* SecureBytes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecureBytes.swift; sourceTree = "<group>"; };
 		6BA5DA5B2B9E94F8009908E5 /* SecureEnclaveService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecureEnclaveService.swift; sourceTree = "<group>"; };
@@ -377,7 +375,6 @@
 			isa = PBXGroup;
 			children = (
 				6B66D5E62B526315006DB79D /* AddTokenView.swift */,
-				6B9581E32B633A880029EF3C /* AddManualTokenView.swift */,
 			);
 			path = AddToken;
 			sourceTree = "<group>";
@@ -592,7 +589,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1540;
-				LastUpgradeCheck = 1520;
+				LastUpgradeCheck = 1630;
 				TargetAttributes = {
 					6B3BB0AC2B4EA87C00DCEF0B = {
 						CreatedOnToolsVersion = 15.2;
@@ -691,7 +688,6 @@
 				6B3C7A382BE764E70043FEBD /* StorageSetupView.swift in Sources */,
 				6BC3C3B52BA6B91E00B181B9 /* BiometricsSetupView.swift in Sources */,
 				6B9D74652C14ADDC008E6582 /* StateService.swift in Sources */,
-				6B9581E42B633A880029EF3C /* AddManualTokenView.swift in Sources */,
 				6B19CA722B7A70B800690390 /* WelcomeView.swift in Sources */,
 				6B66D5E72B526315006DB79D /* AddTokenView.swift in Sources */,
 				6B2583AF2B96048700938F3A /* SettingsTab.swift in Sources */,
@@ -805,6 +801,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = MKJ7X96SHQ;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
@@ -869,6 +866,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = MKJ7X96SHQ;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
@@ -901,7 +899,6 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Chronos/Preview Content\"";
-				DEVELOPMENT_TEAM = MKJ7X96SHQ;
 				ENABLE_PREVIEWS = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -946,7 +943,6 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Chronos/Preview Content\"";
-				DEVELOPMENT_TEAM = MKJ7X96SHQ;
 				ENABLE_PREVIEWS = YES;
 				ENABLE_TESTABILITY = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
@@ -1020,7 +1016,6 @@
 				COPY_PHASE_STRIP = NO;
 				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = dwarf;
-				DEVELOPMENT_TEAM = MKJ7X96SHQ;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
@@ -1099,7 +1094,6 @@
 				COPY_PHASE_STRIP = NO;
 				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEVELOPMENT_TEAM = MKJ7X96SHQ;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
@@ -1171,7 +1165,6 @@
 				COPY_PHASE_STRIP = NO;
 				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEVELOPMENT_TEAM = MKJ7X96SHQ;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
@@ -1240,6 +1233,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = MKJ7X96SHQ;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
@@ -1272,7 +1266,6 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Chronos/Preview Content\"";
-				DEVELOPMENT_TEAM = MKJ7X96SHQ;
 				ENABLE_PREVIEWS = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;

@@ -38,6 +38,7 @@ struct TokensTab: View {
     @State private var tokenPairs: [TokenPair] = []
     @State private var debounceTimer: Timer?
     @State private var isSearchablePresented: Bool = false
+    @State private var tagsButtonHeight: CGFloat = 32
 
     let cryptoService = Container.shared.cryptoService()
     let stateService = Container.shared.stateService()
@@ -96,7 +97,6 @@ struct TokensTab: View {
                     AddTokenView()
                 }
             }
-            .animation(.default, value: UUID())
             .navigationDestination(isPresented: $showTagsManagementSheet) {
                 TagManagementView()
             }
@@ -104,7 +104,7 @@ struct TokensTab: View {
                         isPresented: $isSearchablePresented,
                         placement: .navigationBarDrawer(displayMode: .automatic),
                         prompt: Text(currentTag == "All" ? "Search tokens" : "Search \"\(currentTag)\" tokens"))
-            .safeAreaInset(edge: .top) {
+            .safeAreaInset(edge: .top, spacing: 0) {
                 if !isSearchablePresented {
                     TagsScrollBar()
                 } else {
@@ -133,6 +133,11 @@ struct TokensTab: View {
                                 .clipShape(Capsule())
                         }
                         .id("All")
+                        .onGeometryChange(for: CGFloat.self) { proxy in
+                            proxy.size.height
+                        } action: { height in
+                            tagsButtonHeight = height
+                        }
 
                         ForEach(Array(stateService.tags).sorted(), id: \.self) { tag in
                             Button {
@@ -152,7 +157,7 @@ struct TokensTab: View {
                         }
                     }
                     .padding(.horizontal)
-                    .frame(height: 32)
+                    .frame(height: tagsButtonHeight)
                 }
                 .padding(.bottom, 8)
                 .background(Color.clear.overlay(.ultraThinMaterial))
@@ -304,41 +309,43 @@ struct TokensTab: View {
             currentTag = "All"
         }
 
-        tokenPairs = tokenPairs
-            .filter { tokenPair in
-                if currentTag == "All" {
-                    return searchQuery.isEmpty ||
-                        tokenPair.token.issuer.localizedCaseInsensitiveContains(searchQuery) ||
-                        tokenPair.token.account.localizedCaseInsensitiveContains(searchQuery)
-                }
+        withAnimation {
+            tokenPairs = tokenPairs
+                .filter { tokenPair in
+                    if currentTag == "All" {
+                        return searchQuery.isEmpty ||
+                            tokenPair.token.issuer.localizedCaseInsensitiveContains(searchQuery) ||
+                            tokenPair.token.account.localizedCaseInsensitiveContains(searchQuery)
+                    }
 
-                return (tokenPair.token.tags?.contains(currentTag) ?? false) &&
-                    (searchQuery.isEmpty ||
-                        tokenPair.token.issuer.localizedCaseInsensitiveContains(searchQuery) ||
-                        tokenPair.token.account.localizedCaseInsensitiveContains(searchQuery))
-            }
-            .sorted { token1, token2 in
-                let pinned1 = token1.token.pinned ?? false
-                let pinned2 = token2.token.pinned ?? false
-
-                if pinned1 != pinned2 {
-                    return pinned1
+                    return (tokenPair.token.tags?.contains(currentTag) ?? false) &&
+                        (searchQuery.isEmpty ||
+                            tokenPair.token.issuer.localizedCaseInsensitiveContains(searchQuery) ||
+                            tokenPair.token.account.localizedCaseInsensitiveContains(searchQuery))
                 }
+                .sorted { token1, token2 in
+                    let pinned1 = token1.token.pinned ?? false
+                    let pinned2 = token2.token.pinned ?? false
 
-                if pinned1 {
-                    return token1.token.issuer.localizedCaseInsensitiveCompare(token2.token.issuer) == .orderedAscending
-                }
+                    if pinned1 != pinned2 {
+                        return pinned1
+                    }
 
-                switch sortCriteria {
-                case .ISSUER_ASC:
-                    return token1.token.issuer.localizedCaseInsensitiveCompare(token2.token.issuer) == .orderedAscending
-                case .ISSUER_DESC:
-                    return token1.token.issuer.localizedCaseInsensitiveCompare(token2.token.issuer) == .orderedDescending
-                case .ACCOUNT_ASC:
-                    return token1.token.account.localizedCaseInsensitiveCompare(token2.token.account) == .orderedAscending
-                case .ACCOUNT_DESC:
-                    return token1.token.account.localizedCaseInsensitiveCompare(token2.token.account) == .orderedDescending
+                    if pinned1 {
+                        return token1.token.issuer.localizedCaseInsensitiveCompare(token2.token.issuer) == .orderedAscending
+                    }
+
+                    switch sortCriteria {
+                    case .ISSUER_ASC:
+                        return token1.token.issuer.localizedCaseInsensitiveCompare(token2.token.issuer) == .orderedAscending
+                    case .ISSUER_DESC:
+                        return token1.token.issuer.localizedCaseInsensitiveCompare(token2.token.issuer) == .orderedDescending
+                    case .ACCOUNT_ASC:
+                        return token1.token.account.localizedCaseInsensitiveCompare(token2.token.account) == .orderedAscending
+                    case .ACCOUNT_DESC:
+                        return token1.token.account.localizedCaseInsensitiveCompare(token2.token.account) == .orderedDescending
+                    }
                 }
-            }
+        }
     }
 }

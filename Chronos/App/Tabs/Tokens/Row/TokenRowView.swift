@@ -113,7 +113,7 @@ struct TokenRowView: View {
         .swipeActions(edge: .leading) {
             TokenRowLeftToRightSwipeView()
         }
-        .swipeActions(edge: .trailing) {
+        .swipeActions(edge: .trailing, allowsFullSwipe: false) {
             TokenRowRightToLeftSwipeView()
         }
         .sheet(item: $selectedTokenForUpdate) { tokenToUpdate in

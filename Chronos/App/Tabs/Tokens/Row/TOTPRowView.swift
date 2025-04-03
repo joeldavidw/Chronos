@@ -32,7 +32,6 @@ struct TOTPRowView: View {
                         .onAppear(perform: updateOtp)
                 }
             }
-            .animation(nil, value: UUID())
 
             Spacer()
 

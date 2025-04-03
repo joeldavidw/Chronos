@@ -159,7 +159,9 @@ struct TokensTab: View {
                     .padding(.horizontal)
                     .frame(height: tagsButtonHeight)
                 }
+                .padding(.top, 2)
                 .padding(.bottom, 8)
+                .padding(.horizontal, 4)
                 .background(Color.clear.overlay(.ultraThinMaterial))
                 .onChange(of: currentTag) { _, tag in
                     withAnimation {

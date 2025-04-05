@@ -129,7 +129,7 @@ struct TokensTab: View {
                                 .padding(.horizontal, 12)
                                 .padding(.vertical, 6)
                                 .foregroundStyle(currentTag == "All" ? .white : (colorScheme == .dark ? .white : .black))
-                                .background(currentTag == "All" ? Color.accentColor : Color(.systemGray4))
+                                .background(currentTag == "All" ? Color.accentColor : Color(.systemFill))
                                 .clipShape(Capsule())
                         }
                         .id("All")
@@ -150,7 +150,7 @@ struct TokensTab: View {
                                     .padding(.horizontal, 12)
                                     .padding(.vertical, 6)
                                     .foregroundStyle(currentTag == tag ? .white : (colorScheme == .dark ? .white : .black))
-                                    .background(currentTag == tag ? Color.accentColor : Color(.systemGray4))
+                                    .background(currentTag == tag ? Color.accentColor : Color(.systemFill))
                                     .clipShape(Capsule())
                             }
                             .id(tag)

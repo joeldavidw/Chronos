@@ -62,8 +62,14 @@ struct TokensTab: View {
 
     var body: some View {
         NavigationStack {
-            List(tokenPairs) { tokenPair in
-                TokenRowView(tokenPair: tokenPair, timer: timer, triggerSortAndFilterTokenPairs: self.sortAndFilterTokenPairs)
+            List {
+                TagsScrollBar()
+                    .listRowInsets(EdgeInsets())
+                    .listRowSeparator(.hidden)
+
+                ForEach(tokenPairs) { tokenPair in
+                    TokenRowView(tokenPair: tokenPair, timer: timer, triggerSortAndFilterTokenPairs: self.sortAndFilterTokenPairs)
+                }
             }
             .onAppear {
                 Task { await updateTokenPairs() }
@@ -108,13 +114,6 @@ struct TokensTab: View {
                         isPresented: $isSearchablePresented,
                         placement: .navigationBarDrawer(displayMode: .automatic),
                         prompt: Text(currentTag == "All" ? "Search tokens" : "Search \"\(currentTag)\" tokens"))
-            .safeAreaInset(edge: .top, spacing: 0) {
-                if !isSearchablePresented {
-                    TagsScrollBar()
-                } else {
-                    Divider()
-                }
-            }
         }
     }
 
@@ -123,19 +122,11 @@ struct TokensTab: View {
             ScrollViewReader { scrollProxy in
                 ScrollView(.horizontal, showsIndicators: false) {
                     LazyHStack(spacing: 8) {
-                        Button {
-                            currentTag = "All"
-                        } label: {
-                            Text("All")
-                                .font(.subheadline)
-                                .fontWeight(.medium)
-                                .lineLimit(1)
-                                .padding(.horizontal, 12)
-                                .padding(.vertical, 6)
-                                .foregroundStyle(currentTag == "All" ? .white : (colorScheme == .dark ? .white : .black))
-                                .background(currentTag == "All" ? Color.accentColor : Color(.tertiarySystemFill))
-                                .clipShape(Capsule())
-                        }
+                        TagButton(
+                            title: "All",
+                            isSelected: currentTag == "All",
+                            action: { currentTag = "All" }
+                        )
                         .id("All")
                         .onGeometryChange(for: CGFloat.self) { proxy in
                             proxy.size.height
@@ -143,20 +134,12 @@ struct TokensTab: View {
                             tagsButtonHeight = height
                         }
 
-                        ForEach(Array(stateService.tags).sorted(), id: \.self) { tag in
-                            Button {
-                                currentTag = tag
-                            } label: {
-                                Text(tag)
-                                    .font(.subheadline)
-                                    .fontWeight(.medium)
-                                    .lineLimit(1)
-                                    .padding(.horizontal, 12)
-                                    .padding(.vertical, 6)
-                                    .foregroundStyle(currentTag == tag ? .white : (colorScheme == .dark ? .white : .black))
-                                    .background(currentTag == tag ? Color.accentColor : Color(.tertiarySystemFill))
-                                    .clipShape(Capsule())
-                            }
+                        ForEach(sortedTags, id: \.self) { tag in
+                            TagButton(
+                                title: tag,
+                                isSelected: currentTag == tag,
+                                action: { currentTag = tag }
+                            )
                             .id(tag)
                         }
                     }
@@ -164,17 +147,38 @@ struct TokensTab: View {
                     .frame(height: tagsButtonHeight)
                 }
                 .padding(.top, 2)
-                .padding(.bottom, 8)
+                .padding(.bottom, 4)
                 .padding(.horizontal, 4)
-                .background(Color.clear.overlay(.ultraThinMaterial))
                 .onChange(of: currentTag) { _, tag in
-                    withAnimation {
+                    withAnimation(.easeInOut(duration: 0.3)) {
                         scrollProxy.scrollTo(tag, anchor: .center)
                     }
                 }
             }
-            Divider()
         }
+    }
+
+    private var sortedTags: [String] {
+        Array(stateService.tags).sorted()
+    }
+
+    @ViewBuilder
+    private func TagButton(title: String, isSelected: Bool, action: @escaping () -> Void) -> some View {
+        Button(action: action) {
+            Text(title)
+                .font(.subheadline)
+                .fontWeight(.medium)
+                .lineLimit(1)
+                .padding(.horizontal, 12)
+                .padding(.vertical, 6)
+                .foregroundStyle(isSelected ? .white : primaryTextColor)
+                .background(isSelected ? Color.accentColor : Color(.tertiarySystemFill))
+                .clipShape(Capsule())
+        }
+    }
+
+    private var primaryTextColor: Color {
+        colorScheme == .dark ? .white : .black
     }
 
     private func ToolbarContent() -> some ToolbarContent {

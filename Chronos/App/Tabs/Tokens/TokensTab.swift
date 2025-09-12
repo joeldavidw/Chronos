@@ -27,6 +27,7 @@ struct TokensTab: View {
     @EnvironmentObject var loginStatus: LoginStatus
     @Environment(\.colorScheme) var colorScheme
 
+    @State private var showSettingsSheet = false
     @State private var showTokenAddSheet = false
     @State private var showTagsManagementSheet = false
     @State private var detentHeight: CGFloat = 0
@@ -99,6 +100,9 @@ struct TokensTab: View {
             }
             .navigationDestination(isPresented: $showTagsManagementSheet) {
                 TagManagementView()
+            }
+            .navigationDestination(isPresented: $showSettingsSheet) {
+                SettingsTab()
             }
             .searchable(text: $searchQuery,
                         isPresented: $isSearchablePresented,
@@ -176,67 +180,89 @@ struct TokensTab: View {
     private func ToolbarContent() -> some ToolbarContent {
         Group {
             ToolbarItemGroup(placement: .topBarLeading) {
-                Menu {
-                    Button {
-                        currentTag = "All"
-                    } label: {
-                        HStack {
-                            Text("All")
-                            if currentTag == "All" {
-                                Image(systemName: "checkmark")
-                            }
-                        }
-                    }
-                    ForEach(Array(stateService.tags).sorted(), id: \.self) { tag in
-                        if tag != "All" {
-                            Button {
-                                currentTag = tag
-                            } label: {
-                                HStack {
-                                    Text(tag)
-                                    if currentTag == tag {
-                                        Image(systemName: "checkmark")
-                                    }
-                                }
-                            }
-                        }
-                    }
-                    Divider()
-                    Button {
-                        showTagsManagementSheet = true
-                    } label: {
-                        Text("Manage Tags")
-                    }
-                } label: {
-                    Label("Tag", systemImage: "tag")
-                }
-                .menuOrder(.fixed)
+                TagFilterMenu()
+                SortOrderMenu()
             }
 
             ToolbarItemGroup(placement: .navigationBarTrailing) {
-                Menu {
-                    ForEach(sortOptions, id: \.criteria) { option in
-                        Button {
-                            sortCriteria = option.criteria
-                        } label: {
-                            if sortCriteria == option.criteria {
-                                Label(option.title, systemImage: "checkmark")
-                            } else {
-                                Text(option.title)
-                            }
-                        }
-                    }
-                } label: {
-                    Label("Sort Order", systemImage: "arrow.up.arrow.down")
+                if #unavailable(iOS 26.0) {
+                    AddTokenButton()
                 }
-                .menuOrder(.fixed)
+                SettingsButton()
+            }
 
-                Button {
-                    showTokenAddSheet.toggle()
-                } label: {
-                    Image(systemName: "plus")
+            // iOS 26+ bottom bar items
+            if #available(iOS 26.0, *) {
+                DefaultToolbarItem(kind: .search, placement: .bottomBar)
+                ToolbarSpacer(placement: .bottomBar)
+                ToolbarItem(placement: .bottomBar) {
+                    AddTokenButton()
                 }
             }
+        }
+    }
+
+    @ViewBuilder
+    private func TagFilterMenu() -> some View {
+        Menu {
+            Button {
+                currentTag = "All"
+            } label: {
+                Label("All", systemImage: currentTag == "All" ? "checkmark" : "")
+            }
+
+            ForEach(Array(stateService.tags).sorted(), id: \.self) { tag in
+                Button {
+                    currentTag = tag
+                } label: {
+                    Label(tag, systemImage: currentTag == tag ? "checkmark" : "")
+                }
+            }
+
+            Divider()
+
+            Button {
+                showTagsManagementSheet = true
+            } label: {
+                Text("Manage Tags")
+            }
+        } label: {
+            Label("Tag", systemImage: "tag")
+        }
+        .menuOrder(.fixed)
+    }
+
+    @ViewBuilder
+    private func SortOrderMenu() -> some View {
+        Menu {
+            ForEach(sortOptions, id: \.criteria) { option in
+                Button {
+                    sortCriteria = option.criteria
+                } label: {
+                    Label(option.title, systemImage: sortCriteria == option.criteria ? "checkmark" : "")
+                }
+            }
+        } label: {
+            Label("Sort Order", systemImage: "arrow.up.arrow.down")
+        }
+        .menuOrder(.fixed)
+    }
+
+    @ViewBuilder
+    private func AddTokenButton() -> some View {
+        Button {
+            showTokenAddSheet.toggle()
+        } label: {
+            Image(systemName: "plus")
+        }
+    }
+
+    @ViewBuilder
+    private func SettingsButton() -> some View {
+        Button {
+            showSettingsSheet.toggle()
+        } label: {
+            Image(systemName: "gear")
         }
     }
 
@@ -307,7 +333,7 @@ struct TokensTab: View {
                 .sorted { $0.localizedCaseInsensitiveCompare($1) == .orderedAscending }
         )
 
-        if currentTag != "All" && !stateService.tags.contains(currentTag) {
+        if currentTag != "All", !stateService.tags.contains(currentTag) {
             currentTag = "All"
         }
 

@@ -95,7 +95,6 @@ struct TokensTab: View {
             .toolbar {
                 ToolbarContent()
             }
-            .toolbarBackground(isSearchablePresented ? .visible : .hidden, for: .navigationBar)
             .overlay {
                 EmptyStateView()
             }

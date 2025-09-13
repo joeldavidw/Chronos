@@ -30,6 +30,8 @@ struct AddTokenView: View {
     @State private var period: Int = 30
     @State private var tags: Set<String> = []
 
+    @FocusState private var isSecretFieldFocused: Bool
+
     let cryptoService = Container.shared.cryptoService()
     let vaultService = Container.shared.vaultService()
 
@@ -180,6 +182,7 @@ private extension AddTokenView {
                 }
             }
         }
+        .multilineTextAlignment(.trailing)
         .onAppear {
             initializeForm()
         }
@@ -190,22 +193,26 @@ private extension AddTokenView {
             Group {
                 if showSecret {
                     TextField("Secret", text: $secret)
+                        .focused($isSecretFieldFocused)
                 } else {
                     SecureField("Secret", text: $secret)
+                        .disabled(true)
+                        .contentShape(Rectangle())
+                        .onTapGesture {
+                            showSecret = true
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                                isSecretFieldFocused = true
+                            }
+                        }
                 }
             }
             .autocapitalization(.none)
             .disableAutocorrection(true)
-
-            Spacer()
-
-            Button {
-                showSecret.toggle()
-            } label: {
-                Image(systemName: showSecret ? "eye.slash" : "eye")
-                    .foregroundStyle(colorScheme == .dark ? .white : .black)
+            .onChange(of: isSecretFieldFocused) { _, isFocused in
+                if !isFocused {
+                    showSecret = false
+                }
             }
-            .buttonStyle(.plain)
         }
     }
 }

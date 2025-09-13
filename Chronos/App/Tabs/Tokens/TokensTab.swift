@@ -246,7 +246,7 @@ struct TokensTab: View {
                 }
             }
         } label: {
-            Label("Sort Order", systemImage: "arrow.up.arrow.down")
+            Label("Sort Order", systemImage: "line.3.horizontal.decrease")
         }
         .menuOrder(.fixed)
     }
@@ -265,7 +265,7 @@ struct TokensTab: View {
         Button {
             showSettingsSheet.toggle()
         } label: {
-            Image(systemName: "gear")
+            Image(systemName: "gearshape")
         }
     }
 

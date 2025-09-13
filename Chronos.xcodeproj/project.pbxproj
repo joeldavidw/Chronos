@@ -15,7 +15,7 @@
 		6B193C8A2C27F03300E759B7 /* CloudKitSyncMonitor in Frameworks */ = {isa = PBXBuildFile; productRef = 6B193C892C27F03300E759B7 /* CloudKitSyncMonitor */; };
 		6B19CA722B7A70B800690390 /* WelcomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B19CA712B7A70B800690390 /* WelcomeView.swift */; };
 		6B19CA742B7A769900690390 /* PasswordSetupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B19CA732B7A769900690390 /* PasswordSetupView.swift */; };
-		6B2583AF2B96048700938F3A /* SettingsTab.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B2583AE2B96048700938F3A /* SettingsTab.swift */; };
+		6B2583AF2B96048700938F3A /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B2583AE2B96048700938F3A /* SettingsView.swift */; };
 		6B27317A2B53E23800F30621 /* UpdateTokenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B2731792B53E23800F30621 /* UpdateTokenView.swift */; };
 		6B27317C2B53F0B200F30621 /* TokenRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B27317B2B53F0B200F30621 /* TokenRowView.swift */; };
 		6B2F7A822C635B5A00DB1450 /* 2FAS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B2F7A812C635B5A00DB1450 /* 2FAS.swift */; };
@@ -31,7 +31,7 @@
 		6B3BB0B52B4EA87D00DCEF0B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6B3BB0B42B4EA87D00DCEF0B /* Assets.xcassets */; };
 		6B3BB0B82B4EA87D00DCEF0B /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6B3BB0B72B4EA87D00DCEF0B /* Preview Assets.xcassets */; };
 		6B3BB0E02B4ECE6F00DCEF0B /* TOTPRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B3BB0DF2B4ECE6F00DCEF0B /* TOTPRowView.swift */; };
-		6B3BB0E22B4ED19300DCEF0B /* TokensTab.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B3BB0E12B4ED19300DCEF0B /* TokensTab.swift */; };
+		6B3BB0E22B4ED19300DCEF0B /* TokensView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B3BB0E12B4ED19300DCEF0B /* TokensView.swift */; };
 		6B3BB0EE2B4EEEBD00DCEF0B /* Valet in Frameworks */ = {isa = PBXBuildFile; productRef = 6B3BB0ED2B4EEEBD00DCEF0B /* Valet */; };
 		6B3BB1202B511A9E00DCEF0B /* SwiftOTP in Frameworks */ = {isa = PBXBuildFile; productRef = 6B3BB11F2B511A9E00DCEF0B /* SwiftOTP */; };
 		6B3C7A382BE764E70043FEBD /* StorageSetupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B3C7A372BE764E70043FEBD /* StorageSetupView.swift */; };
@@ -109,7 +109,7 @@
 		6B12B0A12C19F1E600E9ED2D /* ExportVault.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExportVault.swift; sourceTree = "<group>"; };
 		6B19CA712B7A70B800690390 /* WelcomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeView.swift; sourceTree = "<group>"; };
 		6B19CA732B7A769900690390 /* PasswordSetupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordSetupView.swift; sourceTree = "<group>"; };
-		6B2583AE2B96048700938F3A /* SettingsTab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsTab.swift; sourceTree = "<group>"; };
+		6B2583AE2B96048700938F3A /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		6B2583B02B975D3200938F3A /* Chronos.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Chronos.entitlements; sourceTree = "<group>"; };
 		6B2731792B53E23800F30621 /* UpdateTokenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateTokenView.swift; sourceTree = "<group>"; };
 		6B27317B2B53F0B200F30621 /* TokenRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenRowView.swift; sourceTree = "<group>"; };
@@ -126,7 +126,7 @@
 		6B3BB0B42B4EA87D00DCEF0B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		6B3BB0B72B4EA87D00DCEF0B /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		6B3BB0DF2B4ECE6F00DCEF0B /* TOTPRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TOTPRowView.swift; sourceTree = "<group>"; };
-		6B3BB0E12B4ED19300DCEF0B /* TokensTab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokensTab.swift; sourceTree = "<group>"; };
+		6B3BB0E12B4ED19300DCEF0B /* TokensView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokensView.swift; sourceTree = "<group>"; };
 		6B3C7A372BE764E70043FEBD /* StorageSetupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageSetupView.swift; sourceTree = "<group>"; };
 		6B3F92A82C1B45AA004125A8 /* Vault.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Vault.swift; sourceTree = "<group>"; };
 		6B3F92AA2C1C7987004125A8 /* VaultService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VaultService.swift; sourceTree = "<group>"; };
@@ -235,7 +235,7 @@
 			children = (
 				6BB37D782C4569E9008DA122 /* Import */,
 				6BF53E502C317EFF00356461 /* Export */,
-				6B2583AE2B96048700938F3A /* SettingsTab.swift */,
+				6B2583AE2B96048700938F3A /* SettingsView.swift */,
 			);
 			path = Settings;
 			sourceTree = "<group>";
@@ -289,11 +289,12 @@
 		6B3BB0DA2B4EB04600DCEF0B /* App */ = {
 			isa = PBXGroup;
 			children = (
+				6B2583AD2B96047700938F3A /* Settings */,
+				6B3BB0E42B4EE1D100DCEF0B /* Tokens */,
 				6B8132FE2C4E632800DB367E /* Misc */,
 				6B7A54722B94B7960057DCF9 /* Privacy */,
 				6BD90AA22B8E349500FABD91 /* Login */,
 				6B19CA6E2B7A695200690390 /* Onboarding */,
-				6B3BB0E32B4EE1BB00DCEF0B /* Tabs */,
 				6B3BB0B02B4EA87C00DCEF0B /* ChronosApp.swift */,
 				6B3BB0B22B4EA87C00DCEF0B /* ContentView.swift */,
 				6B3962992BF5E935000410B0 /* MainAppView.swift */,
@@ -302,22 +303,13 @@
 			path = App;
 			sourceTree = "<group>";
 		};
-		6B3BB0E32B4EE1BB00DCEF0B /* Tabs */ = {
-			isa = PBXGroup;
-			children = (
-				6B2583AD2B96047700938F3A /* Settings */,
-				6B3BB0E42B4EE1D100DCEF0B /* Tokens */,
-			);
-			path = Tabs;
-			sourceTree = "<group>";
-		};
 		6B3BB0E42B4EE1D100DCEF0B /* Tokens */ = {
 			isa = PBXGroup;
 			children = (
 				6B8289F52D6B495C00D12AC6 /* Tag */,
 				6BD0562A2BDF64D80099616B /* Row */,
 				6B66D5E52B525D1B006DB79D /* AddToken */,
-				6B3BB0E12B4ED19300DCEF0B /* TokensTab.swift */,
+				6B3BB0E12B4ED19300DCEF0B /* TokensView.swift */,
 			);
 			path = Tokens;
 			sourceTree = "<group>";
@@ -690,7 +682,7 @@
 				6B9D74652C14ADDC008E6582 /* StateService.swift in Sources */,
 				6B19CA722B7A70B800690390 /* WelcomeView.swift in Sources */,
 				6B66D5E72B526315006DB79D /* AddTokenView.swift in Sources */,
-				6B2583AF2B96048700938F3A /* SettingsTab.swift in Sources */,
+				6B2583AF2B96048700938F3A /* SettingsView.swift in Sources */,
 				6B39629C2BF5EB3E000410B0 /* AuthenticationView.swift in Sources */,
 				6BF53E5B2C33FD8F00356461 /* ActivityView.swift in Sources */,
 				6B3F92A92C1B45AA004125A8 /* Vault.swift in Sources */,
@@ -701,7 +693,7 @@
 				6BD90AA52B8E34BB00FABD91 /* PasswordLoginView.swift in Sources */,
 				6B9D74682C1553A1008E6582 /* SecureBytes.swift in Sources */,
 				6B09CEC12CB2DF060054AB61 /* OtpAuthUrlParser.swift in Sources */,
-				6B3BB0E22B4ED19300DCEF0B /* TokensTab.swift in Sources */,
+				6B3BB0E22B4ED19300DCEF0B /* TokensView.swift in Sources */,
 				6B828A142D6B81D200D12AC6 /* TagTokenSelectionView.swift in Sources */,
 				6B828A152D6B81D200D12AC6 /* TagCreationView.swift in Sources */,
 				6B828A162D6B81D200D12AC6 /* TagCreationUpdateForm.swift in Sources */,

@@ -22,7 +22,7 @@ let sortOptions: [(title: String, criteria: TokenSortOrder)] = [
     ("Account (Z - A)", .ACCOUNT_DESC),
 ]
 
-struct TokensTab: View {
+struct TokensView: View {
     @Query private var vaults: [Vault]
     @EnvironmentObject var loginStatus: LoginStatus
     @Environment(\.colorScheme) var colorScheme
@@ -107,7 +107,7 @@ struct TokensTab: View {
                 TagManagementView()
             }
             .navigationDestination(isPresented: $showSettingsSheet) {
-                SettingsTab()
+                SettingsView()
             }
             .searchable(text: $searchQuery,
                         isPresented: $isSearchablePresented,

@@ -32,7 +32,7 @@ struct MainAppView: View {
         if scenePhase != .active {
             PrivacyView()
         } else {
-            TokensTab()
+            TokensView()
                 .onAppear {
                     if filteredVault.isEmpty {
                         stateService.resetAllStates()

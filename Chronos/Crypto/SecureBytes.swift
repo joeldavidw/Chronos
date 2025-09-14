@@ -17,7 +17,7 @@ final class SecureBytes {
         self.clear()
     }
 
-    public func clear() {
+    func clear() {
         bytes = [UInt8](repeating: 0, count: length)
         length = 0
 

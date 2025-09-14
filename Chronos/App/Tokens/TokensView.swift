@@ -22,11 +22,12 @@ let sortOptions: [(title: String, criteria: TokenSortOrder)] = [
     ("Account (Z - A)", .ACCOUNT_DESC),
 ]
 
-struct TokensTab: View {
+struct TokensView: View {
     @Query private var vaults: [Vault]
     @EnvironmentObject var loginStatus: LoginStatus
     @Environment(\.colorScheme) var colorScheme
 
+    @State private var showSettingsSheet = false
     @State private var showTokenAddSheet = false
     @State private var showTagsManagementSheet = false
     @State private var detentHeight: CGFloat = 0
@@ -61,8 +62,14 @@ struct TokensTab: View {
 
     var body: some View {
         NavigationStack {
-            List(tokenPairs) { tokenPair in
-                TokenRowView(tokenPair: tokenPair, timer: timer, triggerSortAndFilterTokenPairs: self.sortAndFilterTokenPairs)
+            List {
+                TagsScrollBar()
+                    .listRowInsets(EdgeInsets())
+                    .listRowSeparator(.hidden)
+
+                ForEach(tokenPairs) { tokenPair in
+                    TokenRowView(tokenPair: tokenPair, timer: timer, triggerSortAndFilterTokenPairs: self.sortAndFilterTokenPairs)
+                }
             }
             .onAppear {
                 Task { await updateTokenPairs() }
@@ -88,7 +95,6 @@ struct TokensTab: View {
             .toolbar {
                 ToolbarContent()
             }
-            .toolbarBackground(isSearchablePresented ? .visible : .hidden, for: .navigationBar)
             .overlay {
                 EmptyStateView()
             }
@@ -100,17 +106,13 @@ struct TokensTab: View {
             .navigationDestination(isPresented: $showTagsManagementSheet) {
                 TagManagementView()
             }
+            .navigationDestination(isPresented: $showSettingsSheet) {
+                SettingsView()
+            }
             .searchable(text: $searchQuery,
                         isPresented: $isSearchablePresented,
                         placement: .navigationBarDrawer(displayMode: .automatic),
                         prompt: Text(currentTag == "All" ? "Search tokens" : "Search \"\(currentTag)\" tokens"))
-            .safeAreaInset(edge: .top, spacing: 0) {
-                if !isSearchablePresented {
-                    TagsScrollBar()
-                } else {
-                    Divider()
-                }
-            }
         }
     }
 
@@ -119,19 +121,11 @@ struct TokensTab: View {
             ScrollViewReader { scrollProxy in
                 ScrollView(.horizontal, showsIndicators: false) {
                     LazyHStack(spacing: 8) {
-                        Button {
-                            currentTag = "All"
-                        } label: {
-                            Text("All")
-                                .font(.subheadline)
-                                .fontWeight(.medium)
-                                .lineLimit(1)
-                                .padding(.horizontal, 12)
-                                .padding(.vertical, 6)
-                                .foregroundStyle(currentTag == "All" ? .white : (colorScheme == .dark ? .white : .black))
-                                .background(currentTag == "All" ? Color.accentColor : Color(.tertiarySystemFill))
-                                .clipShape(Capsule())
-                        }
+                        TagButton(
+                            title: "All",
+                            isSelected: currentTag == "All",
+                            action: { currentTag = "All" }
+                        )
                         .id("All")
                         .onGeometryChange(for: CGFloat.self) { proxy in
                             proxy.size.height
@@ -139,20 +133,12 @@ struct TokensTab: View {
                             tagsButtonHeight = height
                         }
 
-                        ForEach(Array(stateService.tags).sorted(), id: \.self) { tag in
-                            Button {
-                                currentTag = tag
-                            } label: {
-                                Text(tag)
-                                    .font(.subheadline)
-                                    .fontWeight(.medium)
-                                    .lineLimit(1)
-                                    .padding(.horizontal, 12)
-                                    .padding(.vertical, 6)
-                                    .foregroundStyle(currentTag == tag ? .white : (colorScheme == .dark ? .white : .black))
-                                    .background(currentTag == tag ? Color.accentColor : Color(.tertiarySystemFill))
-                                    .clipShape(Capsule())
-                            }
+                        ForEach(sortedTags, id: \.self) { tag in
+                            TagButton(
+                                title: tag,
+                                isSelected: currentTag == tag,
+                                action: { currentTag = tag }
+                            )
                             .id(tag)
                         }
                     }
@@ -160,83 +146,126 @@ struct TokensTab: View {
                     .frame(height: tagsButtonHeight)
                 }
                 .padding(.top, 2)
-                .padding(.bottom, 8)
+                .padding(.bottom, 4)
                 .padding(.horizontal, 4)
-                .background(Color.clear.overlay(.ultraThinMaterial))
                 .onChange(of: currentTag) { _, tag in
-                    withAnimation {
+                    withAnimation(.easeInOut(duration: 0.3)) {
                         scrollProxy.scrollTo(tag, anchor: .center)
                     }
                 }
             }
-            Divider()
         }
+    }
+
+    private var sortedTags: [String] {
+        Array(stateService.tags).sorted()
+    }
+
+    @ViewBuilder
+    private func TagButton(title: String, isSelected: Bool, action: @escaping () -> Void) -> some View {
+        Button(action: action) {
+            Text(title)
+                .font(.subheadline)
+                .fontWeight(.medium)
+                .lineLimit(1)
+                .padding(.horizontal, 12)
+                .padding(.vertical, 6)
+                .foregroundStyle(isSelected ? .white : primaryTextColor)
+                .background(isSelected ? Color.accentColor : Color(.tertiarySystemFill))
+                .clipShape(Capsule())
+        }
+    }
+
+    private var primaryTextColor: Color {
+        colorScheme == .dark ? .white : .black
     }
 
     private func ToolbarContent() -> some ToolbarContent {
         Group {
             ToolbarItemGroup(placement: .topBarLeading) {
-                Menu {
-                    Button {
-                        currentTag = "All"
-                    } label: {
-                        HStack {
-                            Text("All")
-                            if currentTag == "All" {
-                                Image(systemName: "checkmark")
-                            }
-                        }
-                    }
-                    ForEach(Array(stateService.tags).sorted(), id: \.self) { tag in
-                        if tag != "All" {
-                            Button {
-                                currentTag = tag
-                            } label: {
-                                HStack {
-                                    Text(tag)
-                                    if currentTag == tag {
-                                        Image(systemName: "checkmark")
-                                    }
-                                }
-                            }
-                        }
-                    }
-                    Divider()
-                    Button {
-                        showTagsManagementSheet = true
-                    } label: {
-                        Text("Manage Tags")
-                    }
-                } label: {
-                    Label("Tag", systemImage: "tag")
-                }
-                .menuOrder(.fixed)
+                TagFilterMenu()
+                SortOrderMenu()
             }
 
             ToolbarItemGroup(placement: .navigationBarTrailing) {
-                Menu {
-                    ForEach(sortOptions, id: \.criteria) { option in
-                        Button {
-                            sortCriteria = option.criteria
-                        } label: {
-                            if sortCriteria == option.criteria {
-                                Label(option.title, systemImage: "checkmark")
-                            } else {
-                                Text(option.title)
-                            }
-                        }
-                    }
-                } label: {
-                    Label("Sort Order", systemImage: "arrow.up.arrow.down")
+                if #unavailable(iOS 26.0) {
+                    AddTokenButton()
                 }
-                .menuOrder(.fixed)
+                SettingsButton()
+            }
 
-                Button {
-                    showTokenAddSheet.toggle()
-                } label: {
-                    Image(systemName: "plus")
+            // iOS 26+ bottom bar items
+            if #available(iOS 26.0, *) {
+                DefaultToolbarItem(kind: .search, placement: .bottomBar)
+                ToolbarSpacer(placement: .bottomBar)
+                ToolbarItem(placement: .bottomBar) {
+                    AddTokenButton()
                 }
             }
+        }
+    }
+
+    @ViewBuilder
+    private func TagFilterMenu() -> some View {
+        Menu {
+            Button {
+                currentTag = "All"
+            } label: {
+                Label("All", systemImage: currentTag == "All" ? "checkmark" : "")
+            }
+
+            ForEach(Array(stateService.tags).sorted(), id: \.self) { tag in
+                Button {
+                    currentTag = tag
+                } label: {
+                    Label(tag, systemImage: currentTag == tag ? "checkmark" : "")
+                }
+            }
+
+            Divider()
+
+            Button {
+                showTagsManagementSheet = true
+            } label: {
+                Text("Manage Tags")
+            }
+        } label: {
+            Label("Tag", systemImage: "tag")
+        }
+        .menuOrder(.fixed)
+    }
+
+    @ViewBuilder
+    private func SortOrderMenu() -> some View {
+        Menu {
+            ForEach(sortOptions, id: \.criteria) { option in
+                Button {
+                    sortCriteria = option.criteria
+                } label: {
+                    Label(option.title, systemImage: sortCriteria == option.criteria ? "checkmark" : "")
+                }
+            }
+        } label: {
+            Label("Sort Order", systemImage: "line.3.horizontal.decrease")
+        }
+        .menuOrder(.fixed)
+    }
+
+    @ViewBuilder
+    private func AddTokenButton() -> some View {
+        Button {
+            showTokenAddSheet.toggle()
+        } label: {
+            Image(systemName: "plus")
+        }
+    }
+
+    @ViewBuilder
+    private func SettingsButton() -> some View {
+        Button {
+            showSettingsSheet.toggle()
+        } label: {
+            Image(systemName: "gearshape")
         }
     }
 
@@ -307,7 +336,7 @@ struct TokensTab: View {
                 .sorted { $0.localizedCaseInsensitiveCompare($1) == .orderedAscending }
         )
 
-        if currentTag != "All" && !stateService.tags.contains(currentTag) {
+        if currentTag != "All", !stateService.tags.contains(currentTag) {
             currentTag = "All"
         }
 

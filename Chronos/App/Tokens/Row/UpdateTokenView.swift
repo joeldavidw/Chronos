@@ -25,6 +25,7 @@ struct UpdateTokenView: View {
     @State private var tags: Set<String>
 
     @State var showSecret: Bool = false
+    @FocusState private var isSecretFieldFocused: Bool
 
     init(token: Token, encryptedToken: EncryptedToken, triggerSortAndFilterTokenPairs: @escaping () -> Void) {
         self.token = token
@@ -67,30 +68,7 @@ struct UpdateTokenView: View {
                     }
                 }
                 LabeledContent("Secret") {
-                    Group {
-                        if showSecret {
-                            TextField("Secret", text: $secret)
-                                .disableAutocorrection(true)
-                                .autocapitalization(/*@START_MENU_TOKEN@*/ .none/*@END_MENU_TOKEN@*/)
-                        } else {
-                            SecureField("Secret", text: $secret)
-                                .disabled(true)
-                        }
-                    }
-                    .disableAutocorrection(true)
-                    .autocapitalization(.none)
-                    Spacer()
-                    Button {
-                        showSecret.toggle()
-                    } label: {
-                        if showSecret {
-                            Image(systemName: "eye.slash")
-                                .foregroundStyle(colorScheme == .dark ? .white : .black)
-                        } else {
-                            Image(systemName: "eye")
-                                .foregroundStyle(colorScheme == .dark ? .white : .black)
-                        }
-                    }
+                    secretField
                 }
             }
 
@@ -173,5 +151,33 @@ extension UpdateTokenView {
             counter != token.counter ||
             period != token.period ||
             tags != token.tags
+    }
+
+    var secretField: some View {
+        HStack {
+            Group {
+                if showSecret {
+                    TextField("Secret", text: $secret)
+                        .focused($isSecretFieldFocused)
+                } else {
+                    SecureField("Secret", text: $secret)
+                        .disabled(true)
+                        .contentShape(Rectangle())
+                        .onTapGesture {
+                            showSecret = true
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                                isSecretFieldFocused = true
+                            }
+                        }
+                }
+            }
+            .autocapitalization(.none)
+            .disableAutocorrection(true)
+            .onChange(of: isSecretFieldFocused) { _, isFocused in
+                if !isFocused {
+                    showSecret = false
+                }
+            }
+        }
     }
 }

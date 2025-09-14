@@ -32,52 +32,37 @@ struct MainAppView: View {
         if scenePhase != .active {
             PrivacyView()
         } else {
-            TabView(selection: $currentTab) {
-                Group {
-                    TokensTab()
-                        .tag("Tokens")
-                        .tabItem {
-                            Label("Tokens", systemImage: "lock.fill")
-                        }
-
-                    SettingsTab()
-                        .tag("Settings")
-                        .tabItem {
-                            Label("Settings", systemImage: "gearshape")
-                        }
-                }
-                .toolbarBackground(.visible, for: .tabBar)
-            }
-            .onAppear {
-                if filteredVault.isEmpty {
-                    stateService.resetAllStates()
-                    loginStatus.loggedIn = false
-                }
-
-                if biometricsEnabled && statePasswordReminderEnabled {
-                    if nextPasswordReminderTimestamp == 0 {
-                        nextPasswordReminderTimestamp = Date().timeIntervalSince1970 + (2 * 7 * 24 * 60 * 60)
+            TokensView()
+                .onAppear {
+                    if filteredVault.isEmpty {
+                        stateService.resetAllStates()
+                        loginStatus.loggedIn = false
                     }
 
-                    if Date().timeIntervalSince1970 >= nextPasswordReminderTimestamp {
-                        showPasswordReminder = true
+                    if biometricsEnabled && statePasswordReminderEnabled {
+                        if nextPasswordReminderTimestamp == 0 {
+                            nextPasswordReminderTimestamp = Date().timeIntervalSince1970 + (2 * 7 * 24 * 60 * 60)
+                        }
+
+                        if Date().timeIntervalSince1970 >= nextPasswordReminderTimestamp {
+                            showPasswordReminder = true
+                        }
                     }
                 }
-            }
-            .onChange(of: filteredVault) { _, newValue in
-                if newValue.isEmpty {
-                    stateService.resetAllStates()
-                    loginStatus.loggedIn = false
+                .onChange(of: filteredVault) { _, newValue in
+                    if newValue.isEmpty {
+                        stateService.resetAllStates()
+                        loginStatus.loggedIn = false
+                    }
                 }
-            }
-            .onChange(of: syncMonitor.syncStateSummary) { _, newValue in
-                if newValue == .succeeded {
-                    iCloudSyncLastAttempt = Date().timeIntervalSince1970
+                .onChange(of: syncMonitor.syncStateSummary) { _, newValue in
+                    if newValue == .succeeded {
+                        iCloudSyncLastAttempt = Date().timeIntervalSince1970
+                    }
                 }
-            }
-            .sheet(isPresented: $showPasswordReminder, content: {
-                PasswordReminderView()
-            })
+                .sheet(isPresented: $showPasswordReminder, content: {
+                    PasswordReminderView()
+                })
         }
     }
 }

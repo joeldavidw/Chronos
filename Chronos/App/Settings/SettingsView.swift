@@ -6,7 +6,7 @@ final class ExportNavigation: ObservableObject {
     @Published var showSheet = false
 }
 
-struct SettingsTab: View {
+struct SettingsView: View {
     @EnvironmentObject private var loginStatus: LoginStatus
     @Environment(\.scenePhase) private var scenePhase
 

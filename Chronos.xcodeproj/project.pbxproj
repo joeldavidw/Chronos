@@ -89,6 +89,7 @@
 		6BF53E542C31856A00356461 /* EncryptedExportPasswordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BF53E532C31856A00356461 /* EncryptedExportPasswordView.swift */; };
 		6BF53E572C32EF7700356461 /* EncryptedExportConfirmPasswordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BF53E562C32EF7700356461 /* EncryptedExportConfirmPasswordView.swift */; };
 		6BF53E5B2C33FD8F00356461 /* ActivityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BF53E5A2C33FD8F00356461 /* ActivityView.swift */; };
+		6BF5F9FC2E766E2F0022115A /* AppIcon.icon in Resources */ = {isa = PBXBuildFile; fileRef = 6BF5F9FB2E766E2F0022115A /* AppIcon.icon */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -175,6 +176,7 @@
 		6BF53E532C31856A00356461 /* EncryptedExportPasswordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EncryptedExportPasswordView.swift; sourceTree = "<group>"; };
 		6BF53E562C32EF7700356461 /* EncryptedExportConfirmPasswordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EncryptedExportConfirmPasswordView.swift; sourceTree = "<group>"; };
 		6BF53E5A2C33FD8F00356461 /* ActivityView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityView.swift; sourceTree = "<group>"; };
+		6BF5F9FB2E766E2F0022115A /* AppIcon.icon */ = {isa = PBXFileReference; lastKnownFileType = folder.iconcomposer.icon; path = AppIcon.icon; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -272,6 +274,7 @@
 				6B3BB1062B503CB900DCEF0B /* Database */,
 				6B3BB0DA2B4EB04600DCEF0B /* App */,
 				6B3BB0B42B4EA87D00DCEF0B /* Assets.xcassets */,
+				6BF5F9FB2E766E2F0022115A /* AppIcon.icon */,
 				6B3BB0B62B4EA87D00DCEF0B /* Preview Content */,
 				6B3962A32C002E60000410B0 /* Launch Screen.storyboard */,
 			);
@@ -632,6 +635,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				6B3BB0B82B4EA87D00DCEF0B /* Preview Assets.xcassets in Resources */,
+				6BF5F9FC2E766E2F0022115A /* AppIcon.icon in Resources */,
 				6B3962A42C002E60000410B0 /* Launch Screen.storyboard in Resources */,
 				6B3BB0B52B4EA87D00DCEF0B /* Assets.xcassets in Resources */,
 			);

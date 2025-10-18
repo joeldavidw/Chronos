@@ -135,8 +135,7 @@ struct SettingsView: View {
                             AlertKitAPI.present(
                                 title: "Double tap to reveal",
                                 icon: .custom(UIImage(systemName: "info.circle")!),
-                                style: .iOS17AppleMusic,
-                                haptic: .success
+                                style: .iOS17AppleMusic
                             )
                         }
                     }

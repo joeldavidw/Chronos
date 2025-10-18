@@ -47,7 +47,6 @@
 		6B66D5E72B526315006DB79D /* AddTokenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B66D5E62B526315006DB79D /* AddTokenView.swift */; };
 		6B66D5ED2B526648006DB79D /* CodeScanner in Frameworks */ = {isa = PBXBuildFile; productRef = 6B66D5EC2B526648006DB79D /* CodeScanner */; };
 		6B66D5EF2B52BAC2006DB79D /* HOTPRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B66D5EE2B52BAC2006DB79D /* HOTPRowView.swift */; };
-		6B7383E02B9C3962008E8867 /* Factory in Frameworks */ = {isa = PBXBuildFile; productRef = 6B7383DF2B9C3962008E8867 /* Factory */; };
 		6B7383E52B9C4230008E8867 /* Container.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B7383E42B9C4230008E8867 /* Container.swift */; };
 		6B7A54742B94B7A30057DCF9 /* PrivacyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B7A54732B94B7A30057DCF9 /* PrivacyView.swift */; };
 		6B8132F22C4975DA00DB367E /* Raivo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B8132F12C4975DA00DB367E /* Raivo.swift */; };
@@ -82,6 +81,7 @@
 		6BC5F0522C52429100BA106F /* SwiftProtobuf in Frameworks */ = {isa = PBXBuildFile; productRef = 6BC5F0512C52429100BA106F /* SwiftProtobuf */; };
 		6BC5F0552C52464600BA106F /* GoogleAuth.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BC5F0542C5242B500BA106F /* GoogleAuth.pb.swift */; };
 		6BC5F0572C529A2A00BA106F /* GoogleAuthenticator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BC5F0562C529A2A00BA106F /* GoogleAuthenticator.swift */; };
+		6BCA2E5B2EA3A28A001B9114 /* FactoryKit in Frameworks */ = {isa = PBXBuildFile; productRef = 6BCA2E5A2EA3A28A001B9114 /* FactoryKit */; };
 		6BD90AA52B8E34BB00FABD91 /* PasswordLoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BD90AA42B8E34BB00FABD91 /* PasswordLoginView.swift */; };
 		6BE122922BD6413D008636D2 /* ChronosCrypto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BE122912BD6413D008636D2 /* ChronosCrypto.swift */; };
 		6BF53E4F2C317AA400356461 /* ZipArchive in Frameworks */ = {isa = PBXBuildFile; productRef = 6BF53E4E2C317AA400356461 /* ZipArchive */; };
@@ -191,9 +191,9 @@
 				6B35A4C92B557EE50004D4C5 /* AlertKit in Frameworks */,
 				6BC5F0482C4F8B1B00BA106F /* Html in Frameworks */,
 				6B66D5ED2B526648006DB79D /* CodeScanner in Frameworks */,
-				6B7383E02B9C3962008E8867 /* Factory in Frameworks */,
 				6B3C7A3D2BE9E0600043FEBD /* Logging in Frameworks */,
 				6BC5F0522C52429100BA106F /* SwiftProtobuf in Frameworks */,
+				6BCA2E5B2EA3A28A001B9114 /* FactoryKit in Frameworks */,
 				6B193C8A2C27F03300E759B7 /* CloudKitSyncMonitor in Frameworks */,
 				6BB37D812C46C751008DA122 /* SwiftyJSON in Frameworks */,
 				6BF53E4F2C317AA400356461 /* ZipArchive in Frameworks */,
@@ -545,7 +545,6 @@
 				6B66D5EC2B526648006DB79D /* CodeScanner */,
 				6B35A4C82B557EE50004D4C5 /* AlertKit */,
 				6B8ABEEB2B8F6A4F00F5B514 /* CryptoSwift */,
-				6B7383DF2B9C3962008E8867 /* Factory */,
 				6B3C7A3C2BE9E0600043FEBD /* Logging */,
 				6B193C892C27F03300E759B7 /* CloudKitSyncMonitor */,
 				6BF53E4E2C317AA400356461 /* ZipArchive */,
@@ -553,6 +552,7 @@
 				6BC5F0472C4F8B1B00BA106F /* Html */,
 				6BC5F0512C52429100BA106F /* SwiftProtobuf */,
 				6B96C8832CA7BFB3004ECB11 /* QRCode */,
+				6BCA2E5A2EA3A28A001B9114 /* FactoryKit */,
 			);
 			productName = Chronos;
 			productReference = 6B3BB0AD2B4EA87C00DCEF0B /* Chronos.app */;
@@ -610,7 +610,6 @@
 				6B66D5EB2B526648006DB79D /* XCRemoteSwiftPackageReference "CodeScanner" */,
 				6B35A4C72B557EE50004D4C5 /* XCRemoteSwiftPackageReference "AlertKit" */,
 				6B8ABEEA2B8F6A4F00F5B514 /* XCRemoteSwiftPackageReference "CryptoSwift" */,
-				6B7383DE2B9C3962008E8867 /* XCRemoteSwiftPackageReference "Factory" */,
 				6B3C7A3B2BE9E0600043FEBD /* XCRemoteSwiftPackageReference "swift-log" */,
 				6B193C882C27F03300E759B7 /* XCRemoteSwiftPackageReference "CloudKitSyncMonitor" */,
 				6BF53E4B2C31793100356461 /* XCRemoteSwiftPackageReference "ZipArchive" */,
@@ -618,6 +617,7 @@
 				6BC5F0462C4F8B1B00BA106F /* XCRemoteSwiftPackageReference "swift-html" */,
 				6BC5F0502C52429100BA106F /* XCRemoteSwiftPackageReference "swift-protobuf" */,
 				6B96C8822CA7BFB3004ECB11 /* XCRemoteSwiftPackageReference "QRCode" */,
+				6BCA2E592EA3A28A001B9114 /* XCRemoteSwiftPackageReference "Factory" */,
 			);
 			productRefGroup = 6B3BB0AE2B4EA87C00DCEF0B /* Products */;
 			projectDirPath = "";
@@ -1380,14 +1380,6 @@
 				minimumVersion = 2.5.1;
 			};
 		};
-		6B7383DE2B9C3962008E8867 /* XCRemoteSwiftPackageReference "Factory" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/hmlongco/Factory";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 2.4.1;
-			};
-		};
 		6B8ABEEA2B8F6A4F00F5B514 /* XCRemoteSwiftPackageReference "CryptoSwift" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/krzyzanowskim/CryptoSwift.git";
@@ -1426,6 +1418,14 @@
 			requirement = {
 				kind = upToNextMajorVersion;
 				minimumVersion = 1.28.2;
+			};
+		};
+		6BCA2E592EA3A28A001B9114 /* XCRemoteSwiftPackageReference "Factory" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/hmlongco/Factory";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.5.3;
 			};
 		};
 		6BF53E4B2C31793100356461 /* XCRemoteSwiftPackageReference "ZipArchive" */ = {
@@ -1469,11 +1469,6 @@
 			package = 6B66D5EB2B526648006DB79D /* XCRemoteSwiftPackageReference "CodeScanner" */;
 			productName = CodeScanner;
 		};
-		6B7383DF2B9C3962008E8867 /* Factory */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 6B7383DE2B9C3962008E8867 /* XCRemoteSwiftPackageReference "Factory" */;
-			productName = Factory;
-		};
 		6B8ABEEB2B8F6A4F00F5B514 /* CryptoSwift */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 6B8ABEEA2B8F6A4F00F5B514 /* XCRemoteSwiftPackageReference "CryptoSwift" */;
@@ -1498,6 +1493,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 6BC5F0502C52429100BA106F /* XCRemoteSwiftPackageReference "swift-protobuf" */;
 			productName = SwiftProtobuf;
+		};
+		6BCA2E5A2EA3A28A001B9114 /* FactoryKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 6BCA2E592EA3A28A001B9114 /* XCRemoteSwiftPackageReference "Factory" */;
+			productName = FactoryKit;
 		};
 		6BF53E4E2C317AA400356461 /* ZipArchive */ = {
 			isa = XCSwiftPackageProductDependency;

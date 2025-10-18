@@ -1,5 +1,5 @@
 import AlertKit
-import Factory
+import FactoryKit
 import SwiftData
 import SwiftUI
 

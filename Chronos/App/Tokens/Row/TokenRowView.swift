@@ -129,8 +129,11 @@ struct TokenRowView: View {
             })
         } message: {
             if let tokenToDelete = self.selectedTokenForDeletion {
-                Text("Permentaly delete **\(tokenToDelete.issuer)**?")
+                Text("Permanently delete **\(tokenToDelete.issuer)**?")
             }
+        }
+        .onDisappear {
+            tokenRevealed = false
         }
     }
 

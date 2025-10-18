@@ -11,25 +11,34 @@ struct TOTPRowView: View {
     @State private var progress: Double = 1.0
 
     @AppStorage(StateEnum.PREVIOUS_TOKEN_ENABLED.rawValue) private var statePreviousTokenEnabled: Bool = false
+    @AppStorage(StateEnum.TAP_TO_REVEAL_ENABLED.rawValue) private var stateTapToRevealEnabled: Bool = false
 
     let timer: Publishers.Autoconnect<Timer.TimerPublisher>
+    let isTokenRevealed: Bool
 
     var body: some View {
         Group {
             HStack(alignment: .lastTextBaseline) {
-                Text(!otp.isEmpty ? formatOtp(otp: otp) : token.generateOtp())
-                    .font(.largeTitle)
-                    .fontWeight(.light)
-                    .lineLimit(1)
-                    .onAppear(perform: updateOtp)
-
-                if statePreviousTokenEnabled {
-                    Text("- \(!prevOtp.isEmpty ? formatOtp(otp: prevOtp) : token.generateOtp(previous: true))")
-                        .font(.title)
+                if stateTapToRevealEnabled && !isTokenRevealed {
+                    Text(formatOtp(otp: Array(repeating: "•", count: token.digits).joined(separator: "")))
+                        .font(.largeTitle)
+                        .fontWeight(.black)
+                        .lineLimit(1)
+                } else {
+                    Text(!otp.isEmpty ? formatOtp(otp: otp) : token.generateOtp())
+                        .font(.largeTitle)
                         .fontWeight(.light)
-                        .foregroundStyle(.gray)
                         .lineLimit(1)
                         .onAppear(perform: updateOtp)
+
+                    if statePreviousTokenEnabled {
+                        Text("- \(!prevOtp.isEmpty ? formatOtp(otp: prevOtp) : token.generateOtp(previous: true))")
+                            .font(.title)
+                            .fontWeight(.light)
+                            .foregroundStyle(.gray)
+                            .lineLimit(1)
+                            .onAppear(perform: updateOtp)
+                    }
                 }
             }
 

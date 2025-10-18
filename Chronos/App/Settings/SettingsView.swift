@@ -121,16 +121,18 @@ struct SettingsView: View {
                             }
                         }
                     }
+                }
 
+                Section(header: Text("Appearance")) {
                     Toggle(isOn: $stateTapToRevealEnabled, label: {
-                        Text("Tap to reveal")
+                        Text("Tap To Reveal")
                     })
                     .onChange(of: stateTapToRevealEnabled) { _, enabled in
                         stateTapToRevealEnabled = enabled
                     }
 
                     Toggle(isOn: $statePreviousTokenEnabled, label: {
-                        Text("Show previous token")
+                        Text("Show Previous Token")
                     })
                     .onChange(of: statePreviousTokenEnabled) { _, enabled in
                         statePreviousTokenEnabled = enabled
@@ -158,10 +160,10 @@ struct SettingsView: View {
                     }
                 } footer: {
                     if let appVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String {
-                        let buildVersion = Bundle.main.infoDictionary?["CFBundleVersion"] as? String ?? "NA"
-                        Text("Chronos Authenticator Version \(appVersion) (\(buildVersion))")
-                            .padding(.top, 8)
+                        Text("Chronos Authenticator\nVersion \(appVersion)")
+                            .padding(.top, 16)
                             .frame(maxWidth: .infinity, alignment: .center)
+                            .multilineTextAlignment(.center)
                     }
                 }
                 .listSectionSpacing(8)

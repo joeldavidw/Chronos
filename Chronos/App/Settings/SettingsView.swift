@@ -1,3 +1,4 @@
+import AlertKit
 import CloudKitSyncMonitor
 import FactoryKit
 import SwiftUI
@@ -125,10 +126,19 @@ struct SettingsView: View {
 
                 Section(header: Text("Appearance")) {
                     Toggle(isOn: $stateTapToRevealEnabled, label: {
-                        Text("Tap To Reveal")
+                        Text("Hide Tokens")
                     })
                     .onChange(of: stateTapToRevealEnabled) { _, enabled in
                         stateTapToRevealEnabled = enabled
+
+                        if enabled {
+                            AlertKitAPI.present(
+                                title: "Double tap to reveal",
+                                icon: .custom(UIImage(systemName: "info.circle")!),
+                                style: .iOS17AppleMusic,
+                                haptic: .success
+                            )
+                        }
                     }
 
                     Toggle(isOn: $statePreviousTokenEnabled, label: {

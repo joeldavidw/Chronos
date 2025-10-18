@@ -1,4 +1,4 @@
-import Factory
+import FactoryKit
 import QRCode
 import SwiftUI
 

@@ -1,6 +1,6 @@
 import AlertKit
 import CodeScanner
-import Factory
+import FactoryKit
 import SwiftUI
 
 class ImportSourceDetailViewModel: ObservableObject {

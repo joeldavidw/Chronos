@@ -1,4 +1,4 @@
-import Factory
+import FactoryKit
 import SwiftUI
 
 struct VaultSetupView: View {

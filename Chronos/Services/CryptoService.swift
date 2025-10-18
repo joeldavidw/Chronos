@@ -1,5 +1,5 @@
 import CryptoSwift
-import Factory
+import FactoryKit
 import Foundation
 import Logging
 import SwiftData

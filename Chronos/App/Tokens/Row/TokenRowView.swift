@@ -132,6 +132,9 @@ struct TokenRowView: View {
                 Text("Permentaly delete **\(tokenToDelete.issuer)**?")
             }
         }
+        .onDisappear {
+            tokenRevealed = false
+        }
     }
 
     func TokenRowLeftToRightSwipeView() -> some View {

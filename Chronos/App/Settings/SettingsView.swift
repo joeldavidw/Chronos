@@ -1,3 +1,4 @@
+import AlertKit
 import CloudKitSyncMonitor
 import FactoryKit
 import SwiftUI
@@ -121,16 +122,27 @@ struct SettingsView: View {
                             }
                         }
                     }
+                }
 
+                Section(header: Text("Appearance")) {
                     Toggle(isOn: $stateTapToRevealEnabled, label: {
-                        Text("Tap to reveal")
+                        Text("Hide Tokens")
                     })
                     .onChange(of: stateTapToRevealEnabled) { _, enabled in
                         stateTapToRevealEnabled = enabled
+
+                        if enabled {
+                            AlertKitAPI.present(
+                                title: "Double tap to reveal",
+                                icon: .custom(UIImage(systemName: "info.circle")!),
+                                style: .iOS17AppleMusic,
+                                haptic: .success
+                            )
+                        }
                     }
 
                     Toggle(isOn: $statePreviousTokenEnabled, label: {
-                        Text("Show previous token")
+                        Text("Show Previous Token")
                     })
                     .onChange(of: statePreviousTokenEnabled) { _, enabled in
                         statePreviousTokenEnabled = enabled
@@ -158,10 +170,10 @@ struct SettingsView: View {
                     }
                 } footer: {
                     if let appVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String {
-                        let buildVersion = Bundle.main.infoDictionary?["CFBundleVersion"] as? String ?? "NA"
-                        Text("Chronos Authenticator Version \(appVersion) (\(buildVersion))")
-                            .padding(.top, 8)
+                        Text("Chronos Authenticator\nVersion \(appVersion)")
+                            .padding(.top, 16)
                             .frame(maxWidth: .infinity, alignment: .center)
+                            .multilineTextAlignment(.center)
                     }
                 }
                 .listSectionSpacing(8)

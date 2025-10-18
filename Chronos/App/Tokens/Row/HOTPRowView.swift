@@ -7,22 +7,33 @@ struct HOTPRowView: View {
     @State private var otp = ""
     @State private var disableIncrementBtn = false
 
+    @AppStorage(StateEnum.TAP_TO_REVEAL_ENABLED.rawValue) private var stateTapToRevealEnabled: Bool = false
+
     let cryptoService = Container.shared.cryptoService()
 
     var token: Token
     var encryptedToken: EncryptedToken
+    let isTokenRevealed: Bool
 
     var body: some View {
-        Text(!otp.isEmpty ? formatOtp(otp: otp) : token.generateOtp())
-            .font(.largeTitle)
-            .fontWeight(.light)
-            .lineLimit(1)
-            .onAppear {
-                otp = token.generateOtp()
-            }
-            .onChange(of: token.counter) { _, _ in
-                otp = token.generateOtp()
-            }
+        if stateTapToRevealEnabled && !isTokenRevealed {
+            Text(formatOtp(otp: Array(repeating: "•", count: token.digits).joined(separator: "")))
+                .font(.largeTitle)
+                .fontWeight(.black)
+                .lineLimit(1)
+        } else {
+            Text(!otp.isEmpty ? formatOtp(otp: otp) : token.generateOtp())
+                .font(.largeTitle)
+                .fontWeight(.light)
+                .lineLimit(1)
+                .onAppear {
+                    otp = token.generateOtp()
+                }
+                .onChange(of: token.counter) { _, _ in
+                    otp = token.generateOtp()
+                }
+        }
+
         Spacer()
         Button {
             disableIncrementBtn = true

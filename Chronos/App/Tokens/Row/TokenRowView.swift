@@ -6,14 +6,12 @@ import SwiftUI
 struct TokenRowView: View {
     @Environment(\.modelContext) private var modelContext
 
-    @State private var showTokenDeleteSheet = false
-    @State private var showTokenQRSheet = false
-
-    @State private var selectedTokenForDeletion: Token?
-    @State private var selectedTokenForUpdate: Token?
-
     @AppStorage(StateEnum.TAP_TO_REVEAL_ENABLED.rawValue) private var stateTapToRevealEnabled: Bool = false
 
+    @State private var showTokenDeleteSheet = false
+    @State private var showTokenQRSheet = false
+    @State private var selectedTokenForDeletion: Token?
+    @State private var selectedTokenForUpdate: Token?
     @State private var tokenRevealed = false
 
     let tokenPair: TokenPair
@@ -54,31 +52,20 @@ struct TokenRowView: View {
                 }
             }
 
-            if stateTapToRevealEnabled && !tokenRevealed {
-                HStack {
-                    Text(formatOtp(otp: Array(repeating: "•", count: token.digits).joined(separator: "")))
-                        .font(.largeTitle)
-                        .fontWeight(.black)
-                        .lineLimit(1)
-
-                    Spacer()
-                }
-            } else {
-                HStack {
-                    if token.isValid {
-                        switch token.type {
-                        case TokenTypeEnum.TOTP:
-                            TOTPRowView(token: token, timer: timer)
-                        case TokenTypeEnum.HOTP:
-                            HOTPRowView(token: token, encryptedToken: encryptedToken)
-                        }
-                    } else {
-                        Text("Invalid Token")
-                            .font(.title)
-                            .fontWeight(.light)
-                            .opacity(0.5)
-                            .lineLimit(1)
+            HStack {
+                if token.isValid {
+                    switch token.type {
+                    case TokenTypeEnum.TOTP:
+                        TOTPRowView(token: token, timer: timer, isTokenRevealed: tokenRevealed)
+                    case TokenTypeEnum.HOTP:
+                        HOTPRowView(token: token, encryptedToken: encryptedToken, isTokenRevealed: tokenRevealed)
                     }
+                } else {
+                    Text("Invalid Token")
+                        .font(.title)
+                        .fontWeight(.light)
+                        .opacity(0.5)
+                        .lineLimit(1)
                 }
             }
         }
@@ -87,26 +74,27 @@ struct TokenRowView: View {
         .contentShape(Rectangle())
         .padding(CGFloat(4))
         .onTapGesture {
-            if !stateTapToRevealEnabled {
-                if token.isValid {
-                    UIPasteboard.general.string = token.generateOtp()
+            if token.isValid {
+                UIPasteboard.general.string = token.generateOtp()
 
-                    AlertKitAPI.present(
-                        title: "Copied",
-                        icon: .done,
-                        style: .iOS17AppleMusic,
-                        haptic: .success
-                    )
-                } else {
-                    AlertKitAPI.present(
-                        title: "Invalid Token",
-                        subtitle: token.validationError?.localizedDescription.description,
-                        icon: .error,
-                        style: .iOS17AppleMusic,
-                        haptic: .success
-                    )
-                }
+                AlertKitAPI.present(
+                    title: "Copied",
+                    icon: .done,
+                    style: .iOS17AppleMusic,
+                    haptic: .success
+                )
             } else {
+                AlertKitAPI.present(
+                    title: "Invalid Token",
+                    subtitle: token.validationError?.localizedDescription.description,
+                    icon: .error,
+                    style: .iOS17AppleMusic,
+                    haptic: .success
+                )
+            }
+        }
+        .onTapGesture(count: 2) {
+            if stateTapToRevealEnabled {
                 tokenRevealed.toggle()
             }
         }

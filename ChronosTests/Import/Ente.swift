@@ -2,7 +2,7 @@
 import XCTest
 
 final class EnteTests: XCTestCase {
-    func testValidImport() throws {
+    func testValidImport() {
         let inputData = """
         otpauth://totp/Apple:user1+totp@test.com?secret=AB6B7FAYHW2G42ZA4FJHLRWWHU&issuer=Apple&algorithm=SHA1&digits=6&period=30
         otpauth://totp/AWS:user2+totp@test.com?secret=U7WXBPTLK62EC6Y2X4ALCMWWHS&issuer=AWS&algorithm=SHA256&digits=7&period=60
@@ -48,7 +48,7 @@ final class EnteTests: XCTestCase {
         XCTAssertEqual(tokens[3].secret, "MGTMWSHCBRMOBRI2AXNJD4M332")
     }
 
-    func testValidImport_Whitepsaces() throws {
+    func testValidImport_Whitepsaces() {
         let inputData = """
 
 

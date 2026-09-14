@@ -1,0 +1,5 @@
+--exclude Chronos/Services/Import/Protos,**/*.pb.swift
+
+--disable docComments
+--disable redundantSwiftUIGroup
+--disable noForceUnwrapInTests

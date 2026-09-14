@@ -3,7 +3,7 @@ import SwiftyJSON
 import XCTest
 
 final class ChronosTests: XCTestCase {
-    func testValidImport() throws {
+    func testValidImport() {
         let json: JSON = [
             "tokens": [
                 [
@@ -53,7 +53,7 @@ final class ChronosTests: XCTestCase {
         XCTAssertEqual(tokens[1].secret, "ff")
     }
 
-    func testValidWithAdditionalDataImport() throws {
+    func testValidWithAdditionalDataImport() {
         let json: JSON = [
             "tokens": [
                 [
@@ -111,7 +111,7 @@ final class ChronosTests: XCTestCase {
         XCTAssertEqual(tokens[1].tags, [])
     }
 
-    func testInvalidImport_MissingVariables() throws {
+    func testInvalidImport_MissingVariables() {
         let json: JSON = [
             "tokens": [
                 [

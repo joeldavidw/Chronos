@@ -3,7 +3,7 @@ import SwiftyJSON
 import XCTest
 
 final class TwoFASTests: XCTestCase {
-    func testValidImport() throws {
+    func testValidImport() {
         let json: JSON =
             [
                 "appOrigin": "ios",
@@ -227,7 +227,7 @@ final class TwoFASTests: XCTestCase {
         XCTAssertEqual(tokens[8].secret, "BB6B7FAYHW2G42ZA4FJHLRWWHU")
     }
 
-    func testValidImport_Period() throws {
+    func testValidImport_Period() {
         let json: JSON =
             [
                 "appOrigin": "ios",
@@ -337,7 +337,7 @@ final class TwoFASTests: XCTestCase {
         XCTAssertEqual(tokens[3].secret, "MGTMWSHCBRMOBRI2AXNJD4M332")
     }
 
-    func testInvalidImport_Algorithm() throws {
+    func testInvalidImport_Algorithm() {
         let json: JSON =
             [
                 "appOrigin": "ios",
@@ -415,7 +415,7 @@ final class TwoFASTests: XCTestCase {
         XCTAssertNil(tokens)
     }
 
-    func testInvalidImport_Steam() throws {
+    func testInvalidImport_Steam() {
         let json: JSON =
             [
                 "appOrigin": "ios",

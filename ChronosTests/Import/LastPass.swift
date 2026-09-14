@@ -3,7 +3,7 @@ import SwiftyJSON
 import XCTest
 
 final class LastPassTests: XCTestCase {
-    func testValidImport() throws {
+    func testValidImport() {
         let json: JSON =
             [
                 "accounts": [

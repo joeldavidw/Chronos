@@ -162,7 +162,6 @@ struct TokensView: View {
         Array(stateService.tags).sorted()
     }
 
-    @ViewBuilder
     private func TagButton(title: String, isSelected: Bool, action: @escaping () -> Void) -> some View {
         Button(action: action) {
             Text(title)
@@ -206,7 +205,6 @@ struct TokensView: View {
         }
     }
 
-    @ViewBuilder
     private func TagFilterMenu() -> some View {
         Menu {
             Button {
@@ -236,7 +234,6 @@ struct TokensView: View {
         .menuOrder(.fixed)
     }
 
-    @ViewBuilder
     private func SortOrderMenu() -> some View {
         Menu {
             ForEach(sortOptions, id: \.criteria) { option in
@@ -252,7 +249,6 @@ struct TokensView: View {
         .menuOrder(.fixed)
     }
 
-    @ViewBuilder
     private func AddTokenButton() -> some View {
         Button {
             showTokenAddSheet.toggle()
@@ -261,7 +257,6 @@ struct TokensView: View {
         }
     }
 
-    @ViewBuilder
     private func SettingsButton() -> some View {
         Button {
             showSettingsSheet.toggle()

@@ -79,8 +79,7 @@ struct EncryptedExportConfirmPasswordView: View {
                         Text("An error occurred while during the export process")
                     }
                 }
-            }
-        )
+            })
     }
 
     func doSubmit() {

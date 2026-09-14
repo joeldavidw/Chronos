@@ -2,8 +2,6 @@ import FactoryKit
 import SwiftUI
 
 struct HOTPRowView: View {
-    @Environment(\.modelContext) private var modelContext
-
     @State private var otp = ""
     @State private var disableIncrementBtn = false
 

@@ -3,7 +3,7 @@ import SwiftyJSON
 import XCTest
 
 final class AegisTests: XCTestCase {
-    func testValidImport() throws {
+    func testValidImport() {
         let json: JSON =
             [
                 "version": 1,

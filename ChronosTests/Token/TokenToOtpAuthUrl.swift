@@ -2,7 +2,7 @@
 import XCTest
 
 final class TokenToOtpAuthUrlTests: XCTestCase {
-    func testTotp() throws {
+    func testTotp() {
         // Test case 1: Standard TOTP token
         let token1 = Token()
         token1.issuer = "Apple"
@@ -104,7 +104,7 @@ final class TokenToOtpAuthUrlTests: XCTestCase {
         XCTAssertEqual(url, "otpauth://totp/Example:user@example.com?secret=&algorithm=SHA1&digits=6&issuer=Example&period=30")
     }
 
-    func testHotp() throws {
+    func testHotp() {
         // Test case 1: Standard HOTP token
         let token1 = Token()
         token1.issuer = "GitHub"

@@ -1,6 +1,7 @@
 import AlertKit
 import Combine
 import FactoryKit
+import SwiftData
 import SwiftUI
 
 struct TokenRowView: View {

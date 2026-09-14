@@ -3,7 +3,7 @@ import SwiftyJSON
 import XCTest
 
 final class GoogleAuthenticatorTests: XCTestCase {
-    func testValidImport() throws {
+    func testValidImport() {
         let authOtpMigratation = "otpauth-migration://offline?data=Ci0KCkhlbGxvId6tvu8SEmpvaG5AYXBwbGVzZWVkLmNvbRoFQXBwbGUgASgBMAIKLgoKSGVsbG8h3q2%2B7xITam9objJAYXBwbGVzZWVkLmNvbRoFQXBwbGUgAigCMAIKNAoKSGVsbG8h3q2%2B7xIXam9obitob3RwQGFwcGxlc2VlZC5jb20aBUFwcGxlIAEoATABOAAKNQoKSGVsbG8h3q2%2B7xIYam9obitob3RwMkBhcHBsZXNlZWQuY29tGgVBcHBsZSABKAIwATgAEAIYASAA"
 
         let importService = ImportService()
@@ -48,7 +48,7 @@ final class GoogleAuthenticatorTests: XCTestCase {
         XCTAssertEqual(tokens[3].secret, "JBSWY3DPEHPK3PXP")
     }
 
-    func testInvalidImport_AlgoMD5() throws {
+    func testInvalidImport_AlgoMD5() {
         let authOtpMigratation = "otpauth-migration://offline?data=Ci0KCkhlbGxvId6tvu8SEmpvaG5AYXBwbGVzZWVkLmNvbRoFQXBwbGUgASgBMAIKLgoKSGVsbG8h3q2%2B6RIRbWQ1QGFwcGxlc2VlZC5jb20aBUFwcGxlIAQoATABOAAQAhgBIAA%3D"
 
         let importService = ImportService()

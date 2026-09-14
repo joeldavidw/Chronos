@@ -2,14 +2,18 @@ import Foundation
 import SwiftOTP
 
 enum TokenTypeEnum: String, Codable, CaseIterable, Identifiable {
-    var id: String { rawValue }
+    var id: String {
+        rawValue
+    }
 
     case TOTP
     case HOTP
 }
 
 enum TokenAlgorithmEnum: String, Codable, CaseIterable, Identifiable {
-    var id: String { rawValue }
+    var id: String {
+        rawValue
+    }
 
     case SHA1
     case SHA256

@@ -3,7 +3,7 @@ import SwiftyJSON
 import XCTest
 
 final class RaivoTests: XCTestCase {
-    func testValidImport() throws {
+    func testValidImport() {
         let json: JSON = [
             [
                 "secret": "ff",
@@ -57,7 +57,7 @@ final class RaivoTests: XCTestCase {
         XCTAssertEqual(tokens[1].secret, "JBSWY3DPEHPK3PXP")
     }
 
-    func testInvalidImport_MissingVariables() throws {
+    func testInvalidImport_MissingVariables() {
         let json: JSON = [
             [
                 "issuer": "Raivo",

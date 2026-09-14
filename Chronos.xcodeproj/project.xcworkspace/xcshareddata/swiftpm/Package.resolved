@@ -33,8 +33,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/krzyzanowskim/CryptoSwift.git",
       "state" : {
-        "revision" : "e45a26384239e028ec87fbcc788f513b67e10d8f",
-        "version" : "1.9.0"
+        "revision" : "f2a627b84c1ff96f21ac2fcb623ab36142dd5512",
+        "version" : "1.10.0"
       }
     },
     {
@@ -42,8 +42,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/hmlongco/Factory",
       "state" : {
-        "revision" : "ccc898f21992ebc130bc04cc197460a5ae230bcf",
-        "version" : "2.5.3"
+        "revision" : "27717e148c0c1ed2998f687a8e98d9395d684abf",
+        "version" : "3.3.2"
       }
     },
     {
@@ -51,8 +51,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/dagronf/QRCode",
       "state" : {
-        "revision" : "90bf2183e2eec226840751af42a2eaebfd53330b",
-        "version" : "23.0.0"
+        "revision" : "a8b8a5166e072156baf66ec2fff0850aa14b5297",
+        "version" : "28.1.0"
       }
     },
     {
@@ -159,8 +159,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/square/Valet",
       "state" : {
-        "revision" : "05c9e514fbd352a6866877ca31326b4e0b7d6d01",
-        "version" : "5.0.0"
+        "revision" : "43f517941ced37752c0cd5e2b53a3c9d021c848b",
+        "version" : "5.1.1"
       }
     },
     {

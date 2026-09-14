@@ -584,7 +584,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1540;
-				LastUpgradeCheck = 1630;
+				LastUpgradeCheck = 2700;
 				TargetAttributes = {
 					6B3BB0AC2B4EA87C00DCEF0B = {
 						CreatedOnToolsVersion = 15.2;
@@ -822,6 +822,7 @@
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
@@ -880,6 +881,7 @@
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_COMPILATION_MODE = wholemodule;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -1247,6 +1249,7 @@
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_COMPILATION_MODE = wholemodule;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -1393,7 +1396,7 @@
 			repositoryURL = "https://github.com/dagronf/QRCode";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 23.0.0;
+				minimumVersion = 28.1.0;
 			};
 		};
 		6BB37D7F2C46C751008DA122 /* XCRemoteSwiftPackageReference "SwiftyJSON" */ = {
@@ -1425,7 +1428,7 @@
 			repositoryURL = "https://github.com/hmlongco/Factory";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 2.5.3;
+				minimumVersion = 3.3.0;
 			};
 		};
 		6BF53E4B2C31793100356461 /* XCRemoteSwiftPackageReference "ZipArchive" */ = {

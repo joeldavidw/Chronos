@@ -1393,7 +1393,7 @@
 			repositoryURL = "https://github.com/dagronf/QRCode";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 23.0.0;
+				minimumVersion = 28.1.0;
 			};
 		};
 		6BB37D7F2C46C751008DA122 /* XCRemoteSwiftPackageReference "SwiftyJSON" */ = {
@@ -1425,7 +1425,7 @@
 			repositoryURL = "https://github.com/hmlongco/Factory";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 2.5.3;
+				minimumVersion = 3.3.0;
 			};
 		};
 		6BF53E4B2C31793100356461 /* XCRemoteSwiftPackageReference "ZipArchive" */ = {

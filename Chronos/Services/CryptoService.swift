@@ -33,9 +33,7 @@ public class CryptoService {
 
             let keyParams = KeyParams(iv: iv, tag: encrypt.authenticationTag)
 
-            let newPasswordCrypto = ChronosCrypto(key: encrypt.cipherText, keyParams: keyParams, passwordParams: passwordParams, kdfParams: kdfParams)
-
-            return newPasswordCrypto
+            return ChronosCrypto(key: encrypt.cipherText, keyParams: keyParams, passwordParams: passwordParams, kdfParams: kdfParams)
         } catch {
             fatalError(error.localizedDescription)
         }
@@ -133,8 +131,7 @@ extension CryptoService {
         do {
             let decrypted = try AEADXChaCha20Poly1305.decrypt(encryptedTokenCiper, key: Array(stateService.masterKey), iv: iv, authenticationHeader: header, authenticationTag: authenticationTag)
 
-            let tokenJson = try JSONDecoder().decode(Token.self, from: Data(decrypted.plainText))
-            return tokenJson
+            return try JSONDecoder().decode(Token.self, from: Data(decrypted.plainText))
         } catch {
             print(error)
             return nil

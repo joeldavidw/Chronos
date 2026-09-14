@@ -78,8 +78,7 @@ public class ImportService {
         defer { url.stopAccessingSecurityScopedResource() }
 
         do {
-            let strData = try String(contentsOf: url, encoding: .utf8)
-            return strData
+            return try String(contentsOf: url, encoding: .utf8)
         } catch {
             logger.error("Error reading file at \(url): \(error.localizedDescription)")
             return nil
@@ -91,8 +90,7 @@ extension ImportService {
     func importFromChronos(json: JSON) -> [Token]? {
         do {
             let decoder = JSONDecoder()
-            let tokens = try decoder.decode([Token].self, from: json["tokens"].rawData())
-            return tokens
+            return try decoder.decode([Token].self, from: json["tokens"].rawData())
         } catch {
             logger.error("Error decoding tokens from JSON: \(error.localizedDescription)")
             return nil

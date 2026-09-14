@@ -917,7 +917,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 19.1;
+				MARKETING_VERSION = 20.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.joeldavidw.ChronosDevDebug;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -962,7 +962,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 19.1;
+				MARKETING_VERSION = 20.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.joeldavidw.ChronosDevRelease;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1285,7 +1285,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 19.1;
+				MARKETING_VERSION = 20.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.joeldavidw.Chronos;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
